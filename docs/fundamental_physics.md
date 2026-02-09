@@ -1,0 +1,11 @@
+# Fundamental Physics
+- Force
+  - Gravitational, electromagnetic, strong nuclear, weak nuclear
+  - Exemplify with gravity and strong nuclear equations which are slightly different.
+  - Function of distance between two particles and some force-specific property of the particles. Force parallel with distance vector.
+  - Imagine a 5th force:
+    - The constellation of more than 2 particles. Not discovered in particle accelerators.
+    - Nonlinearity of size and direction. Cannot be composed of pairwise forces.
+    - Memoryfull. Potential to leave a soul after death.
+- Epiphenomenon
+- Hidden variables
