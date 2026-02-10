@@ -1,4 +1,6 @@
-# Experience
+# Teleology
+
+- global workspace theory[^baars][^dehaene]
 
 **Definition** (agent).
 Discrete.
@@ -13,3 +15,7 @@ The function of experience is to create an observation $o^i$ that merges other o
 
 Motivations.
 - You experience both eyes in one experience, there are not two separate consciousnesses for each eye.
+
+
+[^baars]: Bernard Baars
+[^dehaene]: Stanislas Dehaene

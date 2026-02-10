@@ -1,4 +1,4 @@
-# Fundamental Physics
+# Fundamental Forces
 - Force
   - Gravitational, electromagnetic, strong nuclear, weak nuclear
   - Exemplify with gravity and strong nuclear equations which are slightly different.
