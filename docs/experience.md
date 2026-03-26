@@ -1,35 +1,31 @@
 # Experience
 
-We use the words experience, consciousness, and conscious experience interchangeably.
-An underlying assumption is that consciousness is nothing more than a collection of experiences.
-
-**Definition** (Partially Observable Markov Decision Process).
-A POMDP is a tuple $(\mathbb S, \mathbb A, \mathbb O, T, Z, R)$ where:
-- $\mathbb S$ is a set of states,
-- $\mathbb A$ is a set of actions,
-- $\mathbb O$ is a set of observations,
-- $T: \mathbb S \times \mathbb A \times \mathbb S \to [0,1]$ is the transition function, where $T(s,a,s')$ is the probability of transitioning to state $s'$ after taking action $a$ in state $s$,
-- $Z: \mathbb S \times \mathbb A \times \mathbb O \to [0,1]$ is the observation function, where $Z(s',a,o)$ is the probability of observing $o$ after taking action $a$ and arriving in state $s'$,
-- $R: \mathbb S \times \mathbb A \to {]{-\infty},\infty[}$ is the reward function, and
+**Definition** (Perceived Magnitude).
 
 
-Seeing and hearing are examples of different modalitites.
-Seeing with right eye versus left eye are not separate modalities though.
-The reason is that there is an overlap, where you do no know which eye is responible.
-Similarly, flavour may be a modality whereas taste and smell are not.
-
-
-**Definition** (Experience).
-Let $M_1 \times ... \times M_n \subseteq \mathbb O$ be a set of modalities.
-An experience is an observation with additional axioms:
-- Experiences cover one or more modalities.
+**Definition** (Human Experience).
+Human experience is a tuple
+$(\mathbb W, \mathbb V, \mathbb L, I,S,G)$.
+- $I: \mathbb W \to \mathbb V$ where $I(w)=v$ means that the subjective intensity at $w$ are $v$.
+- $S: 2^\mathbb W \to \{0,1\}$, where $S\{w_0,...,w_n\}=1$ means that $\{w_0,...,w_n\}$ is the boundary of the self.
+- $G: 2^\mathbb W \to 2^\mathbb L$ where $G\{w_0,...,w_n\}=\{l_0,...,l_m\}$ means that $\{l_0,...,l_m\}$ are Gestalt labels to $\{w_0,...,w_n\}$.
 
 
 
-In humans, sensory modalities have analogues in memory modalities, and fantasy modalities.
+**Definition** (Sentient Experience).
+==Sentient experience is a superset of human experience with valence== 
 
 
-**Definition** (Humanlike Experience).
-A human experience is an experience with additional axioms:
-- Every point in each modality has a spatial coordinate.
-- Memory modalities and fantasy modalities have a temporal coordinate.
+## Appendix
+
+**Definition** (Metric Space).
+A metric space is a tuple $(\mathbb M, d)$.
+- $d: \mathbb M \times \mathbb M \to \mathbb R$ is a distance.
+- $d(x,x)=0$.
+- Positivity. If $x \neq y$ then $d(x,y) \geq 0$.
+- Triangle Inequality. $d(x,z) \leq d(x,y) + d(y,z)$.
+- Symmetry. $d(x,y)=d(y,x)$.
+
+
+**Definition** (Smoothing).
+...
