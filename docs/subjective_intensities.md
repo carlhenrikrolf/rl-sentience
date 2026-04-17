@@ -36,7 +36,7 @@ $(\mathbb U, \mathbf 0, \preceq)$.
 
 $\mathbf u$ can be any element in $\mathbb U$.[^unipolar]
 
-[^unipolar]: In audition, pitch is perceived in cents rather than Hertz. There is no unique zero—neither as an extremum nor as an identity element—so a total order would be enough.
+[^unipolar]: 
 
 *Example*.
 (Audition)
@@ -110,7 +110,7 @@ ___
 The three kind above, unipolar, bipolar, and multipolar, do not constitute an exhaustive taxonomy.
 
 *Example*.
-
+In audition, pitch is perceived in cents rather than Hertz. There is no unique zero—neither as an extremum nor as an identity element—so a total order would be enough.
 
 ## Product
 
