@@ -34,7 +34,9 @@ $(\mathbb U, \mathbf 0, \preceq)$.
 - $(\mathbb U, \preceq)$ is a total order.
 - $\mathbf 0 \in \mathbb U$ where $\mathbf 0 \preceq \mathbf u$.
 
-$\mathbf u$ can be any element in $\mathbb U$.
+$\mathbf u$ can be any element in $\mathbb U$.[^unipolar]
+
+[^unipolar]: In audition, pitch is perceived in cents rather than Hertz. There is no unique zero—neither as an extremum nor as an identity element—so a total order would be enough.
 
 *Example*.
 (Audition)
@@ -95,7 +97,7 @@ $$
 $$
 $\mathbf u, \mathbf v$ can be any element in $\mathbb U$,
 $r,s$ can be any element in $\mathbb R$,
-and $k$ can be any element in $\mathbb N$.
+and $k$ can be any element in $\{1,...,|\mathbb U|-1\}$.
 
 *Example.*
 (Audition)
@@ -108,11 +110,14 @@ ___
 The three kind above, unipolar, bipolar, and multipolar, do not constitute an exhaustive taxonomy.
 
 *Example*.
-In audition, pitch is perceived in cents rather than Hertz.
-There is no unique zero—neither as an extremum nor as an identity element—so a total order would be enough.
+
 
 ## Product
 
 **Definition** (Product).
 
 **Definition** (Valence).
+
+## References
+
+Stevens, S.S., 1970. Neural Events and the Psychophysical Law: Power functions like those that govern subjective magnitude show themselves in neurelectric effects. Science, 170(3962), pp.1043-1050.
