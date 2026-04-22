@@ -7,7 +7,7 @@ An investigation if LLMs feel discomfort or pleasure.
 1. Preliminaries
     1. [Ordered Monoids](docs/ordered_monoids.md)
 2. Theory
-    1. [Valence](docs/valence.md)
+    1. [Hedonic Tone](docs/hedonic_tone.md) (alternaltively: [Valence](docs/valence.md))
 
 ## Related Work
 

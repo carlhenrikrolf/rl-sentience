@@ -21,7 +21,7 @@ if and only if $(p\mathbin{\ddag}q ) \mathbin{\ddag} r = (p\mathbin{\ddag}r)\mat
 
 [Proof.]()
 
-$(\mathcal V, €, \circledast)$ is a *group*
+<!-- $(\mathcal V, €, \circledast)$ is a *group*
 if
 
 - Inverse. $p\circledast q \coloneqq p*q$
@@ -33,7 +33,7 @@ $p,q,r$ can be any member in $\mathcal V$.
 Inverse holds by definition.
 Anticommutativity and right-identity suffice for a group.
 
-[Proof.]()
+[Proof.]() -->
 
 *Introspection*.
 Find a pair of stimuli $(X,Y)$ such that $X$ causes you pleasure and $Y$ causes you discomfort.
@@ -42,18 +42,20 @@ If so, you may model your hedonic experiences with groups.
 Otherwise, if that comparison does not make sense, you may model your hedonic experiences with valences instead.
 
 
-**Definition** (Homogenous Valence).
-A *homogenous valence over $\mathcal K$* is a tuple
+**Definition** (Normed Valence).
+A *normed valence over $\mathcal K$* is a tuple
 $(\mathcal V, €, *, \ddag, \|\|)$
-equipped with an field
-$(\mathcal K, 0,+,1, \cdot)$.
+equipped with an ordered field
+$(\mathcal K, 0,+,1, \cdot, \leq)$.
 $(\mathcal V, €, *, \ddag)$ is a valence.
 $\|\|: \mathcal V \to \mathcal K$, $p \mapsto \|p\|$.
 There are two axioms:
 
 1. Homogeneity.
 $n \cdot \|p\| = \|\overbrace{p * \cdots * p}^{n\ \mathrm{times}}\|$.
-2. Positive definiteness.
+1. Triangle inequality.
+$\|r \mathbin\ddag p \| \leq \|r \mathbin\ddag q\| + \|q \mathbin\ddag p \|$.
+3. Definiteness.
 $\|p\|=0$
 if and only if $p=€$.
 
@@ -87,20 +89,19 @@ We refer to $\underline{\mathsf L}$ as *liking*.
 
 **Definition** (Utility).
 Utility is a tuple $(\mathcal U, \underline{\mathsf W})$.
-$\underline{\mathsf W} \mathbin{:} \mathcal U^n \times \mathcal U^n \to 2$,
+$\underline{\mathsf W} \mathbin{:} \mathcal U^m \times \mathcal U^n \to 2$,
 $(\mathbf p,\mathbf q) \mapsto \mathbf p \mathbin{\underline{\mathsf W}} \mathbf q$.
-
 
 1. $2\subseteq \mathcal U$.
 2. $\mathcal V \subseteq \mathcal U$.
 3. Cartesian order.
-If $p_i \mathbin{\underline{\mathsf{L}}} q_i$ for all $i\in\{1,...,n\}$
-then $(p_1,...,p_n) \mathbin{\underline{\mathsf{W}}} (q_1, ..., q_n)$.
+If $n=m$ and $p_i \mathbin{\underline{\mathsf{L}}} q_i$ for all $i\in\{1,...,n\}$
+then $\mathbf p \mathbin{\underline{\mathsf{W}}} \mathbf q$.
 4. Totality.
 $\mathbf p \mathbin{\underline{\mathsf{W}}} \mathbf q$ or $\mathbf q \mathbin{\underline{\mathsf{W}}} \mathbf p$.
 
-$n$ can be anu member in $\mathbb N$.
-$\mathbf p = (p_1,...,p_n),\mathbf q = (q_1,...,q_n)$ can be any members in $\mathcal U$.
+$m, n$ can be any members of $\mathbb N$.
+$\mathbf p = (p_1,...,p_m)$ can be any member of $\mathcal U^m$ and $\mathbf q = (q_1,...,q_n)$ can be any member of $\mathcal U^n$.
 $(\mathcal V, €, *, \ddag, \underline{\mathsf L})$ is an ordered valence.
 
 
