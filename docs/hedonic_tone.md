@@ -121,20 +121,16 @@ $p,q$ can be any members of $\mathcal V$.
 A *neutral tone* is a tuple
 $(\mathcal V, \mathrm e, \div, \underline{\mathsf M})$
 where
-$(\mathcal W, \underline{\mathsf M})$,
-$\mathcal W \subseteq \mathcal V$,
-is a total order,
+$(\mathcal v, \div, \underline{\mathsf M})$,
+is a totally ordered contragroup,
 and
 $(\mathcal V, \mathrm e, \div)$
 is a tone.
+There is one axiom:
 
-1. If $q\in \mathcal V\setminus \mathcal W$ then
-$p \div q \in \mathcal W$.
-2. $\mathrm e \in \mathcal W$ and $\mathrm e \mathbin{\underline{\mathsf M}} p$.
-3. $\mathrm e\div q \mathbin{\underline{\mathsf M}} p \div q \mathbin{\underline{\mathsf M}} p$. 
+1. $(\mathrm e\div q) \mathbin{\underline{\mathsf M}} (p \div q) \mathbin{\underline{\mathsf M}} p$. 
 
-$p$ can be any member of $\mathcal W$.
-
+$p,q$ can be any members of $\mathcal V$.
 
 
 
@@ -143,13 +139,9 @@ Let $n$ be a member of $\{2,3,...\}.$
 An *$n$-colour tone* is a tuple
 $(\mathcal V, \mathrm e_1,..., \mathrm e_n, \div, \underline{\mathsf{B}})$
 where
-$(\mathcal V,e_1,\div), ..., (\mathcal V, e_n, \div)$
-are tones
-and
-$(p,(q_1,...,q_n)) \mapsto p \mathbin{\underline{\mathsf{B}}} (q_1,...,q_n)$.
-$\mathbin{\underline{\mathsf{B}}}$ is defined from a total order
-$(\mathcal W, \preceq)$,
-$\mathcal W \subseteq \mathcal V$:
+$(\mathcal V, e_1,\div), ..., (\mathcal V, e_n, \div)$
+are tones.<!-- $(p,(q_1,...,q_n)) \mapsto p \mathbin{\underline{\mathsf{B}}} (q_1,...,q_n)$. -->
+$\mathbin{\underline{\mathsf{B}}}$ is defined recursively:
 
 1. If $n=2$ then
 $p \mathbin{\underline{\mathsf{B}}} (q_1,q_2)$
@@ -168,8 +160,13 @@ $r \preceq p \preceq q_n$
 or
 $q_n \preceq p \preceq r$.
 
+$(\mathrm V^n, \div, \preceq)$ is a totally ordered contragroup.
 There is one axiom:
 
-1. $p \mathbin{\underline{\mathsf{B}}} (\mathrm e_1, ..., \mathrm e_n)$.
+3. If $p \mathbin{\underline{\mathsf{B}}} (\mathrm e_1, ..., \mathrm e_n)$
+but not
+$q \mathbin{\underline{\mathsf{B}}} (\mathrm e_1, ..., \mathrm e_n)$
+then
+$(p \div q) \mathbin{\underline{\mathsf{B}}} (\mathrm e_1, ..., \mathrm e_n)$.
 
-$p,q_1,...,q_{n-1},q_n$ can be any members of $\mathcal W$.
+$p,q_1,...,q_{n-1},q_n$ can be any members of $\mathcal V$.
