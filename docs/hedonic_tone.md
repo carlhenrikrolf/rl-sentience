@@ -11,6 +11,7 @@ We proceed to connect the proposal to the neuroscience of pleasure and happiness
 [^valence]: Here, we distinguish hedonic tone as a formal concept from valence as an informal notion. 
 [^vedana]: Buddhist philosophy uses the word वेदना (vedana) in the meaning of valence. It can be categorized as happiness, सुख (sukha), suffering दुःख (duhkha), and neither अदुःखम्असुख (aduhkham-asukha).
 
+
 Dimensional models of emotions[^emotion] describes emotions as clusters in a space of two dimensions or more.
 A well-known model is the circumplex model.[^circumplexModel]
 The vector model[^vectorModel] is very similar.
@@ -26,6 +27,7 @@ Later, we develop what makes a tone hedonic step by step
 
 [^emotion]: There are numerous definitions of emotion within psychology. Here, we simply mean it as some subset of feelings. Hunger and thirst are feelings but are rarely counted as emotions. By feelings, we mean any valenced sensation. By sensing, we mean the experiential counterpart to sensing (what the sense organs do) and perception (what the brain does).
 [^arousal]: In psychology, arousal is a collection of physiological responses involving, e.g., increased heart rate and blood pressure. 
+
 
 **Definition** (Tone).
 A *contragroup* is a tuple
@@ -47,6 +49,7 @@ There is one additional axiom:
 
 $p,q,r$ can be any members of $\mathcal V$.
 
+
 Right-identity
 $p\div \mathrm e = \mathrm e$
 follows from 1 and 2.
@@ -60,6 +63,21 @@ $\div$ is subtraction and $\mathrm e$ is zero.
 Another way to view the valence axis is as a logarithmic axis.
 Numbers are in $]0,\infty[$, $\div$ is division, and $\mathrm e$ is one.
 So, a tone is a generalisation such that it is not possible to tell whether the valence axis is logarithmic or not.
+
+
+*Introspection* (Unitless).
+A consequence of not being able to distinguish subtraction ($\mathrm e = 0$) from division ($\mathrm e = 1$) is that a tone does not—in general—have a unit.
+When we say that an axis has a unit, we mean that the difference between one and zero corresponds to one unit.
+Focus on a quale.
+It does not have to have valence.
+(It could, e.g., be loudness.)
+Is there a point where you experience that the quale lacks magnitude, i.e. is equal to $\mathrm e$?
+(Can you hear the silence?)
+Is there a point where you experience that the magnitude is one unit?
+(Can you hear when loudness is one unit, compare with a friend's one unit of loudness, and see whoever has the unit experience closest to 1 dB?)
+We do not relate to the latter.
+If you do, then the model we develop in this section will lack important properties.
+
 
 *Psychology* (Torgerson's Conjecture).
 Torgerson's conjecture is the observation that subjects do not distinguish subtraction and division in psychophysical experiments:
@@ -91,38 +109,12 @@ Furthermore, satiation is itself controversial.[^incomeWellbeing]
 
 </details>
 
-*Introspection* (Unitless).
-Another consequence of not being able to distinguish subtraction ($\mathrm e = 0$) from division ($\mathrm e = 1$) is that a tone does not—in general—have a unit.
-When we say that an axis has a unit, we mean that the difference between one and zero corresponds to one unit.
-Focus on a quale.
-It does not have to have valence.
-(It could, e.g., be loudness.)
-Is there a point where you experience that the quale lacks magnitude, i.e. is equal to $\mathrm e$?
-(Can you hear the silence?)
-Is there a point where you experience that the magnitude is one unit?
-(Can you hear when loudness is one unit, compare with a friend's one unit of loudness, and see whoever has the unit experience closest to 1 dB?)
-We do not relate to the latter.
-If you do, then the model we develop in this section will lack important properties.
-
-<details>
-<summary>
-<i>Psychology</i> (Cross-modality).
-</summary>
-
-Researching cross-modal comparisons was one project in psychophysics.[^matchingFunctions]
-Subjects are asked to "match" a magnitude of one modality with the magnitude of another modality.
-One interpretation of what it means to "match" is that the two modalities are at equally many units.
-Within the cross-modal paradigm, however, subjects were rarely asked to describe their interpretations of matching.
-It could also be that they arbitrarily decided a matching point and kept it for the rest of the session.
-Cross-modal comparisons are not consistent between sessions.
-(Intra-modal comparisons need not be either.)[^repeatablePowerLaws]
-
-</details>
 
 Tone, as defined here, is not a widely studied mathematical structure.
 Tones are related to *groups* though.
 In a group, an operator acting like addition or multiplication is defined.
 Then, subtraction or division is defined as the inverse.
+
 
 **Theorem**.
 <i>
@@ -144,6 +136,24 @@ $p * q \coloneqq \mathrm e \div ((\mathrm e \div p) \div q)$.
 For a pair of a pleasurable feeling and an uncomfortable feeling $(p,u)$, can there be a point at which $p$ feels as pleasurable as $u$ feels uncomfortable?
 To make things concrete, consider the following experiment. You have one hand in cold water of temperature $c$ in range $\mathcal C$. You use the other hand to drink a beverage with an amount of sugar $s$ in range $\mathcal S$. All temperatures in $\mathcal C$ are uncomfortable and all amounts of sugar in $\mathcal S$ are pleasurable. The experimenter fixes $c$ and instructs you the participant to vary $s$ by choosing between different beverages with different sweetness labels. You should pick $s$ such that $p(s)$ feels as pleasurable as $u(c)$ feels uncomfortable. Can you do this, or is the question ill-posed?
 We experience the question as ill-posed, and, therefore, we use tones rather than groups.
+
+
+<details>
+<summary>
+<i>Psychology</i> (Cross-modality).
+</summary>
+
+Researching cross-modal comparisons was one project in psychophysics.[^matchingFunctions]
+Subjects are asked to "match" a magnitude of one modality with the magnitude of another modality.
+One interpretation of what it means to "match" is that the two modalities are at equally many units.
+Another interpretation is that there is an additional modality that compares ratios between different modalities.[^crossmodalRelationTheory]
+Within the cross-modal paradigm, however, subjects were rarely asked to describe their interpretations of matching.
+It could also be that they arbitrarily decided a matching point and kept it for the rest of the session.
+Cross-modal comparisons are not consistent between sessions.
+(Intra-modal comparisons need not be either.)[^repeatablePowerLaws]
+In any case, cross-modal experiments pertaining to pleasure–pain pairs are absent from the literature.
+
+</details>
 
 **Definition** (Retention).
 We define a *retention* as
@@ -336,6 +346,7 @@ $\mathbf p = (p_1,...,p_m)$ can be any member of $\mathcal U^m$ and $\mathbf q =
 [^birnbaumLoudness]: Birnbaum, M.H. and Elmasian, R., 1977. Loudness “ratios” and “differences” involve the same psychophysical operation. Perception & Psychophysics, 22(4), pp.383-391.
 [^birnbaumWeight]: Birnbaum, M.H. and Veit, C.T., 1974. Scale convergence as a criterion for rescaling: Information integration with difference, ratio, and averaging tasks. Perception & Psychophysics, 15(1), pp.7-15.
 [^circumplexModel]: Russell, James (1980). "A circumplex model of affect". Journal of Personality and Social Psychology. 39 (6): 1161–1178. doi:10.1037/h0077714. hdl:10983/22919.
+[^crossmodalRelationTheory]: Krantz, D.H., 1972. A theory of magnitude estimation and cross-modality matching. Journal of mathematical psychology, 9(2), pp.168-199.
 [^incomeWellbeing]: M.A. Killingsworth, D. Kahneman, & B. Mellers, Income and emotional well-being: A conflict resolved, Proc. Natl. Acad. Sci. U.S.A. 120 (10) e2208661120, https://doi.org/10.1073/pnas.2208661120 (2023).
 [^matchingFunctions]: Stevens, S.S., 1966. Matching functions between loudness and ten other continua1. Perception & Psychophysics, 1(1), pp.5-8.
 [^reexaminationTorgerson]: Grace, R.C., Morton, N.J., Ward, M.D., Wilson, A.J. and Kemp, S., 2018. Ratios and differences in perceptual comparison: A reexamination of Torgerson’s conjecture. Journal of Mathematical Psychology, 85, pp.62-75. 
