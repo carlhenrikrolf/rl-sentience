@@ -1,88 +1,127 @@
 # Spacetime
 
-**Definition** (Ternary Order).
-A ternary order is a tuple $(\mathcal M, \preceq)$
-where ${\preceq} : \mathcal M \times \mathcal M \to [0,1]$ notated as $(\mathbf a, \mathbf b)  \mapsto \mathbf a \preceq \mathbf b$.
+<details>
+<summary>
+<b>Definition</b> (Inner Product Space).
+</summary>
 
-- Reflexivity.
-$[ a \preceq  a]=\tfrac{1}{2}$.
-- Totality.
-$[ a \preceq  b] + [ b \preceq  a] = 1$.
-- Transitivity.
-If $[ a \preceq  b]\geq \tfrac{1}{2}$
-and $[ b \preceq  c]\geq \tfrac{1}{2}$
-then
-$[ a \preceq  c]\geq \min \{ [ t \preceq  u], [ u \preceq  v]\}$.
-- Antisymmetry.
-$[c \preceq a]=[c \preceq b]$
-if and only if
-$a=b$.
+Let
+$(\mathcal K, 0, +, 1, \cdot)$ be a field.
+An *inner product space over $\mathcal K$* is a tuple
+$(\mathcal V, 0, +, \cdot, \langle*\rangle)$.
+*Origin*
+$0 \in \mathcal V$.
+*Addition*
+$+: \mathcal V \times \mathcal V \to \mathcal V$,
+$(p,q) \mapsto p+q$.
+*Scalar multiplication*
+$\cdot: \mathcal K \times \mathcal V \to \mathcal V$,
+$(a, p) \mapsto a \cdot p$.
+*Inner product*
+$\langle*\rangle : \mathcal V \times \mathcal V \to \mathcal V$,
+$(p,q) \mapsto \langle p * q \rangle$.
 
-$a,b,c$ can be any member of $\mathcal M$.
+1. Associativity.
+$p+(q+r) = (p+q)+r$.
+1. Commutativity.
+$p+q = q+p$.
+1. Identity of addition.
+$p+0 = p$
+1. Inverse.
+$p+(-p)=0$
+for some $(-p)\in \mathcal V$.
+1. Compatibility.
+$a\cdot (b\cdot p) = (a \cdot b) \cdot p$
+1. Identity of scalar multiplication.
+$1\cdot p = p$.
+1. Distributivity.
+$a \cdot (p+q) = (a\cdot p) + (a\cdot q)$.
+1. Distributivity with respect to field.
+$(a+b) \cdot p = (a\cdot p) + (b\cdot p)$.
 
-**Definition** (Timelike Order).
-A timelike order is a tuple $(\mathcal T, n, \preceq)$, where
-$n\in\mathbb N$ is the *dimension*,
-and ${\preceq} : \mathcal T^n \times \mathcal T^n \to \{0,\frac{1}{2}, 1\}$.
+Inner product:
 
-- Ternary. $(\mathcal T, \preceq)$ is a ternary order
-- Interval.[^fishburn]
-If $[a \preceq b]\geq\tfrac{1}{2}$ and $[c \preceq d]\geq\tfrac{1}{2}$
-then $[a \preceq d]\geq\tfrac{1}{2}$ or $[c \preceq d]\geq\tfrac{1}{2}$. ==CHECK==
-- Product.
-$[\mathbf a \preceq \mathbf b] = p$
-with $p\in\{0,1\}$
-if and only if
-$[a_i \preceq b_i]\in\{\tfrac{1}{2}, p\}$
-for all $i$
-and $[a_j \preceq b_j] = p$
-for some $j$.
+9. Conjugate symmetry.
+$\langle p * q \rangle = \overline{\langle q * p \rangle}$.
+1. Linearity.
+$\langle (a\cdot p) + (b\cdot q), r\rangle = (a\cdot \langle p * r\rangle) + (b\cdot \langle q * r \rangle)$.
+1. Positive definiteness.
+$\langle p * p \rangle\geq 0$.
 
-$a,b,c,d$ can be any member of $\mathcal T$.
-$\mathbf a, \mathbf b$ can be any member of $\mathcal T^n$.
-$i,j$ are confined within $\{1,...,n\}$.
+$p,q,r$ can be any members of $\mathcal V$.
+$a,b$ can be any members of $\mathcal K$.
 
+</details>
 
+**Definition** (Subjective Space).
+A *subjective space over $\mathcal K$* is a tuple
+$(\mathcal X, 0, +, \cdot, \langle\rangle, *)$.
+*Expectation*
+$\langle\rangle : \mathcal X \to \mathcal K$,
+$p \mapsto \langle p \rangle$.
+*Dot product*
+$* : \mathcal X^3 \times \mathcal X^3 \to \mathcal X$.
+Define
+$\| p \| \cdot \| p \| \coloneqq \langle p * p \rangle$.
 
+1. Euclidean.
+$$
+\left\langle
+  \begin{bmatrix}
+    x \\
+    y \\
+    z
+  \end{bmatrix}
+  *
+  \begin{bmatrix}
+    x' \\
+    y' \\
+    z'
+  \end{bmatrix}
+\right\rangle
+=
+\langle x\cdot x' \rangle + \langle y\cdot y' \rangle + \langle z\cdot z' \rangle
+$$
+2. Constant. $\langle\langle p \rangle\rangle = \langle p \rangle$.
+3. Triangle inequality
+$\|\langle p \rangle \| \leq \langle \| p \| \rangle$
+4. Monotonic.
 
-**Definition** (Spacelike Order).
-A spacelike order is a tuple $(\mathcal X, m, \preceq)$
-where $m\in\mathbb N$ is the *dimension*
-and ${\preceq} : \mathcal X^m \times \mathcal X^m \to [0,1]$.
-- Ternary.
-$(\mathcal X, \preceq)$ is a ternary order.
-- Product.
-==TODO==
-
-
-**Definition** (Metric Spacetime).
-Metric spacetime is a tuple $(\mathcal X, \mathcal T, \mathbf e, d)$,
-where $\mathbf e\in \mathcal T^2$ and $d: \mathcal X^3\mathcal T^2 \times \mathcal X^3 \mathcal T^2 \to \mathbb R$.
-- Spacelike.
-$(\mathcal X, 3, \preceq)$ is a spacelike.
-- Timelike.
-$(\mathcal T, 2, \preceq)$ is a timelike.
-- $[\mathbf e \preceq \mathbf t]\geq \tfrac{1}{2}$
-for all $\mathbf t \in \mathcal T^2$.
-- Product. ==TODO==
-- Distance.
-$d$ is a distance function.
-- If $d(\mathbf x, \mathbf y)=0$
-then
-$[\mathbf x \preceq \mathbf y ]=\tfrac{1}{2}$.
-- If $d(\mathbf x, \mathbf y)=\infty$
-then
-$[\mathbf x \preceq \mathbf y]\in\{0,1\}$.
-
-$\mathbf x, \mathbf y$ can be any member of $\mathcal X^3 \mathcal T^2$ such that $x_4=y_4$ and $x_5=y_5$.
+See Halpern et al. for axiomatization of expectations.
 
 
-**Definition** (Normed Spacetime).
-Normed spacetime is a tuple $(\mathcal X, \mathcal T, \|\|, \ominus)$,
-where $\|\|: \mathcal X^3\mathcal T^2 \to \mathbb R$
-notated as $\mathbf a \mapsto \|\mathbf a\|$,
-and ${\ominus} : \mathcal X^3\mathcal T^2 \times \mathcal X^3\mathcal T^2 \to \mathcal X^3\mathcal T^2 $
-notated as $(\mathbf a, \mathbf b) \mapsto \mathbf a \ominus \mathbf b$.
+**Definition** (Subjective Time).
 
+1. $\langle * \rangle$ is an inner product.
+2. $\langle p \rangle = p$.
+3.
+$$
+\left\langle
+  \begin{bmatrix}
+    t \\
+    0
+  \end{bmatrix}
+  *
+  \begin{bmatrix}
+    0 \\
+    u
+  \end{bmatrix}
+\right\rangle
+\propto \|t\| \cdot \|u\|
+$$
+4. If $t\geq 0$ and $u \geq 0$ then
+$$
+\left\langle
+  \begin{bmatrix}
+    t \\
+    0
+  \end{bmatrix}
+  *
+  \begin{bmatrix}
+    0 \\
+    u
+  \end{bmatrix}
+\right\rangle
+\leq 0
+$$
 
-[^fishburn]: Fishburn. 1970.
