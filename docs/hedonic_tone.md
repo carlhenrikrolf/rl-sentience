@@ -147,13 +147,15 @@ We experience the question as ill-posed, and, therefore, we use tones rather tha
 
 **Definition** (Retention).
 We define a *retention* as
+
 $$
-\overrightarrow{pq} \mathrel{:=}
+\overrightarrow{pq} \coloneqq
 \begin{cases}
 p &\text{if } p = q \\
 (p,q\div p) &\text{otherwise}
 \end{cases}
 $$
+
 Further, we define
 $\vec{\mathcal V}\coloneqq\{\overrightarrow{pq} \mathbin{|} (p,q) \in \mathcal V^2\}$.
 *Stream of consciousness*
