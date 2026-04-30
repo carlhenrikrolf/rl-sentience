@@ -148,7 +148,7 @@ We experience the question as ill-posed, and, therefore, we use tones rather tha
 **Definition** (Retention).
 We define a *retention* as
 $$
-\overrightarrow{pq} \coloneqq
+\overrightarrow{pq} \mathrel{:=}
 \begin{cases}
 p &\text{if } p = q \\
 (p,q\div p) &\text{otherwise}
