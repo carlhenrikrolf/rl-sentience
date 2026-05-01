@@ -3,7 +3,7 @@
 In this section, we propose a formal definition of hedonic tone,[^hedonic] also known as valence[^valence] or the pleasure–pain axis.[^vedana]
 The proposal relies heavily on introspection, and it is unclear to what extent it generalizes to other individuals or even the same individuals over time.
 On the other hand, we ground the work in psychophysics and phenomenology.
-We relate valence to other other kinds of qualia (sense data).
+We relate valence to other kinds of qualia (sense data).
 We proceed to connect the proposal to the neuroscience of pleasure and happiness economics.
 
 
@@ -14,9 +14,10 @@ We proceed to connect the proposal to the neuroscience of pleasure and happiness
 
 Dimensional models of emotions[^emotion] describes emotions as clusters in a space of two dimensions or more.
 A well-known model is the circumplex model.[^circumplexModel]
-The vector model[^vectorModel] is very similar.
+The vector model[^vectorModel] is very similar, and the PAD model includes a third dominance dimension[^padModel].
 Both are two-dimensional with one arousal[^arousal] and one valence dimension.
 The valence dimension is often pictured as an axis with several negative values, several positive values and a point in between.
+This bipolar view is not without critics but has strong empirical support.[^bipolar]
 We formalize two properties from this picture.
 First, we can talk about differences in hedonic tone.
 Second, there is a point that separates pain from pleasure—a point of both minimal pleasure and minimal pain.
@@ -148,10 +149,10 @@ Subjects are asked to "match" a magnitude of one modality with the magnitude of 
 One interpretation of what it means to "match" is that the two modalities are at equally many units.
 Another interpretation is that there is an additional modality that compares ratios between different modalities.[^crossmodalRelationTheory]
 Within the cross-modal paradigm, however, subjects were rarely asked to describe their interpretations of matching.
-It could also be that they arbitrarily decided a matching point and kept it for the rest of the session.
+It could also be that they arbitrarily anchored on a matching point and kept it for the rest of the session.
 Cross-modal comparisons are not consistent between sessions.
 (Intra-modal comparisons need not be either.)[^repeatablePowerLaws]
-In any case, cross-modal experiments pertaining to pleasure–pain pairs are absent from the literature.
+Valenced cross-modal matching experiments exist, but experiments directly comparing pleasurable and uncomfortable modalities are scarce.
 
 </details>
 
@@ -342,13 +343,14 @@ then $\mathbf p \mathbin{\underline{\mathsf{W}}} \mathbf q$.
 $\mathbf p = (p_1,...,p_m)$ can be any member of $\mathcal U^m$ and $\mathbf q = (q_1,...,q_n)$ can be any member of $\mathcal U^n$.
 
 
-
+[^bipolar]: Russell, J.A. and Carroll, J.M., 1999. On the bipolarity of positive and negative affect. Psychological bulletin, 125(1), p.3.
 [^birnbaumLoudness]: Birnbaum, M.H. and Elmasian, R., 1977. Loudness “ratios” and “differences” involve the same psychophysical operation. Perception & Psychophysics, 22(4), pp.383-391.
 [^birnbaumWeight]: Birnbaum, M.H. and Veit, C.T., 1974. Scale convergence as a criterion for rescaling: Information integration with difference, ratio, and averaging tasks. Perception & Psychophysics, 15(1), pp.7-15.
 [^circumplexModel]: Russell, James (1980). "A circumplex model of affect". Journal of Personality and Social Psychology. 39 (6): 1161–1178. doi:10.1037/h0077714. hdl:10983/22919.
 [^crossmodalRelationTheory]: Krantz, D.H., 1972. A theory of magnitude estimation and cross-modality matching. Journal of mathematical psychology, 9(2), pp.168-199.
 [^incomeWellbeing]: M.A. Killingsworth, D. Kahneman, & B. Mellers, Income and emotional well-being: A conflict resolved, Proc. Natl. Acad. Sci. U.S.A. 120 (10) e2208661120, https://doi.org/10.1073/pnas.2208661120 (2023).
 [^matchingFunctions]: Stevens, S.S., 1966. Matching functions between loudness and ten other continua1. Perception & Psychophysics, 1(1), pp.5-8.
+[^padModel]: Mehrabian, A. and Russell, J.A., 1974. An approach to environmental psychology. the MIT Press. 
 [^reexaminationTorgerson]: Grace, R.C., Morton, N.J., Ward, M.D., Wilson, A.J. and Kemp, S., 2018. Ratios and differences in perceptual comparison: A reexamination of Torgerson’s conjecture. Journal of Mathematical Psychology, 85, pp.62-75. 
 [^repeatablePowerLaws]: Teghtsoonian, M. and Teghtsoonian, R., 1971. How repeatable are Stevens’s power law exponents for individual subjects?. Perception & Psychophysics, 10(3), pp.147-149.
 [^torgerson]: Torgerson, W.S., 1961. Distances and ratios in psychophysical scaling. Acta Psychologica, 19, pp.201-205.
