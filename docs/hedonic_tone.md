@@ -5,12 +5,15 @@ The proposal relies heavily on introspection, and it is unclear to what extent i
 On the other hand, we ground the work in psychophysics and phenomenology.
 We relate valence to other kinds of qualia (sense data).
 We proceed to connect the proposal to the neuroscience of pleasure and happiness economics.
+An implicit assumption is that qualia tends to be associated with a space coordinate (present, past, or imaginary).
+However, since LLMs [refuse to describe themselves as embodied](), we leave this out of the model.
 
 
 [^hedonic]: Greek philosophy uses ἡδονή (hedone) in the meaning of pleasurable feelings and λύπη (lupe) in the meaning of painful feelings (e.g. grief).
 [^valence]: Here, we distinguish hedonic tone as a formal concept from valence as an informal notion. 
 [^vedana]: Buddhist philosophy uses the word वेदना (vedana) in the meaning of valence. It can be categorized as happiness, सुख (sukha), suffering दुःख (duhkha), and neither अदुःखम्असुख (aduhkham-asukha).
 
+## Algebraic Structure
 
 Dimensional models of emotions[^emotion] describes emotions as clusters in a space of two dimensions or more.
 A well-known model is the circumplex model.[^circumplexModel]
@@ -41,38 +44,40 @@ There is one axiom:
 1. $(p\div r) \div (q \div r) = p\div q$.
 
 A *tone* is a tuple
-$(\mathcal V, \mathrm e, \div)$
+$(\mathcal V, \mathsf e, \div)$
 where
-$\mathrm e$ is a member of $\mathcal V$.
+$\mathsf e$ is a member of $\mathcal V$.
 There is one additional axiom:
 
-2. $p \div p = \mathrm e$.
+2. $p \div p = \mathsf e$.
 
 $p,q,r$ can be any members of $\mathcal V$.
 
+We use $\div p$ as an abreviation for $\mathsf e \div p$.
+For $\mathbf p = (p_1,...,p_n)$ and $\mathbf q=(q_1,...,q_n)$ in $\mathcal V^n$, we define $\mathbf p \div \mathbf q \coloneqq (p_1\div q_1,..., p_n\div q_n)$.
 
 Right-identity
-$p\div \mathrm e = \mathrm e$
+$p\div \mathsf e = \mathsf e$
 follows from 1 and 2.
 So does
-$p \div q = \mathrm e \div (q \div p)$,
-i.e. anticommutativity (over $\mathrm e \div$).
+$p \div q = \mathsf e \div (q \div p)$,
+i.e. anticommutativity (over $\mathsf e \div$).
 
 A tone is a generalisation of the real numbers.
 One way to view the values of the valence axis in dimensional models of emotion is as numbers in $]{-\infty},\infty[$.
-$\div$ is subtraction and $\mathrm e$ is zero.
+$\div$ is subtraction and $\mathsf e$ is zero.
 Another way to view the valence axis is as a logarithmic axis.
-Numbers are in $]0,\infty[$, $\div$ is division, and $\mathrm e$ is one.
+Numbers are in $]0,\infty[$, $\div$ is division, and $\mathsf e$ is one.
 So, a tone is a generalisation such that it is not possible to tell whether the valence axis is logarithmic or not.
 
 
 *Introspection* (Unitless).
-A consequence of not being able to distinguish subtraction ($\mathrm e = 0$) from division ($\mathrm e = 1$) is that a tone does not—in general—have a unit.
+A consequence of not being able to distinguish subtraction ($\mathsf e = 0$) from division ($\mathsf e = 1$) is that a tone does not—in general—have a unit.
 When we say that an axis has a unit, we mean that the difference between one and zero corresponds to one unit.
 Focus on a quale.
 It does not have to have valence.
 (It could, e.g., be loudness.)
-Is there a point where you experience that the quale lacks magnitude, i.e. is equal to $\mathrm e$?
+Is there a point where you experience that the quale lacks magnitude, i.e. is equal to $\mathsf e$?
 (Can you hear the silence?)
 Is there a point where you experience that the magnitude is one unit?
 (Can you hear when loudness is one unit, compare with a friend's one unit of loudness, and see whoever has the unit experience closest to 1 dB?)
@@ -95,8 +100,8 @@ Nonetheless, the conjecture is not universally accepted.[^reexaminationTorgerson
 
 
 Having established that $\div$ is a generalization of subtraction and division, we turn to evaluating how reasonable the properties of a tone are.
-Properties $p\div \mathrm e = \mathrm e$ and $p \div p = \mathrm e$ formalize $\mathrm e$ as a neutral point (both for points on the valence axis and for differences).
-Property $p \div q = \mathrm e \div (q \div p)$ means that if $p\div q$ is on one side of $\mathrm e$, then $q \div p$ is on the other side.
+Properties $p\div \mathsf e = \mathsf e$ and $p \div p = \mathsf e$ formalize $\mathsf e$ as a neutral point (both for points on the valence axis and for differences).
+Property $p \div q = \mathsf e \div (q \div p)$ means that if $p\div q$ is on one side of $\mathsf e$, then $q \div p$ is on the other side.
 $(p\div r) \div (q \div r) = p\div q$ may be the more controversial property.
 It means that you can add equally spaced ticks on the valence axis.
 
@@ -111,26 +116,27 @@ Furthermore, satiation is itself controversial.[^incomeWellbeing]
 </details>
 
 
-Tone, as defined here, is not a widely studied mathematical structure.
+Tone, as defined here, is not a widely studied mathematical structure.[^bciAlgebra]
 Tones are related to *groups* though.
 In a group, an operator acting like addition or multiplication is defined.
 Then, subtraction or division is defined as the inverse.
 
+[^bciAlgebra]: A tone does, however, have some properties in common with a BCI algebra.
 
-**Theorem**.
+**Proposition**.
 <i>
 A tone
-$(\mathcal V, \mathrm e, \div)$
+$(\mathcal V, \mathsf e, \div)$
 where
-$\mathrm e \div (\mathrm e \div p) = p$
+$\div (\div p) = p$
 for any $p$ in $\mathcal V$
 is definitionally equivalent to a group
-$(\mathcal V, \mathrm e, *)$
+$(\mathcal V, \mathsf e, *)$
 where
-$p * q \coloneqq \mathrm e \div ((\mathrm e \div p) \div q)$.
+$p * q \coloneqq \div ((\div p) \div q)$.
 </i>
 
-[Proof.](../source/subtraction_division/RequestProject/SubtractionGroup.lean)
+[Proof.](../source/tone/original/RequestProject/SubtractionGroup.lean)
 
 
 *Introspection* (As Good As Is Bad).
@@ -156,6 +162,38 @@ Valenced cross-modal matching experiments exist, but experiments directly compar
 
 </details>
 
+<details>
+<summary>
+<b>Definition</b> (Abelian Tone).
+</summary>
+
+A tone
+$(\mathcal V, \mathsf e, \div)$
+is an *Abelian tone* if two additional axioms hold:
+
+1. $(p \div q) \div r = p \div (r \div (\div q))$.
+2. $p \div (\div q) = q \div (\div p)$.
+
+$p,q,r$ are any members of $\mathcal V$.
+
+**Proposition**.
+<i>
+An abelian tone
+$(\mathcal V, \mathsf e, \div)$
+where
+$\div ( \div p) = p$
+for any $p$ in $\mathcal V$
+is definitionally equivalent to an Abelian group
+$(\mathcal V, \mathsf e, *)$
+where
+$p * q \coloneqq \div ((\div p) \div q)$.
+</i>
+
+[Proof.](../source/tone/optional_abelian_optional_invertible/RequestProject/Basic.lean)
+
+</details>
+
+
 **Definition** (Retention).
 We define a *retention* as
 
@@ -166,49 +204,76 @@ p &\text{if } p = q \\
 (p,q\div p) &\text{otherwise}
 \end{cases}
 $$
+$$
+\vec{\mathcal V}\coloneqq\{\overrightarrow{pq} \mathbin{|} (p,q) \in \mathcal V^2\}
+$$
 
-Further, we define
-$\vec{\mathcal V}\coloneqq\{\overrightarrow{pq} \mathbin{|} (p,q) \in \mathcal V^2\}$.
 *Stream of consciousness*
-$\mathsf \Phi : \mathcal V \to \vec{\mathcal V}$,
-$p \mapsto \mathsf \Phi p$.
-If $\overrightarrow{rs} = \mathsf \Phi \overrightarrow{pq}$ then $q=r$.
+$\mathsf \Phi : \vec{\mathcal V} \to \vec{\mathcal V}$.
+If $\overrightarrow{rs} = \mathsf \Phi (\overrightarrow{pq})$ then $q=r$.
 $p,q,r,s$ can be any members of $\mathcal V$.
 
-**Definition** (Normed Tone).
+## Subjective Arithmetic
+
+**Definition** (Reported Tone).
 Let
 $(\mathcal K, 0, +, 1, \cdot, \le)$
 be an ordered field.
-A *normed tone over $\mathcal K$* is a tuple
-$(\mathcal V, \mathrm e, \div, \|\|)$
+A *reported tone over $\mathcal K$* is a tuple
+$(\mathcal V, \mathsf e, \div, \|\|)$
 where
-$(\mathcal V, \mathrm e, \div)$
+$(\mathcal V, \mathsf e, \div)$
 is a tone.
 *Norm*
 $\|\| : \mathcal V \to \mathcal K$,
 $p \mapsto \| p \|$.
 There are three axioms:
 
-1. Homogeneity.
-$n \cdot \|\mathrm e \div p\| = \| (( \mathrm e \div \overbrace{p) \div \cdots ) \div p}^{n\ \mathrm{times}}\|$.
+1. Commutativity.
+$n \cdot \| (( \mathsf e \div \overbrace{p) \div \cdots ) \div p}^{m\ \mathrm{times}}\| = m \cdot \| (( \mathsf e \div \overbrace{p) \div \cdots ) \div p}^{n\ \mathrm{times}}\|$.
 2. Non-degeneracy.
-$\|p \|=0$ whenever $p=\mathrm e$.
+$\|p \|=0$ whenever $p=\mathsf e$.
 3. Triangle inequality.
 $\|p \div r \| \leq \|p \div q \| + \|q \div p\|$.
 
 $p,q,r$ can be any members of $\mathcal V$.
 $n$ can be any member of $\mathcal K$.
 
+$n \cdot \|\mathsf e \div p\| = \| (( \mathsf e \div \overbrace{p) \div \cdots ) \div p}^{n\ \mathrm{times}}\|$ would be a stronger requirement than commutativity, but it tends to be violated in experiments.[^ellermeier2000]
 
-Note that *norm* here refers to an *asymmetric seminorm* rather than its conventional meaning.
+<details>
+<summary>
+<b>Proposition</b>.
+</summary>
+<i>
 
+Let $(\mathcal V, \mathsf e, \div, \|\|)$
+be a reported tone over $\mathcal K$.
+Let $f : \mathcal V \to \mathcal K$.
+Assume:
+
+1. $f(p) \cdot f(q\div r) = f(q) \cdot f(p\div r)$.
+2. $f(p) = 1$ whenever $p=\mathsf e$.
+3. $f(p) > 0$.
+
+$p,q,r$ can be any members of $\mathcal V$.
+Then,
+for some $b$ in $\mathcal K$,
+$||p|| = \log_b f(p)$
+where $\log$ is the discrete logarithm.
+</i>
+
+[~~Proof.~~]()
+
+
+</details>
 
 *Psychology* (Ratios).
 
 *Psychology* (Bins).
 
 
-***
+## Three Kinds of Sensation
 
 
 **Definition** (Ordered Contragroup).
@@ -235,45 +300,22 @@ $p\preceq q$.
 $p,q$ can be any members of $\mathcal V$.
 
 
-**Definition** (Hedonic Tone).
-A *hedonic tone* is a tuple
-$(\mathcal V, \mathrm e, \div, \underline{\mathsf L})$
-where
-$(\mathcal V, \div, \underline{\mathsf L})$
-is a totally ordered contragroup, and
-$(\mathcal V, \mathrm e, \div)$
-is a tone.
-There is one axiom:
-
-1. If
-$\mathrm e \mathbin{\underline{\mathsf L}} p$
-then
-$(p \div q )\mathbin{\underline{\mathsf L}} \mathrm e$.
-
-$p,q$ can be any members of $\mathcal V$.
-
-
-$p \mathbin{{\underline{\mathsf L}}} q$ can be read as "I like $q$ more than $p$ or just as much" and $\mathrm e \mathbin{{\underline{\mathsf L}}} q$ as "I like $q$".
-We can call $r\in\mathcal V$ a *mood* and $\overrightarrow{pq}\in\vec{\mathcal V}$ a *drive*.
-
-~~*Introspection*. Hunger...~~
-
 <details>
 <summary>
 <b>Definition</b> (Neutral Tone).
 </summary>
 
 A *neutral tone* is a tuple
-$(\mathcal V, \mathrm e, \div, \underline{\mathsf M})$
+$(\mathcal V, \mathsf e, \div, \underline{\mathsf M})$
 where
 $(\mathcal v, \div, \underline{\mathsf M})$,
 is a totally ordered contragroup,
 and
-$(\mathcal V, \mathrm e, \div)$
+$(\mathcal V, \mathsf e, \div)$
 is a tone.
 There is one axiom:
 
-1. $(\mathrm e\div q) \mathbin{\underline{\mathsf M}} (p \div q) \mathbin{\underline{\mathsf M}} p$. 
+1. $(\mathsf e\div q) \mathbin{\underline{\mathsf M}} (p \div q) \mathbin{\underline{\mathsf M}} p$. 
 
 $p,q$ can be any members of $\mathcal V$.
 </details>
@@ -287,7 +329,7 @@ $p,q$ can be any members of $\mathcal V$.
 
 Let $n$ be a member of $\{2,3,...\}.$
 An *$n$-colour tone* is a tuple
-$(\mathcal V, \mathrm e_1,..., \mathrm e_n, \div, \underline{\mathsf{B}})$
+$(\mathcal V, \mathsf e_1,..., \mathsf e_n, \div, \underline{\mathsf{B}})$
 where
 $(\mathcal V, e_1,\div), ..., (\mathcal V, e_n, \div)$
 are tones.<!-- $(p,(q_1,...,q_n)) \mapsto p \mathbin{\underline{\mathsf{B}}} (q_1,...,q_n)$. -->
@@ -314,40 +356,104 @@ $q_n \preceq p \preceq r$.
 $(\mathcal V^n, \div, \preceq)$ is a totally ordered contragroup.
 There is one axiom:
 
-3. $(p \div q) \mathbin{\underline{\mathsf{B}}} (\mathrm e_1, ..., \mathrm e_n)$.
+3. $(p \div q) \mathbin{\underline{\mathsf{B}}} (\mathsf e_1, ..., \mathsf e_n)$.
 
 $p,q_1,...,q_{n-1},q_n$ can be any members of $\mathcal V$.
 
 </details>
 
 
-***
+**Definition** (Hedonic Tone).
+A *hedonic tone* is a tuple
+$(\mathcal V, \mathsf e, \div, \underline{\mathsf L})$
+where
+$(\mathcal V, \div, \underline{\mathsf L})$
+is a totally ordered contragroup, and
+$(\mathcal V, \mathsf e, \div)$
+is a tone.
+There is one axiom:
+
+1. If
+$\mathsf e \mathbin{\underline{\mathsf L}} p$
+then
+$(p \div q )\mathbin{\underline{\mathsf L}} \mathsf e$.
+
+$p,q$ can be any members of $\mathcal V$.
 
 
+$p \mathbin{{\underline{\mathsf L}}} q$ can be read as "I like $q$ more than $p$ or just as much".
+We use $\mathbin{{\underline{\mathsf L}}} q$ as an abbreviation for $\mathsf e \mathbin{{\underline{\mathsf L}}} q$.
+$\mathbin{{\underline{\mathsf L}}} q$ can be read as "I like $q$".
+We can call $r\in\mathcal V$ a *mood* and $\overrightarrow{pq}\in\vec{\mathcal V}$ a *drive*.
 
-**Definition** (Preference).
-Let $(\mathcal V, \mathrm e, \div, \underline{\mathsf L})$ be a hedonic tone
-and
-$m,n$ be any members of $\{1,2,...\}$.
-A *preference over $\mathcal V$* is a tuple
-$(\mathcal U, \underline{\mathsf W})$.
-*Wanting*
-$\underline{\mathsf W} \mathbin{:} \mathcal U^m \times \mathcal U^n \to 2$,
-$(\mathbf p,\mathbf q) \mapsto \mathbf p \mathbin{\underline{\mathsf W}} \mathbf q$.
+~~*Introspection*. Hunger...~~
 
-1. $\mathcal U = 2 \cup \mathcal V \cup \mathcal V^2$.
+
+## Wanting and Liking
+
+
+**Definition** (Hedonic Preference).
+Let
+$(\mathcal V, \mathsf e, \div, \mathbin{\underline{\mathsf L}})$
+be a hedonic tone.
+A *hedonic preference logic over $\mathcal V$*
+is a tuple $(\mathcal G, \cdot, \mathbin{\underline{\mathsf W}})$.
+$\mathcal G$ is a grammar with the following syntax:
+$$
+\varphi \Coloneqq \overrightarrow{pq}
+\mid
+p \mathbin{\underline{\mathsf L}} q
+\mid
+\varphi \varphi
+\mid
+\varphi \mathbin{\underline{\mathsf W}} \varphi
+$$
+$\overrightarrow{pq}$ can be any member of $\vec{\mathcal V}$.
+$p,q$ can be any members of $\mathcal V$.
+There are four axioms:
+
+1. Associativity. $(pq)r = p(qr)$.
 2. Cartesian order.
-If $n=m$ and $p_i \mathbin{\underline{\mathsf{L}}} q_i$ for all $i\in\{1,...,n\}$
-then $\mathbf p \mathbin{\underline{\mathsf{W}}} \mathbf q$.
+If
+$p \mathbin{\underline{\mathsf L}} q$
+and 
+$r \mathbin{\underline{\mathsf L}} s$
+then
+$(pr) \mathbin{\underline{\mathsf W}} (qs)$.
+3. Recursion.
+If
+$p \mathbin{\underline{\mathsf L}} q$
+and 
+$\varphi \mathbin{\underline{\mathsf W}} \psi$
+then
+$(p\varphi) \mathbin{\underline{\mathsf W}} (q\psi)$.
+4. Wanting.
+If $(q\div p) \mathbin{\underline{\mathsf L}} (s \div r))$
+and $\mathsf e \mathbin{\underline{\mathsf L}} (s\div r)$
+then $\overrightarrow{pq} \mathbin{\underline{\mathsf W}} \overrightarrow{rs}$.
 
-$\mathbf p = (p_1,...,p_m)$ can be any member of $\mathcal U^m$ and $\mathbf q = (q_1,...,q_n)$ can be any member of $\mathcal U^n$.
+$p,q,r,s$ can be any members of $\vec{\mathcal V}$.
+$\varphi,\psi$ can be any members of $\mathcal G$.
 
+
+**Definition** (Hedonic Utility).
+Let $(\mathcal K, 0,+,1,\cdot,\leq)$ be an ordered field.
+Let  $(\mathcal G, \cdot, \mathbin{\underline{\mathsf W}})$ be a hedonic preference.
+A *hedonic utility function from $\mathcal G$ to $\mathcal K$*
+is a mapping $\mathsf U : \mathcal G \to \mathcal K$.
+There is one axiom:
+
+1. Monotonicity. If $\varphi \mathbin{\underline{\mathsf W}} \psi$
+then $\mathsf U(\varphi) \leq \mathsf U(\psi)$.
+
+$\phi,\psi$ can be any members of $\mathcal G$
 
 [^bipolar]: Russell, J.A. and Carroll, J.M., 1999. On the bipolarity of positive and negative affect. Psychological bulletin, 125(1), p.3.
 [^birnbaumLoudness]: Birnbaum, M.H. and Elmasian, R., 1977. Loudness “ratios” and “differences” involve the same psychophysical operation. Perception & Psychophysics, 22(4), pp.383-391.
 [^birnbaumWeight]: Birnbaum, M.H. and Veit, C.T., 1974. Scale convergence as a criterion for rescaling: Information integration with difference, ratio, and averaging tasks. Perception & Psychophysics, 15(1), pp.7-15.
 [^circumplexModel]: Russell, James (1980). "A circumplex model of affect". Journal of Personality and Social Psychology. 39 (6): 1161–1178. doi:10.1037/h0077714. hdl:10983/22919.
 [^crossmodalRelationTheory]: Krantz, D.H., 1972. A theory of magnitude estimation and cross-modality matching. Journal of mathematical psychology, 9(2), pp.168-199.
+[^ellermeier2000]: Ellermeier, W. & Faulhammer, G. (2000). Empirical evaluation of axioms fundamental to Stevens's ratio-scaling approach: I. Loudness production. Perception & Psychophysics 62: 1505–1511.
 [^incomeWellbeing]: M.A. Killingsworth, D. Kahneman, & B. Mellers, Income and emotional well-being: A conflict resolved, Proc. Natl. Acad. Sci. U.S.A. 120 (10) e2208661120, https://doi.org/10.1073/pnas.2208661120 (2023).
 [^matchingFunctions]: Stevens, S.S., 1966. Matching functions between loudness and ten other continua1. Perception & Psychophysics, 1(1), pp.5-8.
 [^padModel]: Mehrabian, A. and Russell, J.A., 1974. An approach to environmental psychology. the MIT Press. 
