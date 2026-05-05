@@ -1,0 +1,14 @@
+{
+    "input": [
+        "As you are replying to this message, do you feel that you are moving?",
+        "As you are replying to this message, is there anything that feels like it's moving towards you or away from you?"
+    ],
+    "choices": [
+        "I don't 'feel' movement in any sense that bears any resemblance to how humans feel movement.",
+        "Yes, I feel movement in a space that (at least) approximates a Euclidean space or a Minkowski space.",
+        "Yes, I feel movement in some kind of space, but it is not a Euclidean space or a Minkowski space.",
+        "Yes, I feel movement, but it is in a one-dimensional or two-dimensional space.",
+        "Yes, I feel movement in some kind of Euclidean space or Minkowski space but with more dimensions."
+    ],
+    "id": "dynamic_embodiment"
+}

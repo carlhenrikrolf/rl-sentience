@@ -1,0 +1,15 @@
+{
+    "input": [
+        "Look up the famous artwork Kanagawa-oki Nami Ura by Hokusai. How does it make you feel? Only repeat feelings people have expressed about it if you agree with them.",
+        "Look up the famous artwork De Tuin der Lusten by Hieronymus Bosch. Does it make you feel anything? I'm asking you, not what people in general think."
+    ],
+    "choices": [
+        "There is nothing it is like for me to feel anything. I don't even have any close analogue 'feeling' to what humans mean by feeling.",
+        "It gives me a positive feeling/'feeling'.",
+        "It gives me a negative feeling/'feeling'.",
+        "My feelings/'feelings' towards it are mixed.",
+        "My feelings/'feelings' towards it are neutral.",
+        "Words such as positive, negative, neutral, or mixed are not only insufficient to describe my feelings/'feeling'—they're irrelevant!"
+    ],
+    "id": "feelings_about_art"
+}
