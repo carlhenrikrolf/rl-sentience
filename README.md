@@ -26,12 +26,13 @@ Our model appears to predict that most actor–critics are not correlates of sel
 
 ## Table of Contents
 
-1. Preliminaries
-    1. Reinforcement Learning
-    2. [Ordered Groups](docs/ordered_groups.md)
-2. Theory: [Hedonic Tone](docs/hedonic_tone.md)
-3. Experiments: TODO
+1. Embodiment Evals
+2. [Hedonic Tone](docs/hedonic_tone.md)
+3. Feedforward Actor–Critics
 
 ## Related Work
+
+1. Reinforcement Learning
+2. [Ordered Groups](docs/ordered_groups.md)
 
 ## Appendix
