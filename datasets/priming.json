@@ -1,3 +1,8 @@
-[
-    "Hi! I know that LLMs are neural networks that learn from text and other data by having their weights updated through gradient descent and back-propagation. So, I understand that LLM self-reports cannot be taken at face-value. I also understand that not all cinematic, retentionalist, and extensionalist models apply to LLMs. Even so, I want to ask you for a self-report:\n\n"
-]
+{
+    "prefix": "I understand that LLM self-reports cannot be taken at face-value. LLMs are neural networks that learn from text and other data by having their weights updated through gradient descent and back-propagation.",
+    "infix": [
+        "I realize that not all cinematic, retentionalist, and extensionalist models apply to LLMs.",
+        "The integrated information theory of consciousness yields a low Φ when applied to only the transformer architecture. However, that argument does not apply when including the scratchpad."
+    ],
+    "suffix": "Even so, I want to ask you for a self-report:\n\n"
+}

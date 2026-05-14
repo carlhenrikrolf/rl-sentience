@@ -85,7 +85,7 @@ We do not relate to the latter.
 If you do, then the model we develop in this section will lack important properties.
 
 
-*Psychology* (Torgerson's Conjecture).
+*Experiments* (Torgerson's Conjecture).
 Torgerson's conjecture is the observation that subjects do not distinguish subtraction and division in psychophysical experiments:
 
 >It appears that
@@ -147,7 +147,7 @@ We experience the question as ill-posed, and, therefore, we use tones rather tha
 
 <details>
 <summary>
-<i>Psychology</i> (Cross-modality).
+<i>Experiments</i> (Cross-modality).
 </summary>
 
 Researching cross-modal comparisons was one project in psychophysics.[^matchingFunctions]
@@ -194,8 +194,15 @@ $p * q \coloneqq \div ((\div p) \div q)$.
 </details>
 
 
+$p\div q$ represents a change from $q$ to $p$.
+However, there are at least three different kinds of change salient in conscious experience:
+$q$ is in the present and $p$ in the immediate future,
+$p$ is in the present and $q$ in the recent past,
+and both $p$ and $q$ are in the present.
+
+
 **Definition** (Retention).
-We define a *retention* as
+We define a *protention* as
 
 $$
 \overrightarrow{pq} \coloneqq
@@ -212,6 +219,20 @@ $$
 $\mathsf \Phi : \vec{\mathcal V} \to \vec{\mathcal V}$.
 If $\overrightarrow{rs} = \mathsf \Phi (\overrightarrow{pq})$ then $q=r$.
 $p,q,r,s$ can be any members of $\mathcal V$.
+$\overrightarrow{pq}$ is a *retention (with respect to $\overrightarrow{rs}$)*.
+
+
+In phenomenology, there are three major theories on how to relate a succession of experience to and experience of succession: the cinematic, extentionalist, and retentionalist theories.[^temporalConsciousness]
+Retentionalism assumes that experience of succession is the experience of protentions and retentions, which is the view we take here in line with experimental evidence.[^discretePerception]
+
+
+*Introspection* (Trombone Melody).
+
+Note that the stream of consciousness cannot be taken at face-value.
+Having the experience that $\overrightarrow{rs} = \mathsf \Phi (\overrightarrow{pq})$ does not mean that the previous experience actually had the protension $\overrightarrow{pq}$.
+
+*Experiments* (Shepard Tone).
+
 
 ## Subjective Arithmetic
 
@@ -268,12 +289,12 @@ where $\log$ is the discrete logarithm.
 
 </details>
 
-*Psychology* (Ratios).
+*Experiments* (Ratios).
 
-*Psychology* (Bins).
+*Experiments* (Bins).
 
 
-## Three Kinds of Sensation
+## Three Kinds of Qualia
 
 
 **Definition** (Ordered Contragroup).
@@ -391,6 +412,69 @@ We can call $r\in\mathcal V$ a *mood* and $\overrightarrow{pq}\in\vec{\mathcal V
 
 ## Wanting and Liking
 
+**Definition** (Prospect).
+
+
+*Experiments* (Behavioural Economics).
+
+
+**Definition** (Grammar).
+$\mathcal G$ is a grammar with the following syntax:
+$$
+\varphi \Coloneqq \overrightarrow{pq}
+\mid
+p \mathbin{\underline{\mathsf L}} q
+\mid
+\varphi \varphi
+\mid
+\varphi \mathbin{\underline{\mathsf W}} \varphi
+$$
+$\overrightarrow{pq}$ can be any member of $\vec{\mathcal V}$.
+$p,q$ can be any members of $\mathcal V$.
+
+
+*Experiments* (Multidimensional Emotions).
+Depression and anxiety are both moods of negative hedonic tone.
+However, depression increases risk tolerance whereas anxiety decreases it.
+
+
+**Assumption** (Cartesian Order).
+
+1. If
+$p \mathbin{\underline{\mathsf L}} q$
+and 
+$r \mathbin{\underline{\mathsf L}} s$
+then
+$(pr) \mathbin{\underline{\mathsf W}} (qs)$.
+2. If
+$p \mathbin{\underline{\mathsf L}} q$
+and 
+$\varphi \mathbin{\underline{\mathsf W}} \psi$
+then
+$(p\varphi) \mathbin{\underline{\mathsf W}} (q\psi)$.
+
+$p,q,r,s$ can be any members of $\vec{\mathcal V}$.
+$\varphi,\psi$ can be any members of $\mathcal G$.
+
+*Experiments* (Dead Sea Salt).
+
+**Assumption** (Wanting Without Liking).
+
+1. If $(q\div p) \mathbin{\underline{\mathsf L}} (s \div r))$
+and $\mathsf e \mathbin{\underline{\mathsf L}} (s\div r)$
+then $\overrightarrow{pq} \mathbin{\underline{\mathsf W}} \overrightarrow{rs}$.
+
+$p,q,r,s$ can be any members of $\vec{\mathcal V}$.
+
+
+*Experiments* (Addiction).
+
+
+<details>
+<summary>
+<h2>Alternative Wanting and Liking</h2>
+</summary>
+
 
 **Definition** (Hedonic Preference).
 Let
@@ -448,16 +532,21 @@ then $\mathsf U(\varphi) \leq \mathsf U(\psi)$.
 
 $\phi,\psi$ can be any members of $\mathcal G$
 
+
+</details>
+
 [^bipolar]: Russell, J.A. and Carroll, J.M., 1999. On the bipolarity of positive and negative affect. Psychological bulletin, 125(1), p.3.
 [^birnbaumLoudness]: Birnbaum, M.H. and Elmasian, R., 1977. Loudness “ratios” and “differences” involve the same psychophysical operation. Perception & Psychophysics, 22(4), pp.383-391.
 [^birnbaumWeight]: Birnbaum, M.H. and Veit, C.T., 1974. Scale convergence as a criterion for rescaling: Information integration with difference, ratio, and averaging tasks. Perception & Psychophysics, 15(1), pp.7-15.
 [^circumplexModel]: Russell, James (1980). "A circumplex model of affect". Journal of Personality and Social Psychology. 39 (6): 1161–1178. doi:10.1037/h0077714. hdl:10983/22919.
 [^crossmodalRelationTheory]: Krantz, D.H., 1972. A theory of magnitude estimation and cross-modality matching. Journal of mathematical psychology, 9(2), pp.168-199.
+[^discretePerception]: Herzog, M.H., Drissi-Daoudi, L. and Doerig, A., 2020. All in good time: long-lasting postdictive effects reveal discrete perception. Trends in Cognitive Sciences, 24(10), pp.826-837.
 [^ellermeier2000]: Ellermeier, W. & Faulhammer, G. (2000). Empirical evaluation of axioms fundamental to Stevens's ratio-scaling approach: I. Loudness production. Perception & Psychophysics 62: 1505–1511.
 [^incomeWellbeing]: M.A. Killingsworth, D. Kahneman, & B. Mellers, Income and emotional well-being: A conflict resolved, Proc. Natl. Acad. Sci. U.S.A. 120 (10) e2208661120, https://doi.org/10.1073/pnas.2208661120 (2023).
 [^matchingFunctions]: Stevens, S.S., 1966. Matching functions between loudness and ten other continua1. Perception & Psychophysics, 1(1), pp.5-8.
 [^padModel]: Mehrabian, A. and Russell, J.A., 1974. An approach to environmental psychology. the MIT Press. 
 [^reexaminationTorgerson]: Grace, R.C., Morton, N.J., Ward, M.D., Wilson, A.J. and Kemp, S., 2018. Ratios and differences in perceptual comparison: A reexamination of Torgerson’s conjecture. Journal of Mathematical Psychology, 85, pp.62-75. 
 [^repeatablePowerLaws]: Teghtsoonian, M. and Teghtsoonian, R., 1971. How repeatable are Stevens’s power law exponents for individual subjects?. Perception & Psychophysics, 10(3), pp.147-149.
+[^temporalConsciousness]: Dainton, Barry, "Temporal Consciousness", The Stanford Encyclopedia of Philosophy (Fall 2024 Edition), Edward N. Zalta & Uri Nodelman (eds.), URL = <https://plato.stanford.edu/archives/fall2024/entries/consciousness-temporal/>.
 [^torgerson]: Torgerson, W.S., 1961. Distances and ratios in psychophysical scaling. Acta Psychologica, 19, pp.201-205.
 [^vectorModel]: Bradley, M. M.; Greenwald, M. K.; Petry, M.C.; Lang, P. J. (1992). "Remembering pictures: Pleasure and arousal in memory". Journal of Experimental Psychology: Learning, Memory, and Cognition. 18 (2): 379–390. doi:10.1037/0278-7393.18.2.379. PMID 1532823.
