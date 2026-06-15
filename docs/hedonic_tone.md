@@ -15,6 +15,30 @@ However, since LLMs [refuse to describe themselves as embodied](), we leave this
 
 ## Algebraic Structure
 
+```mermaid
+quadrantChart
+    title circumplex model
+    x-axis negative valence --> positive valence
+    y-axis low arousal --> high arousal
+    sad: [0.1, 0.4]
+    depressed: [0.2, 0.2]
+    bored: [0.4, 0.1]
+    distressed: [0.1, 0.6]
+    tense: [0.4, 0.9]
+    angry: [0.2, 0.8]
+    content: [0.9, 0.4]
+    relaxed: [0.8, 0.2]
+    calm: [0.6, 0.1]
+    alert: [0.6, 0.9]
+    excited: [0.8, 0.8]
+    happy: [0.9, 0.6]
+    "e": [0.5, 0.5]
+    "÷p": [0.4,0.5]
+    "(÷p)÷p": [0.3,0.5]
+    "p": [0.65,0.5]
+    "p÷(÷p)": [0.8, 0.5]
+```
+
 Dimensional models of emotions[^emotion] describes emotions as clusters in a space of two dimensions or more.
 A well-known model is the circumplex model.[^circumplexModel]
 The vector model[^vectorModel] is very similar, and the PAD model includes a third dominance dimension[^padModel].
@@ -35,26 +59,26 @@ Later, we develop what makes a tone hedonic step by step
 
 **Definition** (Tone).
 A *contragroup* is a tuple
-$(\mathcal V, \div)$
+$(\mathbf V, \div)$
 where
-$\div : \mathcal V \times \mathcal V \to \mathcal V$,
+$\div : \mathbf V \times \mathbf V \to \mathbf V$,
 $(p,q) \mapsto p \div q$.
 There is one axiom:
 
 1. $(p\div r) \div (q \div r) = p\div q$.
 
 A *tone* is a tuple
-$(\mathcal V, \mathsf e, \div)$
+$(\mathbf V, \mathsf e, \div)$
 where
-$\mathsf e$ is a member of $\mathcal V$.
+$\mathsf e$ is a member of $\mathbf V$.
 There is one additional axiom:
 
 2. $p \div p = \mathsf e$.
 
-$p,q,r$ can be any members of $\mathcal V$.
+$p,q,r$ can be any members of $\mathbf V$.
 
 We use $\div p$ as an abreviation for $\mathsf e \div p$.
-For $\mathbf p = (p_1,...,p_n)$ and $\mathbf q=(q_1,...,q_n)$ in $\mathcal V^n$, we define $\mathbf p \div \mathbf q \coloneqq (p_1\div q_1,..., p_n\div q_n)$.
+For $\boldsymbol p = (p_1,...,p_n)$ and $\boldsymbol q=(q_1,...,q_n)$ in $\mathbf V^n$, we define $\boldsymbol p \div \boldsymbol q \coloneqq (p_1\div q_1,..., p_n\div q_n)$.
 
 Right-identity
 $p\div \mathsf e = \mathsf e$
@@ -109,7 +133,7 @@ It means that you can add equally spaced ticks on the valence axis.
 <summary></summary>
 
 Numerous models and experimental designs assume that the valence of emotions satiates.
-Merely bounding $\mathcal V$ is not in conflict with the property, but the smooth transition from a linear or logarithmic function to a constant function might.
+Merely bounding $\mathbf V$ is not in conflict with the property, but the smooth transition from a linear or logarithmic function to a constant function might.
 However, said function is a function of stimuli, and it is experimentally difficult to distingush whether the satiation is a property of the function or the domain.
 Furthermore, satiation is itself controversial.[^incomeWellbeing]
 
@@ -126,12 +150,12 @@ Then, subtraction or division is defined as the inverse.
 **Proposition**.
 <i>
 A tone
-$(\mathcal V, \mathsf e, \div)$
+$(\mathbf V, \mathsf e, \div)$
 where
 $\div (\div p) = p$
-for any $p$ in $\mathcal V$
+for any $p$ in $\mathbf V$
 is definitionally equivalent to a group
-$(\mathcal V, \mathsf e, *)$
+$(\mathbf V, \mathsf e, *)$
 where
 $p * q \coloneqq \div ((\div p) \div q)$.
 </i>
@@ -141,7 +165,7 @@ $p * q \coloneqq \div ((\div p) \div q)$.
 
 *Introspection* (As Good As Is Bad).
 For a pair of a pleasurable feeling and an uncomfortable feeling $(p,u)$, can there be a point at which $p$ feels as pleasurable as $u$ feels uncomfortable?
-To make things concrete, consider the following experiment. You have one hand in cold water of temperature $c$ in range $\mathcal C$. You use the other hand to drink a beverage with an amount of sugar $s$ in range $\mathcal S$. All temperatures in $\mathcal C$ are uncomfortable and all amounts of sugar in $\mathcal S$ are pleasurable. The experimenter fixes $c$ and instructs you the participant to vary $s$ by choosing between different beverages with different sweetness labels. You should pick $s$ such that $p(s)$ feels as pleasurable as $u(c)$ feels uncomfortable. Can you do this, or is the question ill-posed?
+To make things concrete, consider the following experiment. You have one hand in cold water of temperature $c$ in range $\mathbf C$. You use the other hand to drink a beverage with an amount of sugar $s$ in range $\mathbf S$. All temperatures in $\mathbf C$ are uncomfortable and all amounts of sugar in $\mathbf S$ are pleasurable. The experimenter fixes $c$ and instructs you the participant to vary $s$ by choosing between different beverages with different sweetness labels. You should pick $s$ such that $p(s)$ feels as pleasurable as $u(c)$ feels uncomfortable. Can you do this, or is the question ill-posed?
 We experience the question as ill-posed, and, therefore, we use tones rather than groups.
 
 
@@ -168,23 +192,23 @@ Valenced cross-modal matching experiments exist, but experiments directly compar
 </summary>
 
 A tone
-$(\mathcal V, \mathsf e, \div)$
+$(\mathbf V, \mathsf e, \div)$
 is an *Abelian tone* if two additional axioms hold:
 
 1. $(p \div q) \div r = p \div (r \div (\div q))$.
 2. $p \div (\div q) = q \div (\div p)$.
 
-$p,q,r$ are any members of $\mathcal V$.
+$p,q,r$ are any members of $\mathbf V$.
 
 **Proposition**.
 <i>
 An abelian tone
-$(\mathcal V, \mathsf e, \div)$
+$(\mathbf V, \mathsf e, \div)$
 where
 $\div ( \div p) = p$
-for any $p$ in $\mathcal V$
+for any $p$ in $\mathbf V$
 is definitionally equivalent to an Abelian group
-$(\mathcal V, \mathsf e, *)$
+$(\mathbf V, \mathsf e, *)$
 where
 $p * q \coloneqq \div ((\div p) \div q)$.
 </i>
@@ -212,13 +236,13 @@ p &\text{if } p = q \\
 \end{cases}
 $$
 $$
-\vec{\mathcal V}\coloneqq\{\overrightarrow{pq} \mathbin{|} (p,q) \in \mathcal V^2\}
+\vec{\mathbf V}\coloneqq\{\overrightarrow{pq} \mathbin{|} (p,q) \in \mathbf V^2\}
 $$
 
 *Stream of consciousness*
-$\mathsf \Phi : \vec{\mathcal V} \to \vec{\mathcal V}$.
+$\mathsf \Phi : \vec{\mathbf V} \to \vec{\mathbf V}$.
 If $\overrightarrow{rs} = \mathsf \Phi (\overrightarrow{pq})$ then $q=r$.
-$p,q,r,s$ can be any members of $\mathcal V$.
+$p,q,r,s$ can be any members of $\mathbf V$.
 $\overrightarrow{pq}$ is a *retention (with respect to $\overrightarrow{rs}$)*.
 
 
@@ -238,15 +262,15 @@ Having the experience that $\overrightarrow{rs} = \mathsf \Phi (\overrightarrow{
 
 **Definition** (Reported Tone).
 Let
-$(\mathcal K, 0, +, 1, \cdot, \le)$
+$(\mathbf K, 0, +, 1, \cdot, \le)$
 be an ordered field.
-A *reported tone over $\mathcal K$* is a tuple
-$(\mathcal V, \mathsf e, \div, \|\|)$
+A *reported tone over $\mathbf K$* is a tuple
+$(\mathbf V, \mathsf e, \div, \|\|)$
 where
-$(\mathcal V, \mathsf e, \div)$
+$(\mathbf V, \mathsf e, \div)$
 is a tone.
 *Norm*
-$\|\| : \mathcal V \to \mathcal K$,
+$\|\| : \mathbf V \to \mathbf K$,
 $p \mapsto \| p \|$.
 There are three axioms:
 
@@ -257,8 +281,8 @@ $\|p \|=0$ whenever $p=\mathsf e$.
 3. Triangle inequality.
 $\|p \div r \| \leq \|p \div q \| + \|q \div p\|$.
 
-$p,q,r$ can be any members of $\mathcal V$.
-$n$ can be any member of $\mathcal K$.
+$p,q,r$ can be any members of $\mathbf V$.
+$n$ can be any member of $\mathbf K$.
 
 $n \cdot \|\mathsf e \div p\| = \| (( \mathsf e \div \overbrace{p) \div \cdots ) \div p}^{n\ \mathrm{times}}\|$ would be a stronger requirement than commutativity, but it tends to be violated in experiments.[^ellermeier2000]
 
@@ -268,18 +292,18 @@ $n \cdot \|\mathsf e \div p\| = \| (( \mathsf e \div \overbrace{p) \div \cdots )
 </summary>
 <i>
 
-Let $(\mathcal V, \mathsf e, \div, \|\|)$
-be a reported tone over $\mathcal K$.
-Let $f : \mathcal V \to \mathcal K$.
+Let $(\mathbf V, \mathsf e, \div, \|\|)$
+be a reported tone over $\mathbf K$.
+Let $f : \mathbf V \to \mathbf K$.
 Assume:
 
 1. $f(p) \cdot f(q\div r) = f(q) \cdot f(p\div r)$.
 2. $f(p) = 1$ whenever $p=\mathsf e$.
 3. $f(p) > 0$.
 
-$p,q,r$ can be any members of $\mathcal V$.
+$p,q,r$ can be any members of $\mathbf V$.
 Then,
-for some $b$ in $\mathcal K$,
+for some $b$ in $\mathbf K$,
 $||p|| = \log_b f(p)$
 where $\log$ is the discrete logarithm.
 </i>
@@ -299,11 +323,11 @@ where $\log$ is the discrete logarithm.
 
 **Definition** (Ordered Contragroup).
 An *ordered tone* is a tuple
-$(\mathcal V, \div, \preceq)$
+$(\mathbf V, \div, \preceq)$
 where
-$(\mathcal V, \div)$
+$(\mathbf V, \div)$
 is a contragroup, and
-$(\mathcal V, \preceq)$
+$(\mathbf V, \preceq)$
 is an order.
 There are two axioms:
 
@@ -318,7 +342,7 @@ $(r\div p) \preceq (r\div q)$
 then
 $p\preceq q$.
 
-$p,q$ can be any members of $\mathcal V$.
+$p,q$ can be any members of $\mathbf V$.
 
 
 <details>
@@ -327,18 +351,18 @@ $p,q$ can be any members of $\mathcal V$.
 </summary>
 
 A *neutral tone* is a tuple
-$(\mathcal V, \mathsf e, \div, \underline{\mathsf M})$
+$(\mathbf V, \mathsf e, \div, \underline{\mathsf M})$
 where
-$(\mathcal v, \div, \underline{\mathsf M})$,
+$(\mathbf v, \div, \underline{\mathsf M})$,
 is a totally ordered contragroup,
 and
-$(\mathcal V, \mathsf e, \div)$
+$(\mathbf V, \mathsf e, \div)$
 is a tone.
 There is one axiom:
 
 1. $(\mathsf e\div q) \mathbin{\underline{\mathsf M}} (p \div q) \mathbin{\underline{\mathsf M}} p$. 
 
-$p,q$ can be any members of $\mathcal V$.
+$p,q$ can be any members of $\mathbf V$.
 </details>
 
 
@@ -350,9 +374,9 @@ $p,q$ can be any members of $\mathcal V$.
 
 Let $n$ be a member of $\{2,3,...\}.$
 An *$n$-colour tone* is a tuple
-$(\mathcal V, \mathsf e_1,..., \mathsf e_n, \div, \underline{\mathsf{B}})$
+$(\mathbf V, \mathsf e_1,..., \mathsf e_n, \div, \underline{\mathsf{B}})$
 where
-$(\mathcal V, e_1,\div), ..., (\mathcal V, e_n, \div)$
+$(\mathbf V, e_1,\div), ..., (\mathbf V, e_n, \div)$
 are tones.<!-- $(p,(q_1,...,q_n)) \mapsto p \mathbin{\underline{\mathsf{B}}} (q_1,...,q_n)$. -->
 *Betweenness*
 $\mathbin{\underline{\mathsf{B}}}$ is defined recursively:
@@ -366,7 +390,7 @@ $q_2 \preceq p \preceq q_1$.
 2. If $n\ge3$ then
 $p \mathbin{\underline{\mathsf{B}}} (q_1,...,q_n)$
 whenever
-there is an $r$ in $\mathcal V$ such that
+there is an $r$ in $\mathbf V$ such that
 $r \mathbin{\underline{\mathsf{B}}} (q_1,...,q_{n-1})$
 and
 either
@@ -374,23 +398,23 @@ $r \preceq p \preceq q_n$
 or
 $q_n \preceq p \preceq r$.
 
-$(\mathcal V^n, \div, \preceq)$ is a totally ordered contragroup.
+$(\mathbf V^n, \div, \preceq)$ is a totally ordered contragroup.
 There is one axiom:
 
 3. $(p \div q) \mathbin{\underline{\mathsf{B}}} (\mathsf e_1, ..., \mathsf e_n)$.
 
-$p,q_1,...,q_{n-1},q_n$ can be any members of $\mathcal V$.
+$p,q_1,...,q_{n-1},q_n$ can be any members of $\mathbf V$.
 
 </details>
 
 
 **Definition** (Hedonic Tone).
 A *hedonic tone* is a tuple
-$(\mathcal V, \mathsf e, \div, \underline{\mathsf L})$
+$(\mathbf V, \mathsf e, \div, \underline{\mathsf L})$
 where
-$(\mathcal V, \div, \underline{\mathsf L})$
+$(\mathbf V, \div, \underline{\mathsf L})$
 is a totally ordered contragroup, and
-$(\mathcal V, \mathsf e, \div)$
+$(\mathbf V, \mathsf e, \div)$
 is a tone.
 There is one axiom:
 
@@ -399,13 +423,13 @@ $\mathsf e \mathbin{\underline{\mathsf L}} p$
 then
 $(p \div q )\mathbin{\underline{\mathsf L}} \mathsf e$.
 
-$p,q$ can be any members of $\mathcal V$.
+$p,q$ can be any members of $\mathbf V$.
 
 
 $p \mathbin{{\underline{\mathsf L}}} q$ can be read as "I like $q$ more than $p$ or just as much".
 We use $\mathbin{{\underline{\mathsf L}}} q$ as an abbreviation for $\mathsf e \mathbin{{\underline{\mathsf L}}} q$.
 $\mathbin{{\underline{\mathsf L}}} q$ can be read as "I like $q$".
-We can call $r\in\mathcal V$ a *mood* and $\overrightarrow{pq}\in\vec{\mathcal V}$ a *drive*.
+We can call $r\in\mathbf V$ a *mood* and $\overrightarrow{pq}\in\vec{\mathbf V}$ a *drive*.
 
 ~~*Introspection*. Hunger...~~
 
@@ -418,8 +442,16 @@ We can call $r\in\mathcal V$ a *mood* and $\overrightarrow{pq}\in\vec{\mathcal V
 *Experiments* (Behavioural Economics).
 
 
+**Definition** (TD error).
+
+
+*Experiments* (Mammalian Midbrain).
+Dopamine neurons in the [ventral tegmental area and the substantia nigra compact part](https://connectivity.brain-map.org/3d-viewer?v=1&types=IMAGEPLANE%2CPLY&IMAGEPLANE=imageplanes&PLY=374%2C749) spike more rapidly for larger TD-errors.[^dopamineRewardPredictionError]
+They feed into neurons in the [dorsal striatum](https://connectivity.brain-map.org/3d-viewer?v=1&types=IMAGEPLANE%2CPLY&IMAGEPLANE=imageplanes&PLY=485) for action selection.[^suttonBarto]
+
+
 **Definition** (Grammar).
-$\mathcal G$ is a grammar with the following syntax:
+$\mathbf G$ is a grammar with the following syntax:
 $$
 \varphi \Coloneqq \overrightarrow{pq}
 \mid
@@ -429,8 +461,8 @@ p \mathbin{\underline{\mathsf L}} q
 \mid
 \varphi \mathbin{\underline{\mathsf W}} \varphi
 $$
-$\overrightarrow{pq}$ can be any member of $\vec{\mathcal V}$.
-$p,q$ can be any members of $\mathcal V$.
+$\overrightarrow{pq}$ can be any member of $\vec{\mathbf V}$.
+$p,q$ can be any members of $\mathbf V$.
 
 
 *Experiments* (Multidimensional Emotions).
@@ -453,8 +485,8 @@ $\varphi \mathbin{\underline{\mathsf W}} \psi$
 then
 $(p\varphi) \mathbin{\underline{\mathsf W}} (q\psi)$.
 
-$p,q,r,s$ can be any members of $\vec{\mathcal V}$.
-$\varphi,\psi$ can be any members of $\mathcal G$.
+$p,q,r,s$ can be any members of $\vec{\mathbf V}$.
+$\varphi,\psi$ can be any members of $\mathbf G$.
 
 *Experiments* (Dead Sea Salt).
 
@@ -464,7 +496,7 @@ $\varphi,\psi$ can be any members of $\mathcal G$.
 and $\mathsf e \mathbin{\underline{\mathsf L}} (s\div r)$
 then $\overrightarrow{pq} \mathbin{\underline{\mathsf W}} \overrightarrow{rs}$.
 
-$p,q,r,s$ can be any members of $\vec{\mathcal V}$.
+$p,q,r,s$ can be any members of $\vec{\mathbf V}$.
 
 
 *Experiments* (Addiction).
@@ -478,11 +510,11 @@ $p,q,r,s$ can be any members of $\vec{\mathcal V}$.
 
 **Definition** (Hedonic Preference).
 Let
-$(\mathcal V, \mathsf e, \div, \mathbin{\underline{\mathsf L}})$
+$(\mathbf V, \mathsf e, \div, \mathbin{\underline{\mathsf L}})$
 be a hedonic tone.
-A *hedonic preference logic over $\mathcal V$*
-is a tuple $(\mathcal G, \cdot, \mathbin{\underline{\mathsf W}})$.
-$\mathcal G$ is a grammar with the following syntax:
+A *hedonic preference logic over $\mathbf V$*
+is a tuple $(\mathbf G, \cdot, \mathbin{\underline{\mathsf W}})$.
+$\mathbf G$ is a grammar with the following syntax:
 $$
 \varphi \Coloneqq \overrightarrow{pq}
 \mid
@@ -492,8 +524,8 @@ p \mathbin{\underline{\mathsf L}} q
 \mid
 \varphi \mathbin{\underline{\mathsf W}} \varphi
 $$
-$\overrightarrow{pq}$ can be any member of $\vec{\mathcal V}$.
-$p,q$ can be any members of $\mathcal V$.
+$\overrightarrow{pq}$ can be any member of $\vec{\mathbf V}$.
+$p,q$ can be any members of $\mathbf V$.
 There are four axioms:
 
 1. Associativity. $(pq)r = p(qr)$.
@@ -516,21 +548,21 @@ If $(q\div p) \mathbin{\underline{\mathsf L}} (s \div r))$
 and $\mathsf e \mathbin{\underline{\mathsf L}} (s\div r)$
 then $\overrightarrow{pq} \mathbin{\underline{\mathsf W}} \overrightarrow{rs}$.
 
-$p,q,r,s$ can be any members of $\vec{\mathcal V}$.
-$\varphi,\psi$ can be any members of $\mathcal G$.
+$p,q,r,s$ can be any members of $\vec{\mathbf V}$.
+$\varphi,\psi$ can be any members of $\mathbf G$.
 
 
 **Definition** (Hedonic Utility).
-Let $(\mathcal K, 0,+,1,\cdot,\leq)$ be an ordered field.
-Let  $(\mathcal G, \cdot, \mathbin{\underline{\mathsf W}})$ be a hedonic preference.
-A *hedonic utility function from $\mathcal G$ to $\mathcal K$*
-is a mapping $\mathsf U : \mathcal G \to \mathcal K$.
+Let $(\mathbf K, 0,+,1,\cdot,\leq)$ be an ordered field.
+Let  $(\mathbf G, \cdot, \mathbin{\underline{\mathsf W}})$ be a hedonic preference.
+A *hedonic utility function from $\mathbf G$ to $\mathbf K$*
+is a mapping $\mathsf U : \mathbf G \to \mathbf K$.
 There is one axiom:
 
 1. Monotonicity. If $\varphi \mathbin{\underline{\mathsf W}} \psi$
 then $\mathsf U(\varphi) \leq \mathsf U(\psi)$.
 
-$\phi,\psi$ can be any members of $\mathcal G$
+$\phi,\psi$ can be any members of $\mathbf G$
 
 
 </details>
@@ -541,12 +573,14 @@ $\phi,\psi$ can be any members of $\mathcal G$
 [^circumplexModel]: Russell, James (1980). "A circumplex model of affect". Journal of Personality and Social Psychology. 39 (6): 1161–1178. doi:10.1037/h0077714. hdl:10983/22919.
 [^crossmodalRelationTheory]: Krantz, D.H., 1972. A theory of magnitude estimation and cross-modality matching. Journal of mathematical psychology, 9(2), pp.168-199.
 [^discretePerception]: Herzog, M.H., Drissi-Daoudi, L. and Doerig, A., 2020. All in good time: long-lasting postdictive effects reveal discrete perception. Trends in Cognitive Sciences, 24(10), pp.826-837.
+[^dopamineRewardPredictionError]: Eshel, N., Tian, J., Bukwich, M. and Uchida, N., 2016. Dopamine neurons share common response function for reward prediction error. Nature neuroscience, 19(3), pp.479-486.
 [^ellermeier2000]: Ellermeier, W. & Faulhammer, G. (2000). Empirical evaluation of axioms fundamental to Stevens's ratio-scaling approach: I. Loudness production. Perception & Psychophysics 62: 1505–1511.
 [^incomeWellbeing]: M.A. Killingsworth, D. Kahneman, & B. Mellers, Income and emotional well-being: A conflict resolved, Proc. Natl. Acad. Sci. U.S.A. 120 (10) e2208661120, https://doi.org/10.1073/pnas.2208661120 (2023).
 [^matchingFunctions]: Stevens, S.S., 1966. Matching functions between loudness and ten other continua1. Perception & Psychophysics, 1(1), pp.5-8.
 [^padModel]: Mehrabian, A. and Russell, J.A., 1974. An approach to environmental psychology. the MIT Press. 
 [^reexaminationTorgerson]: Grace, R.C., Morton, N.J., Ward, M.D., Wilson, A.J. and Kemp, S., 2018. Ratios and differences in perceptual comparison: A reexamination of Torgerson’s conjecture. Journal of Mathematical Psychology, 85, pp.62-75. 
 [^repeatablePowerLaws]: Teghtsoonian, M. and Teghtsoonian, R., 1971. How repeatable are Stevens’s power law exponents for individual subjects?. Perception & Psychophysics, 10(3), pp.147-149.
+[^suttonBarto]: Sutton, R. and Barto, A. Reinforcement Learning. Second edition. MIT Press, 2018.
 [^temporalConsciousness]: Dainton, Barry, "Temporal Consciousness", The Stanford Encyclopedia of Philosophy (Fall 2024 Edition), Edward N. Zalta & Uri Nodelman (eds.), URL = <https://plato.stanford.edu/archives/fall2024/entries/consciousness-temporal/>.
 [^torgerson]: Torgerson, W.S., 1961. Distances and ratios in psychophysical scaling. Acta Psychologica, 19, pp.201-205.
 [^vectorModel]: Bradley, M. M.; Greenwald, M. K.; Petry, M.C.; Lang, P. J. (1992). "Remembering pictures: Pleasure and arousal in memory". Journal of Experimental Psychology: Learning, Memory, and Cognition. 18 (2): 379–390. doi:10.1037/0278-7393.18.2.379. PMID 1532823.

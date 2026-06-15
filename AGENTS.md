@@ -23,9 +23,10 @@ We hope to avoid a factory farming sitation for AIs.
 An article is available in `docs/`.
 As all scientific articles, it should be concise.
 More exploratory forays into the literature should go into `docs/related_work/`.
-Ideas related to consciousness, but not sentience specifically should be placed in `docs/appendix/`.
+Ideas related to consciousness, but not sentience specifically, should be placed in `docs/appendix/`.
 Mathematical proofs should be written in the lean language.
-These go in `source/sentience`.
+Final proofs should go into `source/sentience`.
+For more on organization, see the section below.
 
 The current scope of the project is as a purely theoretical project.
 The aim is to develop some kind of mathematical structure prediciting and measuring valence in conscious experiences.
@@ -34,3 +35,6 @@ Future work should be able at developing experiments:
 2. AI experiments using techniques from, e.g., evals and interpretability.
 3. Self-experiments, once again using experiments from psychophysics to enable humans to test the theories for themselves.
 
+## Organization
+
+`references/` is a directory not tracked by git. It contains pdfs of relevant papers. It is a good idea to check these out as project files.
