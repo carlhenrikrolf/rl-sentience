@@ -38,3 +38,5 @@ Future work should be able at developing experiments:
 ## Organization
 
 `references/` is a directory not tracked by git. It contains pdfs of relevant papers. It is a good idea to check these out as project files.
+
+`tmp/` is also not tracked by git. It has numerous functions. For example, if making a plan, it can be saved there. Or, if making some kind summary, it can be saved there.

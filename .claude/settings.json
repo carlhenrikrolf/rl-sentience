@@ -1,0 +1,23 @@
+{
+    "permissions" : {
+        "deny" : [
+            "Read(./.env)",
+            "Edit(./.env)",
+            "Write(./.env)",
+            "Read(./third_party/functional-welfare-axis/.env)",
+            "Edit(./third_party/functional-welfare-axis/.env)",
+            "Write(./third_party/functional-welfare-axis/.env)",
+            "Edit(./.claude/settings.json)",
+            "Write(./.claude/settings.json)",
+            "Edit(./AGENTS.md)",
+            "Write(./AGENTS.md)"
+        ],
+        "ask" : [
+            "Edit(./.claude/settings.local.json)",
+            "Edit(./docs/**)"
+        ],
+        "allow" : [
+            "Edit(./CLAUDE.md)"
+        ]
+    }
+}

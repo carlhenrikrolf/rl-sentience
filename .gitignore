@@ -2,3 +2,5 @@
 **/.lake/**
 **/.venv/**
 references/**
+**/.env
+tmp/**

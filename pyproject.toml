@@ -1,11 +1,17 @@
-[build-system]
-requires = ["uv_build >= 0.11.7, <0.12.0"]
-build-backend = "uv_build"
-
 [project]
 name = "rl-sentience"
 version = "0.0.0"
+requires-python = ">=3.12"
 dependencies = [
     "ipykernel >= 7.2.0",
-    "brainrender >= 2.1.20"
 ]
+
+# Optional "side quest" deps. Install with: uv sync --group brain
+[dependency-groups]
+brain = [
+    "brainrender >= 2.1.20",
+]
+
+[tool.uv]
+# Not an installable package — just an environment spec (no build step).
+package = false
