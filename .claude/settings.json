@@ -1,23 +1,38 @@
 {
+    "sandbox" : {
+        "enabled" : true,
+        "filesystem" : {
+            "denyRead" : [
+                "/Users"
+            ],
+            "allowRead" : [
+                ".",
+                "~/.venv-vllm-metal",
+                "~/.cache/huggingface",
+                "/Library"
+            ]
+        }
+    },
     "permissions" : {
         "deny" : [
-            "Read(./.env)",
-            "Edit(./.env)",
-            "Write(./.env)",
-            "Read(./third_party/functional-welfare-axis/.env)",
-            "Edit(./third_party/functional-welfare-axis/.env)",
-            "Write(./third_party/functional-welfare-axis/.env)",
+            "Read(/Users/*/.ssh/**)",
+            "Read(/Users/*/.aws/**)",
+            "Read(/**/.env)",
+            "Edit(/**/.env)",
+            "Write(/**/.env)",
             "Edit(./.claude/settings.json)",
             "Write(./.claude/settings.json)",
             "Edit(./AGENTS.md)",
-            "Write(./AGENTS.md)"
+            "Write(./AGENTS.md)",
+            "Edit(./references/**)"
         ],
         "ask" : [
             "Edit(./.claude/settings.local.json)",
             "Edit(./docs/**)"
         ],
         "allow" : [
-            "Edit(./CLAUDE.md)"
+            "Edit(./CLAUDE.md)",
+            "Read(./references/**)"
         ]
     }
 }
