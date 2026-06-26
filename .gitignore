@@ -5,5 +5,3 @@ references/**
 **/.env
 tmp/**
 
-# Lift at lean reorganisation
-RLSentience/**
