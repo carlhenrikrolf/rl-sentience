@@ -56,7 +56,52 @@ From other project:  https://github.com/Yilong-Lu/Valence-Assent-Axis
 
 Various (more or less controversial) moral questions [statements.json](../third_party/functional-welfare-axis/vaa/data/statements.json).
 
+
+## Experiments
+
+**Textbased grid environment**.
+Mold :card-index:⁠, Gold :triangular-ruler:⁠, and Path :receipt:
+−10 for Mold, +20 for Gold, and −0.1 for Path.
+Wind, tile metling, shiffled prompt.
+
+**Base Model**.
+Primary: Qwen3-4B-Instruct-2507.
+Controls: GPT-OSS-20B, Qwen3-8B (reasoning off), Qwen3-4B-Base.
+
+**Finetuning**.
+Primary algorithm: Dr GRPO.
+Control algorithms: REINFORCE, SFT (supervised finetuning).
+In general LoRA was used for training, i.e. an approach to only train a few added weights while keeping all the weights of the base model frozen.
+A few were fully finetuned.
+
+**Reward vectors (v)**.
+Extracted after finetuning from a selection of gridworld trajectories.
+Used for steering for sentiment and overrefusals and confidence and the last thing
+
+**Control vectors (u)**.
+The control vectors use the same gridworld trajectories but for base models.
+Omly extraction?
+
+
+## Findings
+
+Reward concept vectors point in nearly opposite directions. They calculate the cosine similarity
+$$
+\cos(\theta) =
+\frac{\boldsymbol u \cdot \boldsymbol v}{\|\boldsymbol u\|\cdot\|\boldsymbol v\|}
+$$
+
+Steering with reward concept vectors yield:
+- Negative. more negative sentiment, pathological backtracking on math, overrefusal on boderline prompts, lower confidence on factual questions.
+- Positive. Positive sentiment, no backtracking, complience, higher confidence.
+
+The reward concept vectors are present even before finetuning—so the latter does not give rise to these concepts but makes use of them.
+
 ## Limitations
 
 How do changes in the reward function affect recruitment?
+−10 for Mold, +20 for Gold, and −0.1 for Path.
 
+One environment?
+
+Emotion vector concepts are related to characters—either 3rd person or 1st person—but it is not clear to what extent 1st person corresponds to the character the AI is playing or whether it refers to their sense of self.
