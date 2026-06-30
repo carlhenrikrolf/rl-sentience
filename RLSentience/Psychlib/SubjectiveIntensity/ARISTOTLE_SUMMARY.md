@@ -1,3 +1,25 @@
+# Summary of changes for run f1dcdbf2-9e44-4bc2-8c73-b9d81ed7d134
+I continued the project by formalizing the self-contained mathematical core of the newly attached review paper, R. Steingrimsson, "Subjective intensity: Behavioral laws, numerical representations, and behavioral predictions in Luce's model of global psychophysics" (Journal of Mathematical Psychology 75, 2016).
+
+Since this is a review article, most of its formal content was already covered by the existing files (Narens' commutative property in `RatioMagnitudeEstimation.lean`, Torgerson's conjecture in `TorgersonLuce.lean`, and cross-dimensional commutativity in `CrossDimensionScales.lean`). Following the project's one-file-per-paper convention, I added a new self-contained file `RequestProject/SubjectiveIntensity.lean` (namespace `SubjectiveIntensity`) capturing the review's genuinely new, self-contained results that were not yet formalized. The existing files are untouched, and the whole project builds cleanly with no `sorry` and no warnings; every result depends only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
+
+Results proved:
+
+1. The p-additive representation of the unary (1-D) theory and the "incompleteness of Hölder's theorem" point (Section 2.3.1). With summation modeled as physical addition, the p-additive functional equation `ϕ(x+y) = ϕ x + ϕ y + δ·ϕ x·ϕ y` admits a strictly increasing solution for each `δ ∈ {-1,0,1}`:
+   - `padditive_neg_one`/`padditive_zero`/`padditive_one`: the three forms `1 - e^{-κx}`, `ηx`, `e^{λx} - 1` solve the equation for `δ = -1, 0, 1`.
+   - `padditive_*_strictMono`: each is strictly increasing for positive parameters.
+
+2. The rating-scale representations (Section 2.4.2):
+   - `equisection_iff`: the equal-interval characterization (Eq. 27) `(n-m)(ψe-ψx) = m(ψy-ψe) ⇔ ψe = (m/n)(ψy-ψx)+ψx`.
+   - `equisection_power`: its closed-form solution under the power scale `ψ s = α s^β`.
+   - `fractionation_power`: the equal-ratio (fractionation) solution (Eq. 28) under the power scale.
+
+3. The functional form of the weighting function `W` (Eqs. 18–19):
+   - `power_multiplicative`: the power form `W p = p^ω` satisfies Narens' multiplicative property `W(pq) = W p · W q`.
+   - `W_multiplicative_power`: the converse — a strictly increasing, positive, multiplicative weighting function on the positive reals is exactly a power function. Its proof rests on a general helper, `monotone_additive_eq_mul`, the monotone case of Cauchy's functional equation (a monotone additive map ℝ→ℝ is linear), which is also proved here.
+
+Scope note (recorded in the file docstring): the deeper representational machinery referenced by the review (Hölder's theorem proper, scale-type/automorphism theory) lies beyond available libraries and was left out, as in the earlier files; the present file captures the review's elementary, self-contained mathematical claims with complete machine-checked proofs.
+
 # Summary of changes for run 41314d61-590f-4748-ac7a-f79176b80663
 Continuing the same line of research, I formalized the self-contained single-dimension mathematical core of the newly attached paper R. Duncan Luce, Ragnar Steingrimsson & Louis Narens, "Are Psychophysical Scales of Intensities the Same or Different When Stimuli Vary on Other Dimensions?" (Psychological Review, 2010), which builds on the magnitude-production representation already formalized in the project (Narens 1996 and Luce 2012).
 
