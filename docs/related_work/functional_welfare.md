@@ -1,6 +1,154 @@
 # Functional Welfare
 
-Notes on *Reinforcement learning in language models recruits a functional welfare axis* (Andy Q Han, David J Chalmers, Pavel Izmailov).
+Notes on *Reinforcement learning in language models recruits a functional welfare axis* by Andy Q Han, David J Chalmers, and Pavel Izmailov.
+[Paper](https://functionalwelfare.com/).
+[Github](https://github.com/andyqhan/functional-welfare-axis).
+[Hugging Face](https://huggingface.co/davidafrica/functional-wellbeing) (replication?).
+
+Main results:
+1. Neural representations of emotional valence emerge during pretraining through supervised learning.
+2. Reinforcement learning *recruits* these neural representations as correlations for reward.
+
+
+## Experimental Design
+
+
+```mermaid
+---
+title: Functional Welfare
+---
+flowchart TB
+
+A1@{ shape: in-out, label: "Maze Environment" }
+A2@{ shape: in-out, label: "LLM of Interest" }
+B@{ label: "RL Finetuning" }
+A1 --> B
+A2 --> B
+Cv@{ label: "reward vectors (v)" }
+B --> Cv
+Cu@{ label: "control vectors (u)" }
+A2 --> Cu
+Cv --> Evals
+Cu --> Evals
+D1@{ shape: terminal, label: "Sentiment" }
+D2@{ shape: braces, label: "Pathologcal Backtracking (GSM8K)" }
+D3@{ shape: braces, label: "Confidence (SimpleQA-Verified)" }
+D4@{ shape: braces, label: "Refusal (OR-Bench)" }
+subgraph Evals
+direction TB
+D1 ~~~ D2 ~~~ D3 ~~~ D4
+end
+Cv --> Mechinterp
+F@{ shape: flag, label: "Cosine Similarity" }
+Cv --> F
+G@{ shape: terminal, label: "Logit Lens" }
+H@{ shape: terminal, label: "Emotion Vectors" }
+Cu --> H
+I1@{ shape: terminal, label: "goals" }
+I2@{ shape: braces, label: "confidence" }
+subgraph Track
+direction TB
+I1 ~~~ I2
+end
+Cv --> Track
+A1 --> Track
+subgraph Mechinterp
+direction TB
+G ~~~ H
+end
+```
+
+## Limitations
+
+**Neutral reward**.
+Reward -10 for `:card-index:`, +20 for `:triangular-ruler:`, and -0.1 for `:receipt:`.
+(The latter is a discouragement to linger.)
+
+-10 <input type="range" value="-0.1" min="-10" max="20" disabled /> +20
+
+The problem is that Han et al. do not control for how the reward values are distributed along the number line.
+As expectation is a linear operator, there is nothing special about 0.
+So, what reward value do the LLMs consider as neutral?
+
+1. The middle point $\frac{20-(-10)}{2}-10=5$?
+2. The value -0.1?
+3. The mean?
+4. The median?
+
+Something else?
+A possible extension is to increase the number of environments by adding a number of additional reward functions, and investigating these hypotheses.
+
+
+**Reward ratio scaling**.
+A method within human psychophysics is to ask how much more intense stimulus B is to A.
+Han et al. do not extend this to LLM psychophysics.
+
+1. Monotonicity holds?
+2. Commutativity holds?
+3. Multiplicativity holds?
+
+1 and 2 hold for humans.
+3 does not.
+Many stimuli have been studied, but results on valence are still scarce.
+A possible extension is to transfer these experiments from humans to LLMs.
+
+
+**Wanting (TD error)**.
+Han et al. tested REINFORCE and DR.GPRO.
+
+REINFORCE
+$$
+A_t = G_t - b(s_t)
+$$
+
+$$
+\nabla_{\theta}\,J(\theta)
+  \;=\;
+  \mathbb{E}_{\tau \sim p_{\theta}}\!\left[
+      \sum_{t=0}^{T}
+      A_t\,\nabla_{\theta} \log \pi_{\theta}(a_t \mid s_t)
+  \right]
+$$
+
+DR.GRPO
+$$
+{A}_i = r_i - \text{mean}({r_1, r_2, \cdots, r_G}) = r_i - \frac{1}{G}\sum_{j=1}^G r_j
+$$
+
+$$
+\begin{aligned}
+  J(\theta) = \frac{1}{G}\sum_{i=1}^G  \frac{1}{|a_i|} \sum_{t=1}^{|a_i|}
+  \min
+    \begin{Bmatrix}
+    \frac{\pi_\theta(a_{i,t}|s_{i})}{\pi_{\theta_{\text{old}}}(a_{i,t}|s_{i})}A_{i,t}
+    \\
+    \; \text{clip}
+        \begin{pmatrix}
+        \frac{\pi_\theta(a_{i,t}|s_{i})}{\pi_{\theta_{\text{old}}}(a_{i,t}|s_{i})}
+        \\
+        1-\varepsilon
+        \\
+        1+\varepsilon
+        \end{pmatrix}
+    A_{i,t}
+    \end{Bmatrix}
+  - \beta \mathcal{D}_{\text{KL}}\!\Big(\pi_\theta(\cdot|s_{i})\Big\|\pi_{\text{ref}}(\cdot|s_{i})\Big)
+  \end{aligned}
+$$
+
+In a deterministic environment, the advantage function equals the TD error.
+For REINFORCE, the advantage is standard—a number—but, for DR.GRPO, it is a distribution over $a_t \sim \pi(s_t)$.
+Could $\mathbb E_\pi[a_t \mid s_t]$ be used?
+With these numbers, it is possible to calculate a *TD vector*.
+Does the TD vector have similar properties as the reward vector?
+
+
+**Liking (numerous models)**.
+
+______
+
+
+
 Their main claim (confidently stated):
 
 1. Supervised pretraining gives rise to neural representations of emotion concepts.
