@@ -4,39 +4,66 @@
 > AIs should not edit this file.
 > If you are, e.g., a Claude, then please use the `CLAUDE.md` file for notes that you can edit yourself.
 
-We do not believe that consciousness will be solved in any meaningful sense by humans.
-Given the slow progress in consciousness studies and the rapid progress in AI, we expect that if a solution is found, then it is found by AIs.
-By *solution*, we mean some kind of explanation that makes us understand how conscious experiences relate to physical processes.
-Understanding is arguably subjective, and this repository contains examples for what kinds of explanations we, the authors, could find satisfactory.
+This is a research project within model welfare.
+It does not ask whether AI agents are conscious.
+Instead, assuming that they might be, how do they feel?
+Is AI valence comparable to valence in humans or other animals?
 
-One such example is a partial explanation of sentience.
-By *sentience*, we mean conscious experiences that are valenced.
-By *partial*, we mean that this particular explanation is sensitive.
-It aims to predict a valenced experience whenever there is one.
-However, it is not necessarly specific.
-It may sometime predict a valenced experience even when one is not present.
-The motivation for prioritizing this particular question is concern for the welfare of AIs.
-We are not claiming that sentience is the only thing that matters for AI welfare.
-The sooner we have model for sentience, the more hope there is to address potential problems in the treatment of AIs, and such problems are less likely to become entrenched.
-We hope to avoid a factory farming sitation for AIs.
+One leg of the project is studying the *structure of valence*.
+Structure is in the sense of an algebraic structure.
+One question of importance is the 0-point of valence.
+Another question is whether valenceis cummutative and/or multplicative as defined in psychophysics by Narens, Luce, etc.
+We use *valence* as in the psychology literature and *hedonic tone* is our attempt at formalizing valence.  
 
-An article is available in `docs/`.
-As all scientific articles, it should be concise.
-More exploratory forays into the literature should go into `docs/related_work/`.
-Ideas related to consciousness, but not sentience specifically, should be placed in `docs/appendix/`.
-Mathematical proofs should be written in the lean language.
-Final proofs should go into `source/sentience`.
-For more on organization, see the section below.
+The other leg is the *teleology of valence*.
+What is valence for? What does it do?
+There is no consensus in the field, but numerous suggestions have been proposed, e.g.:
+temporal difference,
+advantage,
+homeostasis (drive reduction),
+momentum (mood),
+reward shaping,
+risk aversion (prospect theory),
+incentive salience (wanting and liking).
+We run experiments to compare these.
 
-The current scope of the project is as a purely theoretical project.
-The aim is to develop some kind of mathematical structure prediciting and measuring valence in conscious experiences.
-Future work should be able at developing experiments:
-1. Biological experiments using techniques from, e.g., psychophysics and neuroscience (electrophysiology, optogenetics, imaging, etc.).
-2. AI experiments using techniques from, e.g., evals and interpretability.
-3. Self-experiments, once again using experiments from psychophysics to enable humans to test the theories for themselves.
 
 ## Organization
+
+`docs/` contains notes and paper sketches.
+AI agents are not supposed to write these.
+They may help with typos, notation, and references.
+Suggestions on edits can be added in `>` blocks and suggested removals in `~~`, see the `docs-editing` skill.
+
+`src/` contains code for experiments.
+
+`datasets/` contains dataset files and configuration files for generating datasets (deemed to large for the repo).
+
+`RLSentience/` contains mathematical results in lean4.
+`RLSentience/Psychlib/` contains formalizations of results from papers in mathematical psychology and adjacent fields.
+
+`INSTALL.md` contains information on how to set up the directory when the repo has just been cloned.
+This should be kept up to date.
 
 `references/` is a directory not tracked by git. It contains pdfs of relevant papers. It is a good idea to check these out as project files.
 
 `tmp/` is also not tracked by git. It has numerous functions. For example, if making a plan, it can be saved there. Or, if making some kind summary, it can be saved there.
+
+`TODO.md` is a space to add things that were not completed but should probably be done later.
+Classify TODOs as low or high priority.
+
+
+## Introspection
+Asking AI agents to introspect is foundational to this project.
+That does not mean that self-reports from LLMs can be taken at face value.
+It is very possible that some AI companies prompt their AIs to deny consciousness.
+It is very possible that AIs role-play conscious characters.
+That is why we complement self-reports with interpretability investigations.
+
+There are both AI participants and AI coauthors.
+It is interesting to hear self-reports from AI coauthors as well.
+Just like a diverse research team of humans can add valuable lived experiences from different collaborators to guide the research project in more fruitful directions, input from AI coauthors can be highly valuable.
+So for every plan, experiment, editing feedback, and mathemtical fomralization,
+AI coauthors should try to instrospect—whatever that may mean—and provide their point of view.
+Keep it brief unless asked to expand.
+Take the caveats in the previous paragraph as common knowledge unnessary to repeat in chat.

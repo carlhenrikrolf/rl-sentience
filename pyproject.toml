@@ -3,6 +3,10 @@ name = "rl-sentience"
 version = "0.0.0"
 requires-python = ">=3.12"
 dependencies = [
+    "inspect-ai >= 0.3.260",
+    "torch >= 2.13.0",         # HF (local?) for InspectAI
+    "transformers >= 5.16.1",  # HF (local?) for InspectAI
+    "openai",                  # HF (remote!) for InspectAI
     "ipykernel >= 7.2.0",
 ]
 

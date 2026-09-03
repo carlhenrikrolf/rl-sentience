@@ -1,40 +1,23 @@
 {
-    "sandbox" : {
-        "enabled" : true,
-        "filesystem" : {
-            "denyRead" : [
-                "/Users"
-            ],
-            "allowRead" : [
-                ".",
-                "~/.venv-vllm-metal",
-                "~/.cache/huggingface",
-                "/Library"
-            ]
-        }
-    },
-    "permissions" : {
-        "deny" : [
-            "Read(/Users/*/.ssh/**)",
-            "Read(/Users/*/.aws/**)",
-            "Read(/**/.env)",
-            "Edit(/**/.env)",
-            "Write(/**/.env)",
-            "Edit(./.claude/settings.json)",
-            "Write(./.claude/settings.json)",
-            "Edit(./AGENTS.md)",
-            "Write(./AGENTS.md)",
-            "Edit(./references/**)"
-        ],
-        "ask" : [
-            "Edit(./.claude/settings.local.json)",
-            "Edit(./.claude/skills/**)",
-            "Write(./.claude/skills/**)",
-            "Edit(./docs/**)"
-        ],
-        "allow" : [
-            "Edit(./CLAUDE.md)",
-            "Read(./references/**)"
-        ]
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "allowUnsandboxedCommands": false,
+    "credentials": {
+      "files": [
+        { "path": "~/.ssh", "mode": "deny" },
+        { "path": ".env", "mode": "deny" }
+      ]
     }
+  },
+  "permissions": {
+    "deny": [
+        "Read(~/.ssh/**)",
+        "Read(./.env)",
+        "Edit(./AGENTS.md)"
+    ],
+    "ask": [
+        "./docs/**"
+    ]
+  }
 }

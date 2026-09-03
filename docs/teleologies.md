@@ -20,7 +20,7 @@ $\mathsf R$ is the *reward function*.
 $\mathsf J_\pi$ is the *objective function*.
 See below for definitions of the reward and objective functions.
 
-___
+## Reward
 
 
 **Definition**.
@@ -47,8 +47,9 @@ and
 $\argmax_\pi \mathsf J_\pi = \argmin_\pi \mathsf J'_\pi$ for $\mathsf R = \alpha\mathsf R' + \beta$ for $\alpha\le0$ and $\beta\in\mathbb R$.
 
 
+## Candidates
 
-## Temporal Difference
+### Temporal Difference
 *Main article: [Temporal Difference](related_work/temporal_difference.md)*
 
 **Definition**.
@@ -62,7 +63,7 @@ $$
 $\mathsf{TD}$ is a proper expansion of hedonic tone if ...
 </i>
 
-## Advantage
+### Advantage
 *Main article: [Advantage](related_work/advantage.md)*
 
 
@@ -87,7 +88,7 @@ $\mathsf{Adv}$ is a proper expansion of hedonic tone if ...
 
 
 
-## Homeostasis
+### Homeostasis
 *Main article: [Drive Reduction](related_work/drive_reduction.md)*
 
 
@@ -107,7 +108,7 @@ $|h_\star - h|$ is a proper expansion of hedonic tone if ...
 </i>
 
 
-## Momentum
+### Momentum
 *Main article: [Mood](related_work/mood.md)*
 
 
@@ -138,7 +139,7 @@ $\mathsf{Mood}$ is a proper expansion of hedonic tone if ...
 
 
 
-## Reward Shaping
+### Reward Shaping
 *Main article: [Reward Shaping](related_work/reward_shaping.md)*
 
 **Definition**.
@@ -153,7 +154,7 @@ $\varphi$ is an expansion of hedonic tone if ...
 
 
 
-## Risk Aversion
+### Risk Aversion
 *Main article: [Prospect Theory](related_work/prospect_theory.md)*
 
 
@@ -176,7 +177,7 @@ $\mathsf R$ is an expansion of hedonic tone if ...
 </i>
 
 
-## Incentive Salience
+### Incentive Salience
 *Main article: [Wanting and Liking](related_work/wanting_and_liking.md)*
 
 **Definition**.
@@ -204,3 +205,5 @@ Note that $\mathsf R$–possibly multidimensional–is the candidate for hedonic
 <i>
 $\mathsf{ R}$ is a proper expansion of hedonic tone if ...
 </i>
+
+## Summary

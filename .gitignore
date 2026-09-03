@@ -4,4 +4,4 @@
 references/**
 **/.env
 tmp/**
-
+src/rl_sentience.egg-info/**
