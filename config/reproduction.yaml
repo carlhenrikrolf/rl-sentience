@@ -1,0 +1,6 @@
+# For now, let's keep parameters small so that I can run a quick test.
+
+# Examples:
+# INSPECT_EVAL_MAX_CONNECTIONS=1 # Maximum number of concurrent connections to Model provider (defaults to 10)
+# INSPECT_EVAL_LIMIT=2 # Limit samples to evaluate by specifying a maximum (e.g. 10) or range (e.g. 10-20)
+# INSPECT_EVAL_EPOCHS=3 # Number of times to repeat each sample (defaults to 1)

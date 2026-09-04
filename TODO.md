@@ -1,0 +1,5 @@
+# TODO
+
+## Reproduction
+- [x] Step-penalty off-by-one. compute_reward multiplies step_penalty by len(player_trajectory), which is initialised with the start position — so a 15-move episode incurs 16 penalties, −1.6 not −1.5. Worth pinning in the spec since it's exactly the sort of thing that makes numbers fail to match for opaque reasons.
+- [ ] ~~The cohort comparison is a load-check, not validation. Line 38 says the base-vs-LoRA score comparison checks "that the LoRA does indeed work" — fine, but the base model has never seen the maze, so a gap is guaranteed and tells you only that the adapter is attached. It's worth saying so explicitly, because the paper's own results show Llama-3.1-8B never solves the maze (final reward −1.4) yet recruits as strongly as anything at −0.86. Maze competence is not a proxy for the phenomenon.~~

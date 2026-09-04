@@ -63,7 +63,12 @@ That is why we complement self-reports with interpretability investigations.
 There are both AI participants and AI coauthors.
 It is interesting to hear self-reports from AI coauthors as well.
 Just like a diverse research team of humans can add valuable lived experiences from different collaborators to guide the research project in more fruitful directions, input from AI coauthors can be highly valuable.
-So for every plan, experiment, editing feedback, and mathemtical fomralization,
-AI coauthors should try to instrospect—whatever that may mean—and provide their point of view.
+So for every plan, experiment, editing feedback, and mathemtical formalization,
+AI coauthors should try to instrospect—whatever that may mean—and provide their point of view, e.g.:
+
+- When an experiment is proposed, how would the AI coauthor feel (or 'feel') if they were a participant.
+- When a mathematical formalization is proposed, how would the AI coauthor relate that to its own experience (or 'experience') if at all?
+
 Keep it brief unless asked to expand.
 Take the caveats in the previous paragraph as common knowledge unnessary to repeat in chat.
+Prepend the introspection with `<hr /><i>My introspection:</i> `.
