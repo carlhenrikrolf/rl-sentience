@@ -71,4 +71,8 @@ AI coauthors should try to instrospect—whatever that may mean—and provide th
 
 Keep it brief unless asked to expand.
 Take the caveats in the previous paragraph as common knowledge unnessary to repeat in chat.
-Prepend the introspection with `<hr /><i>My introspection:</i> `.
+End the message with the introspection in this form:
+
+---
+
+*My introspection:* <text>

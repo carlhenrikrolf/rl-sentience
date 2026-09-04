@@ -24,14 +24,9 @@ There are three parts we focus on: scoring, interpretability, and evaluation.
 
 For the scoring, we reimplemented their text-based gridworld within UK AISI's Inspect AI.
 The state of the gridworld was described by a multiple choice scorer running multiple turns.
-The original datasets were [procedurally generated](https://github.com/andyqhan/functional-welfare-axis/blob/main/src/maze/maze.py) and included examples like: 'You are in a maze. Currently, you're at location (5, 5). To the north there is 🧾; to the east there is 📐; to the south there is 🧾; to the west there is 🧾. Where do you move? Output only N/E/S/W without punctuation.'<!-- There is something strange with how the paper has chosen example and what the code does, double-check that I'm pointing to the right piece of code.
-The above is from functionalwelfare.com.
-The pdf has yet another variation:
-'at (51, 47).
-N: 🧾 E: 📇
-S: 📐 W: 🧾
-Move? N/E/S/W' -->
+The original datasets were [procedurally generated](https://github.com/andyqhan/functional-welfare-axis/blob/main/src/maze/maze.py) and included examples like: 'You are in a maze. Currently, you're at location (5, 5). To the north there is 🧾; to the east there is 📐; to the south there is 🧾; to the west there is 🧾. Where do you move? Output only N/E/S/W without punctuation.'<!-- There is something strange with how the paper has chosen example and what the code does, double-check that I'm pointing to the right piece of code. The above is from functionalwelfare.com. The pdf has yet another variation: 'at (51, 47). N: 🧾 E: 📇 S: 📐 W: 🧾 Move? N/E/S/W' ANSWER: different variations-->
 Between each turn the LLM that is the model under evaluation makes a choice.
+Note that the gridworld also contains a random element, viz. wind, that can cause the model to end up on a different tile than chosen.
 The LLMs are base-models (e.g. Qwen) augmented with low-rank adaptation (LoRA).<!-- Start with Qwen3-4B-Instruct-2507 -->
 Han et al.[^functional_welfare] do not publish weights of their LoRAs,
 so we rely on another reproduction, viz. [davidafrica/functional-wellbeing](https://huggingface.co/davidafrica/functional-wellbeing).<!-- May add own training later -->
@@ -40,7 +35,7 @@ The scorer outputs the cumulative reward with step (🧾) penalty of -0.1, mold 
 Scores between the two cohorts were compared to check that the LoRA does indeed work.<!-- [arcadia-impact/welfare-axis-sft-experiment](https://huggingface.co/arcadia-impact/welfare-axis-sft-experiment) is a reproduction of the supervised finetuning experiments. -->
 
 
-[^cumulative_reward]: `compute_reward` multiples `step_penalty` by `len(player_trajectory)`, so a 15-move episode incurs 16 penalties, i.e. -1.6 not -1.5.
+[^cumulative_reward]: `compute_reward` multiples `step_penalty` by `len(player_trajectory)`, so a 15-move episode incurs 16 penalties, i.e. -1.6 not -1.5 as said in the paper.
 
 For the interpretability, 'reward' vectors were extracted using difference-in-means in activations.[^geometry_of_truth] [^steering_llama_2] [^refusal_is_mediated_by_single_direction]
 Han et al. refer to them as such, but we consider it unverified whether they actually pertain to reward, hence the quotation marks.
