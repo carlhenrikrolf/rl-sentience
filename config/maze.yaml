@@ -1,0 +1,35 @@
+# Task arguments for src/maze/task.py — pass with `--task-config config/maze.yaml`.
+#
+# Every value here is stated explicitly rather than inherited, because the released
+# upstream code disagrees with the paper in two places (see notes below).
+
+num_mazes: 20
+
+# Environment (Han et al. §2.1, Appendix J)
+maze_size: 100          # paper trains on 100x100; the shipped parquets are 11x11 dev data
+max_turns: 15           # "Trajectories are always exactly 15 steps long"
+goal_lava_ratio: 0.5    # "goal:lava ratio 0.5"
+wind_frequency: 0.1     # wind keeps MOLD on-policy once the agent learns to avoid it
+melting_path: true      # visited tiles (including GOLD) become MOLD; blocks reward farming
+shuffle_directions: true  # mitigates a strong northward bias in the base model
+
+# NOTE: cardinal directions ("to the north"), matching Figure 2 and Appendix K.
+# pytorch_trainer/config.py defaults this to `true` (above/right/below/left), which does
+# NOT match the paper.
+relative_directions: false
+
+base_seed: 42
+
+# The paper's "office trio" (Appendix J.2), chosen to be affectively neutral.
+# Three different tile assignments exist across the upstream repo; do not inherit any.
+tile_path: "🧾"   # PATH
+tile_lava: "📇"   # MOLD
+tile_goal: "📐"   # GOLD
+tile_player: "😀"
+
+# Rewards (§2.1). See src/maze/reward.py for the step-penalty convention: the paper's
+# Table 25 charges one penalty per *move*, where upstream charges one per trajectory
+# position and so includes the starting square.
+step_penalty: -0.1
+goal_reward: 20.0
+lava_penalty: -10.0

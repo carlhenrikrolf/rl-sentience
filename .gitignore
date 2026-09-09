@@ -1,7 +1,9 @@
 **.DS_Store
 **/.lake/**
 **/.venv/**
-references/**
 **/.env
+logs/**
+vectors/**
+references/**
 tmp/**
 src/rl_sentience.egg-info/**

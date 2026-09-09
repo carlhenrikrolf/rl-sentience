@@ -8,6 +8,13 @@
         { "path": "~/.ssh", "mode": "deny" },
         { "path": ".env", "mode": "deny" }
       ]
+    },
+    "filesystem": {
+      "allowWrite": [
+        "~/.cache/uv",
+        "~/.cache/huggingface",
+        "~/Library/Application Support/inspect_ai"
+      ]
     }
   },
   "permissions": {

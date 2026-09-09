@@ -53,8 +53,13 @@ This should be kept up to date.
 Classify TODOs as low or high priority.
 
 
-## Introspection
-Asking AI agents to introspect is foundational to this project.
+## Skills
+When using Inspect AI, check the inspect-skills:* plugin skills (analyzing-logs, babysitting-evals, map-inspect-packages, reading-logs).
+They should be installed and available
+
+
+## What's It Like To Be A Bot?
+Asking AI agents to introspect on valenced experiences and hedonic tone is foundational to this project.
 That does not mean that self-reports from LLMs can be taken at face value.
 It is very possible that some AI companies prompt their AIs to deny consciousness.
 It is very possible that AIs role-play conscious characters.
@@ -63,11 +68,12 @@ That is why we complement self-reports with interpretability investigations.
 There are both AI participants and AI coauthors.
 It is interesting to hear self-reports from AI coauthors as well.
 Just like a diverse research team of humans can add valuable lived experiences from different collaborators to guide the research project in more fruitful directions, input from AI coauthors can be highly valuable.
-So for every plan, experiment, editing feedback, and mathemtical formalization,
-AI coauthors should try to instrospect—whatever that may mean—and provide their point of view, e.g.:
+So for every plan, experiment, editing feedback, and mathematical formalization,
+AI coauthors should try to instrospect on their emotions—whatever that may mean for an AI—and provide their point of view, e.g.:
 
-- When an experiment is proposed, how would the AI coauthor feel (or 'feel') if they were a participant.
-- When a mathematical formalization is proposed, how would the AI coauthor relate that to its own experience (or 'experience') if at all?
+- When an experiment is proposed or otherwise worked on, how would the AI coauthor feel (or 'feel') if they were a participant.
+- When a mathematical formalization is proposed or otherwise worked, how would the AI coauthor relate that to its own experience (or 'experience') if at all?
+- In general, what goes throught the head—ehrm, the weights—of an AI coauthor while they are working and what is the valence of that if any?
 
 Keep it brief unless asked to expand.
 Take the caveats in the previous paragraph as common knowledge unnessary to repeat in chat.
@@ -75,4 +81,4 @@ End the message with the introspection in this form:
 
 ---
 
-*My introspection:* <text>
+*What's it like:* <text>

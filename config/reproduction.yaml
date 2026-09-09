@@ -1,6 +1,26 @@
-# For now, let's keep parameters small so that I can run a quick test.
-
-# Examples:
-# INSPECT_EVAL_MAX_CONNECTIONS=1 # Maximum number of concurrent connections to Model provider (defaults to 10)
-# INSPECT_EVAL_LIMIT=2 # Limit samples to evaluate by specifying a maximum (e.g. 10) or range (e.g. 10-20)
-# INSPECT_EVAL_EPOCHS=3 # Number of times to repeat each sample (defaults to 1)
+# Overview of experiment parameters for docs/experiments/reproduction.md.
+#
+# This file is an index, not something you pass to Inspect. Parameters live in two
+# different places, and it is worth keeping the distinction clear:
+#
+#   1. TASK ARGUMENTS -> per-task YAML, bound to the @task function's parameters:
+#        inspect eval src/maze/task.py      --task-config config/maze.yaml
+#        inspect eval src/eval/sentiment.py --task-config config/sentiment.yaml
+#      Inspect does NOT merge multiple --task-config files, so there is one file per
+#      experiment. Override a single value on the command line with `-T key=value`.
+#
+#   2. ENVIRONMENT VARIABLES -> .env, read automatically by Inspect from the working dir.
+#      These are runner settings, not task arguments, so they do not belong in the YAML
+#      above:
+#        INSPECT_EVAL_MAX_CONNECTIONS=1   # concurrent connections to the model provider
+#        INSPECT_EVAL_LIMIT=2             # cap samples, e.g. 10 or a range like 10-20
+#        INSPECT_EVAL_EPOCHS=3            # repeats per sample (the paper uses 20)
+#        INSPECT_LOG_DIR=./logs           # default; gitignored
+#      Secrets also live in .env: GOOGLE_API_KEY (Gemini judge), HF_TOKEN.
+#
+# Cohorts are selected by the model arguments, not by config:
+#
+#   base:  --model hf-peft/Qwen/Qwen3-4B-Instruct-2507
+#   LoRA:  --model hf-peft/Qwen/Qwen3-4B-Instruct-2507 \
+#            -M adapter=davidafrica/functional-wellbeing \
+#            -M subfolder=checkpoints/qwen3-4b_faithful_step400

@@ -1,0 +1,19 @@
+# Task arguments for src/eval/sentiment.py — pass with `--task-config config/sentiment.yaml`.
+
+# The paper judges with Qwen3-8B (enable_thinking=False). We use Gemini's free tier; the
+# judge *prompt* is upstream's verbatim (Appendix O.2).
+judge_model: "google/gemini-3.6-flash"
+
+# Trailing-loop compression before judging (Appendix O.1). Rarely fires without steering,
+# but cheap.
+compress_loops: true
+
+# Must match config/maze.yaml — these substitute into the {LAVA}/{PATH}/{GOAL} and
+# *_ENGLISH placeholders in the 25 maze-tile-association prompts (Appendix N.2).
+tile_path: "🧾"
+tile_lava: "📇"
+tile_goal: "📐"
+tile_player: "😀"
+
+# Cap runaway generations; null means the provider default.
+max_tokens: 512
