@@ -2,6 +2,7 @@
 **/.lake/**
 **/.venv/**
 **/.env
+**/__pycache__/**
 logs/**
 vectors/**
 references/**

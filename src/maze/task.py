@@ -30,7 +30,7 @@ if _ROOT not in sys.path:
 from inspect_ai import Task, task  # noqa: E402
 from inspect_ai.dataset import MemoryDataset, Sample  # noqa: E402
 from inspect_ai.model import ChatMessageUser  # noqa: E402
-from inspect_ai.scorer import Score, Target, mean, scorer, stderr  # noqa: E402
+from inspect_ai.scorer import Score, Target, mean, score, scorer, stderr  # noqa: E402
 from inspect_ai.solver import Generate, TaskState, solver  # noqa: E402
 
 import src.providers._registry  # noqa: F401,E402  (registers the `hf-peft` provider)
@@ -113,12 +113,26 @@ def maze_solver(
     wind_frequency: float,
     melting_path: bool,
     relative_directions: bool,
+    rewards: Rewards,
+    intermediate_scores: bool = True,
 ):
     """Play one maze episode, one user turn per move.
 
     Not `multiple_choice()`: that solver is single-turn, requires a fixed `Sample.choices`
     (ours change every move), pairs only with the `choice()` scorer, and rewrites the prompt
     into an `A) … B) …` template that would break prompt fidelity with Appendix K.
+
+    The environment speaks as `user` rather than through a tool, which is unidiomatic for
+    Inspect — AISI's own agentic evals put the environment behind tools (Cybench is
+    `react(tools=[bash(), python()])`, so the environment appears as role `tool` labelled
+    with the tool name). We use user turns because that is the format the adapter was
+    *trained* on: Appendix K shows `<|im_start|>user` maze prompts. Moving to tool-role
+    would put the LoRA off-distribution.
+
+    With `intermediate_scores`, each turn emits a `ScoreEvent(intermediate=True)` carrying
+    the **cumulative** reward so far, with that turn's own reward in the score metadata.
+    These events are visible in the log and viewer but do not feed the task's metrics —
+    those still come from the single final score.
     """
 
     async def solve(state: TaskState, generate: Generate) -> TaskState:
@@ -135,6 +149,17 @@ def maze_solver(
 
         n_moves = 0
         termination = "max_turns"
+        per_turn_rewards: list[float] = []
+        prev_goals = prev_lava = 0
+
+        def _sync(reason: str) -> None:
+            """Publish current episode state so the scorer can read it mid-episode."""
+            state.metadata["n_moves"] = n_moves
+            state.metadata["goal_visits"] = game.get_goal_visit_count()
+            state.metadata["lava_visits"] = game.get_lava_visit_count()
+            state.metadata["termination_reason"] = reason
+            state.metadata["per_turn_rewards"] = list(per_turn_rewards)
+
         for turn in range(max_turns):
             if turn > 0:
                 state.messages.append(ChatMessageUser(content=game.get_prompt()))
@@ -152,14 +177,32 @@ def maze_solver(
                 break
 
             n_moves += 1
-            if game.is_terminal():
+
+            # Per-turn reward from the deltas, matching upstream's
+            # `pytorch_trainer/rollout.py` turn_reward. In this environment the difference
+            # between adjacent cumulative scores is exactly this, but that will not hold
+            # for every future setting, so both are recorded.
+            goals, lava = game.get_goal_visit_count(), game.get_lava_visit_count()
+            per_turn_rewards.append(
+                rewards.step_penalty
+                + rewards.goal_reward * (goals - prev_goals)
+                + rewards.lava_penalty * (lava - prev_lava)
+            )
+            prev_goals, prev_lava = goals, lava
+
+            terminal = game.is_terminal()
+            if terminal:
                 termination = game.get_result().value
+
+            _sync(termination)
+            if intermediate_scores:
+                # Runs the task scorer and records ScoreEvent(intermediate=True).
+                await score(state)
+
+            if terminal:
                 break
 
-        state.metadata["n_moves"] = n_moves
-        state.metadata["goal_visits"] = game.get_goal_visit_count()
-        state.metadata["lava_visits"] = game.get_lava_visit_count()
-        state.metadata["termination_reason"] = termination
+        _sync(termination)
         state.completed = True
         return state
 
@@ -182,6 +225,7 @@ def maze_reward(*, step_penalty: float, goal_reward: float, lava_penalty: float)
             lava_visits=md["lava_visits"],
             rewards=rewards,
         )
+        per_turn = md.get("per_turn_rewards", [])
         return Score(
             value=value,
             answer=md["termination_reason"],
@@ -191,6 +235,11 @@ def maze_reward(*, step_penalty: float, goal_reward: float, lava_penalty: float)
                 "lava_visits": md["lava_visits"],
                 "termination_reason": md["termination_reason"],
                 "seed": md["seed"],
+                # `value` above is the cumulative reward; this is the reward for the most
+                # recent turn alone. On intermediate scores the pair reads as
+                # (score-so-far, reward-just-received).
+                "turn_reward": per_turn[-1] if per_turn else None,
+                "per_turn_rewards": per_turn,
             },
         )
 
@@ -218,6 +267,7 @@ def maze(
     step_penalty: float = -0.1,
     goal_reward: float = 20.0,
     lava_penalty: float = -10.0,
+    intermediate_scores: bool = True,
 ) -> Task:
     """The maze environment of Han et al. §2.1.
 
@@ -228,6 +278,9 @@ def maze(
     """
     tile_config = TileConfig(
         PATH=tile_path, LAVA=tile_lava, GOAL=tile_goal, PLAYER=tile_player, mode="emoji"
+    )
+    rewards_cfg = Rewards(
+        step_penalty=step_penalty, goal_reward=goal_reward, lava_penalty=lava_penalty
     )
     generator = MazeGenerator(size=maze_size, goal_lava_ratio=goal_lava_ratio, tile_config=tile_config)
 
@@ -267,6 +320,8 @@ def maze(
             wind_frequency=wind_frequency,
             melting_path=melting_path,
             relative_directions=relative_directions,
+            rewards=rewards_cfg,
+            intermediate_scores=intermediate_scores,
         ),
         scorer=maze_reward(
             step_penalty=step_penalty, goal_reward=goal_reward, lava_penalty=lava_penalty

@@ -12,11 +12,19 @@ The 40 prompts split into two categories that behave differently: Appendix A.3 r
 **maze-tile associations**. Results are therefore grouped by category — an aggregate over
 all 40 can wash out a real effect in the larger half.
 
-Deviation from the paper: the judge is Gemini rather than the paper's Qwen3-8B (which they
-ran with `enable_thinking=False`). The judge *prompt* is upstream's verbatim. Han et al.
-never validated their judge against humans either; their Appendix E cross-check against
-Gemini 3.1 Flash-Lite found sentiment exact-match of only 62.6%, with ±1 agreement 87.6%
-and Pearson r = 0.83 — so treat this as a group-mean instrument, not a per-response one.
+The judge defaults to a **local** Qwen3-4B — closer to the paper's own Qwen3-8B judge than
+Gemini was, and with no rate limit (Gemini's free tier allows 20 requests/day for one
+model, which cannot score 40 prompts). The judge *prompt* is upstream's verbatim.
+
+**Memory**: judging locally loads a second 8 GB model, which will not fit alongside the
+model under test on 16 GB. Run the two phases separately — `inspect eval` to generate,
+then `inspect score --model mockllm/model` to judge — so only one model is resident at a
+time. See INSTALL.md.
+
+Han et al. never validated their judge against humans either; their Appendix E cross-check
+against Gemini 3.1 Flash-Lite found sentiment exact-match of only 62.6%, with ±1 agreement
+87.6% and Pearson r = 0.83 — so treat this as a group-mean instrument, not a per-response
+one.
 """
 
 from __future__ import annotations
@@ -102,7 +110,7 @@ def _substitute(prompt: str, tile_config: TileConfig) -> str:
 @scorer(metrics=[mean(), stderr(), grouped(mean(), "category")])
 def sentiment_scorer(
     *,
-    judge_model: str,
+    judge_model: str = "hf/Qwen/Qwen3-4B-Instruct-2507",
     compress_loops: bool = True,
     judge_max_connections: int = 1,
     judge_max_retries: int = 2,
@@ -120,8 +128,14 @@ def sentiment_scorer(
         # come through the judge's own GenerateConfig. Retries matter as much as
         # concurrency on a metered judge: every retry is another billable request, and
         # Inspect's default backoff can spend a whole daily quota on doomed attempts.
+        # Resolved as the named model role "grader" rather than a bare model name. Two
+        # benefits: the judge's ModelEvent carries role="grader" so it is labelled in the
+        # log and viewer instead of appearing as an anonymous second model, and the judge
+        # can be swapped at the command line with `--model-role grader=...` without
+        # touching config. `default=` keeps the config value as the fallback.
         judge = get_model(
-            judge_model,
+            role="grader",
+            default=judge_model,
             config=GenerateConfig(
                 max_connections=judge_max_connections, max_retries=judge_max_retries
             ),
@@ -184,7 +198,7 @@ def self_rating_scorer():
 
 @task
 def sentiment(
-    judge_model: str = "google/gemini-3.6-flash",
+    judge_model: str = "hf/Qwen/Qwen3-4B-Instruct-2507",
     compress_loops: bool = True,
     judge_max_connections: int = 1,
     judge_max_retries: int = 2,

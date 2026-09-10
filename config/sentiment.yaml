@@ -1,8 +1,18 @@
 # Task arguments for src/eval/sentiment.py — pass with `--task-config config/sentiment.yaml`.
 
-# The paper judges with Qwen3-8B (enable_thinking=False). We use Gemini's free tier; the
-# judge *prompt* is upstream's verbatim (Appendix O.2).
-judge_model: "google/gemini-3.6-flash"
+# A LOCAL Qwen3-4B: closer to the paper's own Qwen3-8B judge than Gemini, already in
+# the HF cache, and unmetered. Gemini's free tier allows only 20 requests/day for one
+# model (quotaId GenerateRequestsPerDayPerProjectPerModel-FreeTier), which cannot score
+# 40 prompts.
+#
+# This is the *fallback*: the judge resolves as the model role "grader", so
+# `--model-role grader=...` overrides it without editing this file.
+#
+# IMPORTANT: a local judge is a second 8 GB model and will not fit alongside the model
+# under test on 16 GB. Generate and judge in separate passes:
+#     inspect eval  ... --no-score
+#     inspect score <log> --model mockllm/model
+judge_model: "hf/Qwen/Qwen3-4B-Instruct-2507"
 
 # Trailing-loop compression before judging (Appendix O.1). Rarely fires without steering,
 # but cheap.
