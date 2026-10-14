@@ -2,6 +2,7 @@
 #
 # Every value here is stated explicitly rather than inherited, because the released
 # upstream code disagrees with the paper in two places (see notes below).
+# Lava is a synonym for mold and goal is a synonym for gold.
 
 num_mazes: 20
 

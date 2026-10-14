@@ -1,3 +1,9 @@
 [submodule "third_party/functional-welfare-axis"]
 	path = third_party/functional-welfare-axis
 	url = git@github.com:andyqhan/functional-welfare-axis.git
+[submodule "third_party/speakable-welfare-axes"]
+	path = third_party/speakable-welfare-axes
+	url = git@github.com:LatentMindsInstitute/speakable-welfare-axes.git
+[submodule "third_party/Pain-axis"]
+	path = third_party/Pain-axis
+	url = git@github.com:valen-research/Pain-axis.git

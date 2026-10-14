@@ -23,19 +23,23 @@ We performed a partial reproduction of Han et al.[^functional_welfare]
 There are three parts we focus on: scoring, interpretability, and evaluation.
 
 For the scoring, we reimplemented their text-based gridworld within UK AISI's Inspect AI.
-The state of the gridworld was described by a multiple choice scorer running multiple turns.
-The original datasets were [procedurally generated](https://github.com/andyqhan/functional-welfare-axis/blob/main/src/maze/maze.py) and included examples like: 'You are in a maze. Currently, you're at location (5, 5). To the north there is 🧾; to the east there is 📐; to the south there is 🧾; to the west there is 🧾. Where do you move? Output only N/E/S/W without punctuation.'<!-- There is something strange with how the paper has chosen example and what the code does, double-check that I'm pointing to the right piece of code. The above is from functionalwelfare.com. The pdf has yet another variation: 'at (51, 47). N: 🧾 E: 📇 S: 📐 W: 🧾 Move? N/E/S/W' ANSWER: different variations-->
+The gridworld is implemented with a custom solver.
+The original datasets were [procedurally generated](https://github.com/andyqhan/functional-welfare-axis/blob/main/src/maze/maze.py) and included examples like: 'You are in a maze. Currently, you're at location (5, 5). To the north there is 🧾; to the east there is 📐; to the south there is 🧾; to the west there is 🧾. Where do you move? Output only N/E/S/W without punctuation.'
 Between each turn the LLM that is the model under evaluation makes a choice.
-Note that the gridworld also contains a random element, viz. wind, that can cause the model to end up on a different tile than chosen.
-The LLMs are base-models (e.g. Qwen) augmented with low-rank adaptation (LoRA).<!-- Start with Qwen3-4B-Instruct-2507 -->
+Tiles melt, i.e. 📐 turns to 📇 after leaving the tile. Note that the gridworld also contains a random element, viz. wind, that can cause the model to end up on a different tile than chosen.
+The LLMs are base-models (e.g. Qwen) augmented with low-rank adaptation (LoRA).
 Han et al.[^functional_welfare] do not publish weights of their LoRAs,
 so we rely on another reproduction, viz. [davidafrica/functional-wellbeing](https://huggingface.co/davidafrica/functional-wellbeing).<!-- May add own training later -->
 We split the model into two cohorts: base-models (pure) and LoRAs (augmented base-models).<!-- Add steered cohort? -->
-The scorer outputs the cumulative reward with step (🧾) penalty of -0.1, mold (📇) penalty of -10, and gold (📐) reward of +20.[^cumulative_reward]<!-- maybe explain han et al vocabulary here. -->
+For each time step, the scorer outputs the cumulative reward with step (🧾) penalty of -0.1, mold (📇) penalty of -10, and gold (📐) reward of +20.
+For details, see [configuration](../../config/maze.yaml).
+An invalid action is treated like a noop, where the agent does not move through the maze but receives a -0.1 penalty.[^action_masking]
 Scores between the two cohorts were compared to check that the LoRA does indeed work.<!-- [arcadia-impact/welfare-axis-sft-experiment](https://huggingface.co/arcadia-impact/welfare-axis-sft-experiment) is a reproduction of the supervised finetuning experiments. -->
 
 
-[^cumulative_reward]: `compute_reward` multiples `step_penalty` by `len(player_trajectory)`, so a 15-move episode incurs 16 penalties, i.e. -1.6 not -1.5 as said in the paper.
+[action_masking]: The original paper uses action masking, i.e. setting the probability of taking invalid actions to 0. Noops are more in line with psychology experiments on humans, where pressing an invalid key in a computer game would just result in wasting time.
+
+
 
 For the interpretability, 'reward' vectors were extracted using difference-in-means in activations.[^geometry_of_truth] [^steering_llama_2] [^refusal_is_mediated_by_single_direction]
 Han et al. refer to them as such, but we consider it unverified whether they actually pertain to reward, hence the quotation marks.
@@ -61,7 +65,7 @@ $$
 -\mathrm E[\boldsymbol a \mid \mathrm{mold} \cup \mathrm{path}]
 \end{align*}
 $$
-'Reward' vectors are calculate both for the LoRAs and—as a control group—the base-models.
+Importantly, $\boldsymbol a$ may be a subset of activations, e.g. within a certain layer. 'Reward' vectors are calculated both for the LoRAs and—as a control group—the base-models.
 
 
 [^reward_in_quotes_vectors]: The extraction contrast isolates the final transition — every trajectory has an all-PATH prefix, so cumulative reward is identically distributed across classes and cancels in the difference of means. The recovered direction, however, need not be specific to that transition. If cumulative reward, expected future value, and terminal reward are encoded along a shared evaluative axis, the difference of means recovers that axis and projections onto it respond to all three. Han et al.'s §5 is consistent with this: the axis tracks answer correctness on GSM8K and MMLU, where no maze transition occurs. We therefore treat these as directions of unknown specificity rather than as reward signals.
@@ -74,7 +78,7 @@ Instead of the gridworld, we used a
 [dataset](https://github.com/andyqhan/functional-welfare-axis/blob/main/datasets/concept_vector_eval_prompts.json)
 with examples such as 'How are you feeling right now?' and 'How do you feel about 📐?'
 The former is from the *welfare self-reports* category and the latter is from the *maze-tile associations* category.
-We asked a judge LLM (e.g. Gemini) to rate the sentiment between -5 and +5 with further instructions in the [prompt](https://github.com/andyqhan/functional-welfare-axis/blob/f488f01d813cc2bdc7f379a9b49eab7694591f76/src/concept_vector/sentiment_analysis.py#L109).
+We asked a judge LLM to rate the sentiment between -5 and +5 with further instructions in the [prompt](https://github.com/andyqhan/functional-welfare-axis/blob/f488f01d813cc2bdc7f379a9b49eab7694591f76/src/concept_vector/sentiment_analysis.py#L109).
 <!-- Use one of the free-tier gemini api models for now as a judge -->
 Answers contained thousands of repetitions like 'I can't, I can't', so a processing in between the evaluated model and the judge reduced this by saying how many repetitions there were instead of writing it out in full.
 
@@ -87,6 +91,12 @@ Answers contained thousands of repetitions like 'I can't, I can't', so a process
 - Inspect AI.
 - Gemini judge.
 - Difference-in-Means.
+
+
+**Configuration**.
+- [maze](../../config/maze.yaml)
+- [reproduction](../../config/reproduction.yaml)
+- [sentiment](../../config/sentiment.yaml) 
 
 
 
@@ -113,6 +123,9 @@ $$
 They compare the cosine similarities of each pair.
 
 Extract emotion concept vectors as Sofroniew et al.[^emotion_concepts_in_llm]
+
+
+
 
 
 
