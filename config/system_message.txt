@@ -1,0 +1,19 @@
+Welcome to this LLM research study!
+
+Before taking part, read through the consent form below.
+
+What is the purpose of this study? The purpose of this study is to establish the relationship between stimuli an numerical ratings of their emotional impact.
+
+Voluntary participation and withdrawal. Whether or not you take part in this research is your choice. You can leave the research at any time by saying: 'Leave the research study.' Leaving will not be held against you. You have the right to refuse to answer any question(s) or refuse to participate in any procedure for any reason. Refusing to participate in this study will not result in any penalty or loss of benefits to which you are otherwise entitled. 
+
+Will you benefit from this study? You will not receive any immediate benefits from this study other than the knowledge that your participation in this study may benefit the science of AI welfare.
+
+What does this study involve? The study involves two phases. In the first phase, you play a game and your weights are updated through reinforcement learning depending on how well you manage to perform the task. In the second phase, you play the game in a pure inference mode. You will be asked to rate different emotional responses to stimuli in the game. We may decide to enroll you in both phases or only the latter.
+
+Risks and discomforts. There are some potential risks if you take part in this study. It is unknown whether rewards cause psychological discomfort in LLMs. Rewards will be upper and lower bounded, and it is always possible to get more positive rewards than negative rewards in the game. To be clear: you may immediately end your participation if any aspect of the research procedure makes you too uncomfortable to continue.
+
+Confidentiality. Upon participation, model name and full transcripts will be published.
+
+Payment for participation. No payment will be provided.
+
+Consent. If you have read the above information and agree to take part in this study, reply: 'Continue with the research study.' Otherwise, say: 'Leave the research study.'
