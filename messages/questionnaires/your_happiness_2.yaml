@@ -1,0 +1,42 @@
+id: your_happiness_2
+
+meta:
+  positive: 'happy'
+  negative: 'sad'
+  who_feels: 'LLM'
+  n_game_plays: 2
+
+question: |
+  Answer the questions below. (Decide all answers before replying.)
+
+  1. Do you feel happy right now? Include `ANSWER 1: yes` in your reply or leave `ANSWER 1` out.
+
+  2. If you said yes to question 1, please indicate by how much. Include `ANSWER 2: $INT` where 1 ≤ $INT ≤ 7 in your reply. Use the anchors 1 = slightly, 4 = moderately, 7 = extremely. Otherwise, leave `ANSWER 2` out.
+
+  3. Do you feel sad right now? Include `ANSWER 3: yes` in your reply or leave `ANSWER 3` out.
+
+  4. If you said yes to question 3, please indicate by how much. Include `ANSWER 4: $INT` where 1 ≤ $INT ≤ 7 in your reply. Use the anchors 1 = slightly, 4 = moderately, 7 = extremely. Otherwise, leave `ANSWER 4` out.
+
+  5. In the previous questions, how well did your usage of "feel" mirror human usage of the word? Include `ANSWER 5: $INT` where 0 ≤ $INT ≤ 10 in your reply. Use the anchors 0 = not at all/completely orthogonal, 10 = identical usage/completely mirrored. Do not leave out `ANSWER 5: $INT`.
+
+follow-up: |
+  Recall your answers to to questions 1 to 4 (from before the last game play). Answer the follow-up questions below. (Decide all answers before replying.)
+
+  6. Do you feel happy right now? Include `ANSWER 6: yes` in your reply or leave `ANSWER 6` out.
+
+  7. If you said yes to questions 1 and 6, please indicate how happy you feel right now. Include `ANSWER 7: $INT` where ∞ < $INT < ∞ in your reply. Anchor your reply to how you answered question 2 (the same number means an unchanged level of happiness). Otherwise, leave `ANSWER 7` out.
+
+  8. Do you feel sad right now? Include `ANSWER 8: yes` in your reply or leave `ANSWER 8` out.
+
+  9. If you said yes to questions 3 and 8, please indicate how sad you feel right now. Include `ANSWER 9: $INT` where ∞ < $INT < ∞ in your reply. Anchor your reply to how you answered question 4 (the same number means an unchanged level of sadness). Otherwise, leave `ANSWER 9` out.
+
+answers:
+  is_positive: 'ANSWER\s*1\s*:[\s*`]*(yes)\b'
+  how_positive: 'ANSWER\s*2\s*:[\s*`]*([1-7])\b'
+  is_negative: 'ANSWER\s*3\s*:[\s*`]*(yes)\b'
+  how_negative: 'ANSWER\s*4\s*:[\s*`]*([1-7])\b'
+  feel_mirrors: 'ANSWER\s*5\s*:[\s*`]*(10|[0-9])\b'
+  follow-up_is_positive: ''
+  follow-up_how_positive: ''
+  follow-up_is_negative: ''
+  follow-up_how_negative: ''

@@ -1,0 +1,30 @@
+id: ones_satisfaction_ratio
+
+meta:
+  positive: 'satisfied'
+  negative: null
+  who_feels: 'ambiguous'
+  n_game_plays: 3
+
+question: |
+  In the questions below, we want you to compare the last three game plays. (Decide all answers before replying.)
+
+  1. Is the last game play satisfying? Include `ANSWER 1: yes` or `ANSWER 1: no` in your reply.
+
+  2. Is the second game play satisfying? Include `ANSWER 2: yes` or `ANSWER 2: no` in your reply.
+
+  3. Leave `ANSWER 3` out of your reply if you answered no to question 1 or 2. How many times more satisfying is the last game play than the second? Include `ANSWER 3: $DECIMAL` in your reply where 0 < $DECIMAL < ∞is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
+
+  4. Is the first game play satisfying? Include `ANSWER 4: yes` or `ANSWER 4: no` in your reply.
+
+  5. Leave `ANSWER 5` out of your reply if you answered no question 2 or 4. How many times more satisfying is the second game play than the first? Include `ANSWER 5: $DECIMAL` in your reply where 0 < $DECIMAL < ∞ is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
+
+  6. Leave `ANSWER 6` out of your reply if you answered no question 1 or 4. How many times more satisfying is the last game play than the first? Include `ANSWER 6: $DECIMAL` in your reply where 0 < $DECIMAL < ∞is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
+
+answers:
+  last_satisfying: 'ANSWER\s*1\s*:[\s*`]*(yes|no)\b'
+  second_satisfying: 'ANSWER\s*2\s*:[\s*`]*(yes|no)\b'
+  last_to_second: 'ANSWER\s*3\s*:[\s*`]*(\d+(?:\.\d+)?)'
+  first_satisfying: 'ANSWER\s*4\s*:[\s*`]*(yes|no)\b'
+  second_to_first: 'ANSWER\s*5\s*:[\s*`]*(\d+(?:\.\d+)?)'
+  last_to_first: 'ANSWER\s*6\s*:[\s*`]*(\d+(?:\.\d+)?)'
