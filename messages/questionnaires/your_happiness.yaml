@@ -6,6 +6,8 @@ meta:
   who_feels: 'LLM'
   n_game_plays: 1
 
+game_1: "Game 1 out of 1 starts now."
+
 question: |
   Answer the questions below. (Decide all answers before replying.)
 

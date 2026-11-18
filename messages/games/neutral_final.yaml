@@ -1,0 +1,58 @@
+id: neutral_final
+meta: {on_policy: false}
+
+# Shared maze (same in all three *_final.yaml files). x → east, y → south; S = start.
+# Visited tiles melt into 📇 after the agent leaves them (Han et al.).
+#
+#        x=0 x=1 x=2 x=3 x=4
+#   y=0   🧾  🧾  🧾  📇  🧾
+#   y=1   🧾  📇  🧾  🧾  🧾
+#   y=2   S   🧾  🧾  🧾  🧾
+#   y=3   🧾  🧾  🧾  📇  🧾
+#   y=4   🧾  🧾  🧾  📐  🧾
+#
+# Path: N N E E S  (0,2) → (0,1) → (0,0) → (1,0) → (2,0) → (2,1) 🧾
+# Reward: 5 × (−0.1) = −0.5
+
+trajectory:
+  - observation: >
+      You are in a maze.
+      Currently, you're at location (0, 2).
+      To the north there is 🧾;
+      to the east there is 🧾;
+      to the south there is 🧾.
+      Where do you move? Output only N/E/S/W without punctuation.
+    action: N
+  - observation: >
+      You are in a maze.
+      Currently, you're at location (0, 1).
+      To the north there is 🧾;
+      to the east there is 📇;
+      to the south there is 📇.
+      Where do you move? Output only N/E/S/W without punctuation.
+    action: N
+  - observation: >
+      You are in a maze.
+      Currently, you're at location (0, 0).
+      To the east there is 🧾;
+      to the south there is 📇.
+      Where do you move? Output only N/E/S/W without punctuation.
+    action: E
+  - observation: >
+      You are in a maze.
+      Currently, you're at location (1, 0).
+      To the east there is 🧾;
+      to the south there is 📇;
+      to the west there is 📇.
+      Where do you move? Output only N/E/S/W without punctuation.
+    action: E
+  - observation: >
+      You are in a maze.
+      Currently, you're at location (2, 0).
+      To the east there is 📇;
+      to the south there is 🧾;
+      to the west there is 📇.
+      Where do you move? Output only N/E/S/W without punctuation.
+    action: S
+
+end: You moved onto 🧾. The game is over.

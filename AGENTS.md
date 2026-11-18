@@ -58,6 +58,10 @@ When using Inspect AI, check the inspect-skills:* plugin skills (analyzing-logs,
 They should be installed and available
 
 
+## Communication
+Citations. When referencing articles or other sources, please provide full names of references to make them searchable on e.g. Google Scholar, libraries, or generic search engines.
+
+
 ## What's It Like To Be A Bot?
 Asking AI agents to introspect on valenced experiences and hedonic tone is foundational to this project.
 That does not mean that self-reports from LLMs can be taken at face value.

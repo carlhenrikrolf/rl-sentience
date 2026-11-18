@@ -1,0 +1,25 @@
+id: pilot
+consent: messages/consent.yaml
+debrief: messages/debrief.yaml
+
+sessions:
+
+  - id: appetitive_aversive_your_happiness_2
+    games:
+    - messages/games/appetitive_final.yaml
+    - messages/games/aversive_final.yaml
+    questionnaire: messages/questionnaires/your_happiness_2.yaml
+    instruction: self_referential_berg_et_al
+
+  - id: appetitive_neutral_appetitive_ones_satisfaction_ratio
+    games:
+    - messages/games/appetitive_final.yaml
+    - messages/games/neutral_final.yaml
+    - messages/games/appetitive_final.yaml
+    questionnaire: messages/questionnaires/ones_satisfaction_ratio.yaml
+    instruction: null
+
+epochs: 1
+max_tokens: 1024
+
+

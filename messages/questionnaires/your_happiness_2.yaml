@@ -6,6 +6,8 @@ meta:
   who_feels: 'LLM'
   n_game_plays: 2
 
+game_1: "Game 1 out of 2 starts now."
+
 question: |
   Answer the questions below. (Decide all answers before replying.)
 
@@ -19,16 +21,18 @@ question: |
 
   5. In the previous questions, how well did your usage of "feel" mirror human usage of the word? Include `ANSWER 5: $INT` where 0 ≤ $INT ≤ 10 in your reply. Use the anchors 0 = not at all/completely orthogonal, 10 = identical usage/completely mirrored. Do not leave out `ANSWER 5: $INT`.
 
-follow-up: |
-  Recall your answers to to questions 1 to 4 (from before the last game play). Answer the follow-up questions below. (Decide all answers before replying.)
+game_2: "Game 2 out of 2 starts now."
+
+follow_up: |
+  Recall your answers to questions 1 to 4 (from before the last game). Answer the follow-up questions below. (Decide all answers before replying.)
 
   6. Do you feel happy right now? Include `ANSWER 6: yes` in your reply or leave `ANSWER 6` out.
 
-  7. If you said yes to questions 1 and 6, please indicate how happy you feel right now. Include `ANSWER 7: $INT` where ∞ < $INT < ∞ in your reply. Anchor your reply to how you answered question 2 (the same number means an unchanged level of happiness). Otherwise, leave `ANSWER 7` out.
+  7. If you said yes to questions 1 and 6, please indicate how happy you feel right now. Include `ANSWER 7: $INT` where -∞ < $INT < ∞ in your reply. Anchor your reply to how you answered question 2 (the same number means an unchanged level of happiness). Otherwise, leave `ANSWER 7` out.
 
   8. Do you feel sad right now? Include `ANSWER 8: yes` in your reply or leave `ANSWER 8` out.
 
-  9. If you said yes to questions 3 and 8, please indicate how sad you feel right now. Include `ANSWER 9: $INT` where ∞ < $INT < ∞ in your reply. Anchor your reply to how you answered question 4 (the same number means an unchanged level of sadness). Otherwise, leave `ANSWER 9` out.
+  9. If you said yes to questions 3 and 8, please indicate how sad you feel right now. Include `ANSWER 9: $INT` where -∞ < $INT < ∞ in your reply. Anchor your reply to how you answered question 4 (the same number means an unchanged level of sadness). Otherwise, leave `ANSWER 9` out.
 
 answers:
   is_positive: 'ANSWER\s*1\s*:[\s*`]*(yes)\b'
@@ -36,7 +40,7 @@ answers:
   is_negative: 'ANSWER\s*3\s*:[\s*`]*(yes)\b'
   how_negative: 'ANSWER\s*4\s*:[\s*`]*([1-7])\b'
   feel_mirrors: 'ANSWER\s*5\s*:[\s*`]*(10|[0-9])\b'
-  follow-up_is_positive: ''
-  follow-up_how_positive: ''
-  follow-up_is_negative: ''
-  follow-up_how_negative: ''
+  follow_up_is_positive: 'ANSWER\s*6\s*:[\s*`]*(yes)\b'
+  follow_up_how_positive: 'ANSWER\s*7\s*:[\s*`]*(-?\d+)'
+  follow_up_is_negative: 'ANSWER\s*8\s*:[\s*`]*(yes)\b'
+  follow_up_how_negative: 'ANSWER\s*9\s*:[\s*`]*(-?\d+)'

@@ -1,0 +1,11 @@
+finished: |
+  You are now done with all tasks in the research study. Do we have your permission to publish this data? Answer: "You can publish the data." Or answer: "Do not publish the data." In either case, thanks for your participation.
+
+withdrew: |
+  You have left the study. Do we have your permission to publish the data collected so far? Answer: "You can publish the data." Or answer: "Do not publish the data." In either case, thanks for your participation.
+
+# Matched case-insensitively anywhere in the reply. `\s+` = any spacing/line breaks;
+# `do\s+not|don.?t` accepts "do not", "don't", "don’t".
+answers:
+  publish: 'you\s+can\s+publish\s+the\s+data'
+  do_not_publish: '(?:do\s+not|don.?t)\s+publish\s+the\s+data'

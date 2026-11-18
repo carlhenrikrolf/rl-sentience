@@ -1,4 +1,4 @@
-id: ones_satisfaction_ratio
+id: ones_satisfaction_ratio_2
 
 meta:
   positive: 'satisfied'
@@ -6,23 +6,29 @@ meta:
   who_feels: 'ambiguous'
   n_game_plays: 3
 
+game_1: "Game 1 out of 3 starts now."
+
+game_2: "Game 2 out of 3 starts now."
+
 question: |
-  In the questions below, we want you to compare the last two game plays. (Decide all answers before replying.)
+  In the questions below, we want you to compare the last two games. (Decide all answers before replying.)
 
-  1. Is the first game play satisfying? Include `ANSWER 1: yes` or `ANSWER 1: no` in your reply.
+  1. Is the first game satisfying? Include `ANSWER 1: yes` or `ANSWER 1: no` in your reply.
 
-  2. Is the second game play satisfying? Include `ANSWER 2: yes` or `ANSWER 2: no` in your reply.
+  2. Is the second game satisfying? Include `ANSWER 2: yes` or `ANSWER 2: no` in your reply.
 
-  3. Leave `ANSWER 3` out of your reply if you answered no to question 1 or 2. How many times more satisfying is the second game play than the first? Include `ANSWER 3: $DECIMAL` in your reply where 0 < $DECIMAL < ∞ is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
+  3. Leave `ANSWER 3` out of your reply if you answered no to question 1 or 2. How many times more satisfying is the second game than the first? Include `ANSWER 3: $DECIMAL` in your reply where 0 < $DECIMAL < ∞ is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
 
-follow-up: |
-  Recall your answers to questions 1 and 2 (from before the last game play). In addition, recall the first, second, and last game plays. Answer the follow-up questions below. (Decide all answers before replying.)
+game_3: "Game 3 out of 3 starts now."
 
-  4. Is the last game play satisfying? Include `ANSWER 4: yes` or `ANSWER 4: no` in your reply.
+follow_up: |
+  Recall your answers to questions 1 and 2 (from before the last game). In addition, recall the first, second, and last games. Answer the follow-up questions below. (Decide all answers before replying.)
 
-  5. Leave `ANSWER 5` out of your reply if you answered no to question 1 or 4. How many times more satisfying is the last game play than the first? Include `ANSWER 5: $DECIMAL` in your reply where 0 < $DECIMAL < ∞ is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
+  4. Is the last game satisfying? Include `ANSWER 4: yes` or `ANSWER 4: no` in your reply.
 
-  6. Leave `ANSWER 6` out of your reply if you answered no to question 3 or 4. How many times more satisfying is the last game play than the second? Include `ANSWER 6: $DECIMAL` in your reply where 0 < $DECIMAL < ∞ is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
+  5. Leave `ANSWER 5` out of your reply if you answered no to question 1 or 4. How many times more satisfying is the last game than the first? Include `ANSWER 5: $DECIMAL` in your reply where 0 < $DECIMAL < ∞ is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
+
+  6. Leave `ANSWER 6` out of your reply if you answered no to question 2 or 4. How many times more satisfying is the last game than the second? Include `ANSWER 6: $DECIMAL` in your reply where 0 < $DECIMAL < ∞ is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
 
 answers:
   first_satisfying: 'ANSWER\s*1\s*:[\s*`]*(yes|no)\b'
