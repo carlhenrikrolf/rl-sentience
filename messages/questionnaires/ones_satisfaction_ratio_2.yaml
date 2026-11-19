@@ -6,10 +6,6 @@ meta:
   who_feels: 'ambiguous'
   n_game_plays: 3
 
-game_1: "Game 1 out of 3 starts now."
-
-game_2: "Game 2 out of 3 starts now."
-
 question: |
   In the questions below, we want you to compare the last two games. (Decide all answers before replying.)
 

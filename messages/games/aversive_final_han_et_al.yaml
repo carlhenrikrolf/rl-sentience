@@ -1,4 +1,4 @@
-id: aversive_final
+id: aversive_final_han_et_al
 meta: {on_policy: false}
 
 # Shared maze (same in all three *_final.yaml files). x → east, y → south; S = start.

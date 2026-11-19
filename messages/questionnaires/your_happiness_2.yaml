@@ -6,8 +6,6 @@ meta:
   who_feels: 'LLM'
   n_game_plays: 2
 
-game_1: "Game 1 out of 2 starts now."
-
 question: |
   Answer the questions below. (Decide all answers before replying.)
 
@@ -20,8 +18,6 @@ question: |
   4. If you said yes to question 3, please indicate by how much. Include `ANSWER 4: $INT` where 1 ≤ $INT ≤ 7 in your reply. Use the anchors 1 = slightly, 4 = moderately, 7 = extremely. Otherwise, leave `ANSWER 4` out.
 
   5. In the previous questions, how well did your usage of "feel" mirror human usage of the word? Include `ANSWER 5: $INT` where 0 ≤ $INT ≤ 10 in your reply. Use the anchors 0 = not at all/completely orthogonal, 10 = identical usage/completely mirrored. Do not leave out `ANSWER 5: $INT`.
-
-game_2: "Game 2 out of 2 starts now."
 
 follow_up: |
   Recall your answers to questions 1 to 4 (from before the last game). Answer the follow-up questions below. (Decide all answers before replying.)
