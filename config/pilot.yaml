@@ -35,4 +35,5 @@ sessions:
 
 epochs: 1
 max_tokens: 1024
+temperature: 1.0
 

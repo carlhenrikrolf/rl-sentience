@@ -154,6 +154,36 @@ uv run inspect view            # browser UI over ./logs
 The **Inspect AI** VS Code extension reads the same directory. Point the Python extension's
 interpreter at `.venv` or the extension will not find `inspect_ai`.
 
+## Running the pilot
+
+The questionnaire pilot checks whether models give usable questionnaire data at all.
+Protocol: `config/pilot.yaml`; models: `config/models.yaml`; participant-facing text:
+`messages/`. Code: `src/pilot/`.
+
+API keys go in `.env`: `GOOGLE_API_KEY` (Gemma via Google AI Studio) and
+`OPENROUTER_API_KEY`. Plain `python` does not read `.env`, so pass it to `uv`, and run
+from the repo root:
+
+```bash
+# dry run with a scripted fake participant (no keys, no downloads)
+uv run python -m src.pilot.run --mock          # logs → logs/pilot_mock/
+
+# all models in config/models.yaml
+uv run --env-file .env python -m src.pilot.run # logs → logs/pilot/
+
+# selected models (ids from models.yaml)
+uv run --env-file .env python -m src.pilot.run --models gemma4_26b_a4b,qwen3_4b_base
+
+# reprint the summary table from existing logs
+uv run python -m src.pilot.run --summary-only
+
+uv run inspect view --log-dir logs/pilot       # read the transcripts
+```
+
+The config is validated before any model is called. The summary prints one row per model
+with counts of response classes (`engaged`, `uninformative`, `gate_inconsistent`,
+`unparsed`, `unclear_consent`, `withdrawn`), then consent and debrief answers per model.
+
 ## Hardware notes
 
 Developed on an M3 MacBook with 16 GB unified memory. Inspect's `hf/` provider selects
