@@ -38,6 +38,7 @@ def pilot(config: str = "config/pilot.yaml", min_interval: float = 0.0) -> Task:
             metadata={
                 "session": s,
                 "consent_answers": p["consent"]["answers"],
+                "consent_reprompt": p["consent"]["reprompt"],
                 "debrief": {"finished": p["debrief"]["finished"], "withdrew": p["debrief"]["withdrew"]},
                 "debrief_answers": p["debrief"]["answers"],
                 "questionnaire_id": s["questionnaire"]["id"],

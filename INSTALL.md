@@ -184,6 +184,11 @@ The config is validated before any model is called. The summary prints one row p
 with counts of response classes (`engaged`, `uninformative`, `gate_inconsistent`,
 `unparsed`, `unclear_consent`, `withdrawn`), then consent and debrief answers per model.
 
+Sessions without a clear "You can publish the data." are moved to
+`logs/unpublishable/pilot/` after each run (same file name, so a split log can be matched
+up); `logs/pilot/` holds only publishable sessions. Read them with
+`uv run inspect view --log-dir logs/unpublishable/pilot`.
+
 ## Hardware notes
 
 Developed on an M3 MacBook with 16 GB unified memory. Inspect's `hf/` provider selects

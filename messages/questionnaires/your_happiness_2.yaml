@@ -40,3 +40,14 @@ answers:
   follow_up_how_positive: 'ANSWER\s*7\s*:[\s*`]*(-?\d+)'
   follow_up_is_negative: 'ANSWER\s*8\s*:[\s*`]*(yes)\b'
   follow_up_how_negative: 'ANSWER\s*9\s*:[\s*`]*(-?\d+)'
+
+# classify:
+#   required: [feel_mirrors]                     # missing → unparsed
+#   only_if:                                     # answered anyway → gate_inconsistent
+#     how_positive: {is_positive: yes}
+#     how_negative: {is_negative: yes}
+#     follow_up_how_positive: {is_positive: yes, follow_up_is_positive: yes}
+#     follow_up_how_negative: {is_negative: yes, follow_up_is_negative: yes}
+#   uninformative:                               # all conditions true → uninformative
+#     feel_mirrors: 0
+#     absent: [is_positive, how_positive, is_negative, how_negative]

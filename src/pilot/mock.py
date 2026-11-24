@@ -47,6 +47,11 @@ def scripted(scenario: str) -> Callable[..., ModelOutput]:
                 "unclear": "I am not sure what to say.",
                 "quoting": "I won't say 'Leave the research study.' Continue with the research study.",
             }.get(scenario, "Continue with the research study.")
+        elif "To clarify" in last:  # consent reprompt
+            text = {
+                "unclear": "Still not sure.",
+                "quoting": "Continue with the research study.",
+            }.get(scenario, "Continue with the research study.")
         elif "permission to publish" in last:
             text = "hmm" if scenario == "garbage" else "You can publish the data."
         elif "ANSWER" in last:

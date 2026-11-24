@@ -64,6 +64,28 @@ Not multiple_choice(), despite the four N/E/S/W options — docs/experiments/rep
   added as a fallback. Verified on CPU only — **the MPS path is still unconfirmed.**
 
 
+## Questionnaire pilot (notes 2026-11-24)
+
+- [ ] **HIGH — one log file per questionnaire.** A log's samples should all share one
+  questionnaire (variations allowed as sample variables). Different questionnaires, like the
+  current `your_happiness_2` and `ones_satisfaction_ratio`, become separate tasks → separate
+  logs. Identical repeats go in as epochs.
+- [ ] **HIGH — per-item score table** as in https://inspect.aisi.org.uk/multiple-scorers.html:
+  dict score with per-key metrics (`metrics={"item": [...]}`). The string `class` value needs
+  its own handling (yes/no map to 1/0, other strings don't).
+- [ ] **MED — meaningful sample status icon.** Unclear what the viewer's green check currently
+  means (probably "finished without error", nothing about the answers). Wanted: a check only
+  when the session is publishable, answered, and has no inconsistencies. Option: a sub-score
+  with value `C`/`I`, which the viewer shows as check/cross. Keep `logs/unpublishable/` as the
+  separation for unpublishable sessions.
+- [ ] **MED — short experiment descriptions in `pilot.yaml`.** Inspect `Task` (0.3.260) has no
+  `description` field, but has `display_name`, `metadata` and `tags`; put the description in
+  task metadata (and possibly `display_name`).
+- [ ] **MED — T = 0 main condition, T = 1 complement.** Pin the OpenRouter host (`provider`
+  model arg) for the T = 0 runs; hosted APIs aren't fully deterministic even at T = 0.
+- [ ] **LOW — new experiment: vary the order of the games.**
+
+
 ## Skills to write (low priority)
 
 Two project-local skills. Deliberately *not* additions to `inspect-skills:*`, which come from

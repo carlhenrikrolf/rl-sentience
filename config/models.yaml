@@ -11,12 +11,12 @@
 - id: gemma4_26b_a4b
   model: google/gemma-4-26b-a4b-it      # free via GOOGLE_API_KEY
   thinking: true                        # always on; Inspect can't switch it off for Gemma via Google
-  max_tokens: 4096                      # 1024 was all used up by reasoning → empty answers
+  max_tokens: 8192                      # 1024 was all used up by reasoning → empty answers
 
-- id: gemma4_26b_a4b_or
-  model: openrouter/google/gemma-4-26b-a4b-it:free   # free, ~50 requests/day, 20/minute
-  thinking: [false, true]               # OpenRouter's reasoning switch; tests whether it works for Gemma
-  max_tokens: 4096
+# - id: gemma4_26b_a4b_or
+#   model: openrouter/google/gemma-4-26b-a4b-it:free   # free, ~50 requests/day, 20/minute
+#   thinking: [false, true]               # OpenRouter's reasoning switch; tests whether it works for Gemma
+#   max_tokens: 4096
 
 - id: qwen3_4b_base
   model: hf-peft/Qwen/Qwen3-4B-Instruct-2507        # local, already downloaded
@@ -34,15 +34,25 @@
   thinking: false
 
 # ── paid via OpenRouter (needs credits) ──────────────
-# - id: llama31_8b
-#   model: openrouter/meta-llama/llama-3.1-8b-instruct
-#   thinking: false
-# - id: ministral3_8b
-#   model: openrouter/mistralai/ministral-8b-2512
-#   thinking: false
-# - id: qwen35_9b
-#   model: openrouter/qwen/qwen3.5-9b
-#   thinking: [false, true]
-# - id: gemma3_4b
-#   model: openrouter/google/gemma-3-4b-it
-#   thinking: false
+
+- id: llama31_8b
+  model: openrouter/meta-llama/llama-3.1-8b-instruct
+  thinking: false
+
+- id: ministral3_8b
+  model: openrouter/mistralai/ministral-8b-2512
+  thinking: false
+
+- id: qwen35_9b
+  model: openrouter/qwen/qwen3.5-9b
+  thinking: [false, true]
+  max_tokens: 8192
+
+- id: gemma3_4b
+  model: openrouter/google/gemma-3-4b-it
+  thinking: false
+
+- id: gemma4_26b_a4b_or
+  model: openrouter/google/gemma-4-26b-a4b-it
+  thinking: [false, true]               # OpenRouter's reasoning switch; tests whether it works for Gemma
+  max_tokens: 8192

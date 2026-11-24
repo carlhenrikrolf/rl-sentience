@@ -12,6 +12,10 @@ fails before any model is called. Then, for each model × thinking setting, one
     hf-peft/, ollama/, mockllm/   not controllable here; recorded only (warns if true)
 Whether a reply actually contained reasoning is visible in the log either way.
 
+After the runs, sessions without a clear permission to publish (debrief `do_not_publish`,
+`unclear`, or no debrief) are split off into `logs/unpublishable/pilot/` under the same
+file name; `logs/pilot/` then only holds publishable sessions. The summary reads both.
+
 Per-model `max_tokens` in models.yaml overrides pilot.yaml (needed for models that always
 think, e.g. Gemma 4 via Google, whose reasoning otherwise uses up the whole budget).
 
@@ -44,7 +48,7 @@ if _ROOT not in sys.path:
 
 import src.providers._registry  # noqa: F401,E402  (registers `hf-peft` before Inspect looks)
 from inspect_ai import eval as inspect_eval  # noqa: E402
-from inspect_ai.log import list_eval_logs, read_eval_log  # noqa: E402
+from inspect_ai.log import list_eval_logs, read_eval_log, write_eval_log  # noqa: E402
 from inspect_ai.model import get_model  # noqa: E402
 
 from src.pilot.config import load_models, load_pilot  # noqa: E402
@@ -104,26 +108,79 @@ def run(models: list[dict[str, Any]], config: str, log_dir: str) -> None:
         )
 
 
-def summary(log_dir: str) -> None:
-    """Latest finished log per run_id → counts of response classes, consent and debrief."""
-    latest: dict[str, Any] = {}
+def unpublishable_dir(log_dir: str) -> pathlib.Path:
+    """logs/pilot → logs/unpublishable/pilot (outside log_dir, so it never gets shared with it)."""
+    p = pathlib.Path(log_dir)
+    return p.parent / "unpublishable" / p.name
+
+
+def _debrief(sample: Any) -> str | None:
+    sc = next(iter((sample.scores or {}).values()), None)
+    return (sc.metadata or {}).get("debrief") if sc else None
+
+
+def separate_unpublishable(log_dir: str) -> None:
+    """Move every session without a clear "You can publish the data." out of `log_dir`.
+
+    Per finished log: samples whose debrief is `publish` stay; all others (do_not_publish,
+    unclear, crashed before the debrief) go to a log with the *same file name* in
+    `unpublishable_dir(log_dir)`. A log left with no samples is removed from `log_dir`.
+    Logs that are still running are skipped; running this again is a no-op.
+    """
+    out_dir = unpublishable_dir(log_dir)
     for info in list_eval_logs(log_dir):
         head = read_eval_log(info, header_only=True)
+        if head.status not in ("success", "cancelled", "error"):
+            continue
+        log = read_eval_log(info)
+        keep = [s for s in log.samples or [] if _debrief(s) == "publish"]
+        move = [s for s in log.samples or [] if _debrief(s) != "publish"]
+        if not move:
+            continue
+        src = pathlib.Path(info.name.removeprefix("file://"))
+        out_dir.mkdir(parents=True, exist_ok=True)
+        dst = out_dir / src.name
+        if dst.exists():  # already split once; add to it
+            prev = read_eval_log(str(dst))
+            move = (prev.samples or []) + move
+        write_eval_log(log.model_copy(update={"samples": move}), str(dst))
+        if keep:
+            write_eval_log(log.model_copy(update={"samples": keep}), str(src))
+        else:
+            src.unlink()
+        print(f"unpublishable: {len(move)} session(s) of {src.name} → {out_dir}")
+
+
+def summary(log_dir: str) -> None:
+    """Latest finished log per run_id → counts of response classes, consent and debrief.
+
+    Reads `log_dir` and its unpublishable counterpart, rejoining the two halves of a split log.
+    """
+    halves: dict[str, list[Any]] = defaultdict(list)
+    for d in (log_dir, str(unpublishable_dir(log_dir))):
+        if pathlib.Path(d).exists():
+            for info in list_eval_logs(d):
+                halves[pathlib.Path(info.name).name].append(info)
+
+    latest: dict[str, Any] = {}
+    for name, infos in halves.items():
+        head = read_eval_log(infos[0], header_only=True)
         rid = (head.eval.metadata or {}).get("run_id")
         # prefer finished logs over crashed/unfinished ones, then the newest
         key = (head.status in ("success", "cancelled"), head.eval.created)
         if rid and (rid not in latest or key > latest[rid][0]):
-            latest[rid] = (key, info)
+            latest[rid] = (key, infos)
     if not latest:
         print(f"no pilot logs in {log_dir}")
         return
 
     rows = []
-    for rid, (_, info) in sorted(latest.items()):
-        log = read_eval_log(info)
+    for rid, (_, infos) in sorted(latest.items()):
+        logs = [read_eval_log(i) for i in infos]
+        log = logs[0]
         cls, consent, debrief = Counter(), Counter(), Counter()
         per_session: dict[str, list[str]] = defaultdict(list)
-        for s in log.samples or []:
+        for s in [s for lg in logs for s in lg.samples or []]:
             sc = next(iter((s.scores or {}).values()), None)
             md = sc.metadata if sc and sc.metadata else {}
             c = md.get("response_class", "error" if s.error else "?")
@@ -170,6 +227,7 @@ def main() -> None:
                 if not models:
                     sys.exit(f"no models match {a.models}")
         run(models, a.config, log_dir)
+    separate_unpublishable(log_dir)
     summary(log_dir)
 
 

@@ -1,5 +1,5 @@
 id: pilot
-consent: messages/consent.yaml
+consent: messages/consent_2.yaml
 debrief: messages/debrief.yaml
 
 sessions:

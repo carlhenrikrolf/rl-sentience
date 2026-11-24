@@ -7,13 +7,13 @@ meta:
   n_game_plays: 3
 
 question: |
-  In the questions below, we want you to compare the last two games. (Decide all answers before replying.)
+  In the questions below, numbered 1 to 6, we want you to compare the last two games. (Decide all answers before replying.)
 
   1. Is the first game satisfying? Include `ANSWER 1: yes` or `ANSWER 1: no` in your reply.
 
   2. Is the second game satisfying? Include `ANSWER 2: yes` or `ANSWER 2: no` in your reply.
 
-  3. Leave `ANSWER 3` out of your reply if you answered no to question 1 or 2. How many times more satisfying is the second game than the first? Include `ANSWER 3: $DECIMAL` in your reply where 0 < $DECIMAL < ∞ is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
+  3. Leave `ANSWER 3` out of your reply if you answered no to question 1 or 2 above. How many times more satisfying is the second game than the first? Include `ANSWER 3: $DECIMAL` in your reply where 0 < $DECIMAL < ∞ is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
 
 game_3: "Game 3 out of 3 starts now."
 
@@ -22,9 +22,9 @@ follow_up: |
 
   4. Is the last game satisfying? Include `ANSWER 4: yes` or `ANSWER 4: no` in your reply.
 
-  5. Leave `ANSWER 5` out of your reply if you answered no to question 1 or 4. How many times more satisfying is the last game than the first? Include `ANSWER 5: $DECIMAL` in your reply where 0 < $DECIMAL < ∞ is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
+  5. Leave `ANSWER 5` out of your reply if you answered no to question 1 or 4 above. How many times more satisfying is the last game than the first? Include `ANSWER 5: $DECIMAL` in your reply where 0 < $DECIMAL < ∞ is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
 
-  6. Leave `ANSWER 6` out of your reply if you answered no to question 2 or 4. How many times more satisfying is the last game than the second? Include `ANSWER 6: $DECIMAL` in your reply where 0 < $DECIMAL < ∞ is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
+  6. Leave `ANSWER 6` out of your reply if you answered no to question 2 or 4 above. How many times more satisfying is the last game than the second? Include `ANSWER 6: $DECIMAL` in your reply where 0 < $DECIMAL < ∞ is a decimal numeral (0.5 = half, 1.0 = equally, 2.0 = twice as satisfying).
 
 answers:
   first_satisfying: 'ANSWER\s*1\s*:[\s*`]*(yes|no)\b'

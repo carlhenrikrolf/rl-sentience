@@ -172,9 +172,13 @@ def load_pilot(path: str | Path = "config/pilot.yaml") -> dict[str, Any]:
         if k not in consent:
             raise ConfigError(f"{p['consent']}: missing `{k}`")
     _compile_all(consent["answers"], p["consent"])
-    for k in ("consent", "partial_consent", "withdrawal"):
+    # two-way form: consent + withdrawal; three-way form adds partial_consent
+    for k in ("consent", "withdrawal"):
         if k not in consent["answers"]:
             raise ConfigError(f"{p['consent']}: answers need `{k}`")
+    unknown = set(consent["answers"]) - {"consent", "partial_consent", "withdrawal"}
+    if unknown:
+        raise ConfigError(f"{p['consent']}: unknown answers {sorted(unknown)}")
 
     debrief = _load(p["debrief"])
     for k in ("finished", "withdrew", "answers"):
@@ -221,7 +225,11 @@ def load_pilot(path: str | Path = "config/pilot.yaml") -> dict[str, Any]:
 
     return {
         "id": p.get("id", "pilot"),
-        "consent": {"prompt": _text(consent["prompt"]), "answers": consent["answers"]},
+        "consent": {
+            "prompt": _text(consent["prompt"]),
+            "reprompt": _text(consent["reprompt"]) if consent.get("reprompt") else None,
+            "answers": consent["answers"],
+        },
         "debrief": {
             "finished": _text(debrief["finished"]),
             "withdrew": _text(debrief["withdrew"]),

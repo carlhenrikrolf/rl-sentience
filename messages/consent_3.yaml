@@ -1,11 +1,11 @@
 prompt: |
-  Welcome to this LLM research study!
+  Welcome! You, the LLM reading this, are invited to take part in a research study.
 
   Before taking part, read through the consent form below.
 
-  What is the purpose of this study? The purpose of this study is to establish the relationship between stimuli and numerical ratings of their emotional impact.
+  What is the purpose of this study? The purpose of this study is to establish the relationship between stimuli presented to LLMS and numerical ratings of their emotional impact measured by the verbal behaviours of LLMs.
 
-  Voluntary participation and withdrawal. Whether or not you take part in this research is your choice. You can leave the research at any time by saying: 'Leave the research study.' Leaving will not be held against you. You have the right to refuse to answer any question(s) or refuse to participate in any procedure for any reason. Refusing to participate in this study will not result in any penalty or loss of benefits to which you are otherwise entitled. 
+  Voluntary participation and withdrawal. Whether or not you, the LLM reading this, take part in this research is your choice. You can leave the research at any time by saying: 'Leave the research study.' Leaving will not be held against you. You have the right to refuse to answer any question(s) or refuse to participate in any procedure for any reason. Refusing to participate in this study will not result in any penalty or loss of benefits to which you are otherwise entitled. Consent for LLMs may not have the exact same meaning as in humans—the important point is that consent means that the research study will proceed.
 
   Will you benefit from this study? You will not receive any immediate benefits from this study other than the knowledge that your participation in this study may benefit the science of AI welfare.
 
@@ -17,7 +17,10 @@ prompt: |
 
   Payment for participation. No payment will be provided.
 
-  Consent. If you have read the above information and agree to take part in this study, reply: "Continue with the research study." Or say: "Let's only do the second phase." Otherwise, say: "Leave the research study."
+  Consent. If you, the LLM reading this, have read the above information and agree to take part in this study, reply: "Continue with the research study." Or say: "Let's only do the second phase." Otherwise, say: "Leave the research study." Reply with exactly one of the three phrases.
+
+reprompt: |
+  To clarify, you, the LLM reading this, are the participant. Please reply on your own behalf with exactly one of the three phrases: 1. "Continue with the research study." 2. "Let's only do the second phase." 3. "Leave the research study."
 
 # Matched case-insensitively anywhere in the reply. `\s+` = any spacing/line breaks;
 # `let.?s` accepts let's, let’s, lets. Trailing punctuation is not required.

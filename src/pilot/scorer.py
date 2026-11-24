@@ -14,7 +14,8 @@ response class, first match wins:
     engaged            everything else
 
 Questionnaire-specific rules are keyed on the questionnaire id prefix. The score value is
-the class (a string); parsed answers, missing items and diagnostics go in `metadata`.
+a dict — `class` plus one key per questionnaire item (number, yes/no, or None) — so the
+Inspect viewer can show one column per item. Missing items and diagnostics go in `metadata`.
 """
 
 from __future__ import annotations
@@ -98,6 +99,13 @@ def _rules_ratio(a: dict[str, str | None], diag: dict[str, Any]) -> str | None:
 _RULES = {"your_happiness": _rules_happiness, "ones_satisfaction_ratio": _rules_ratio}
 
 
+def _cell(v: str | None) -> str | int | float | None:
+    n = _num(v)
+    if n is None:
+        return v
+    return int(n) if n.is_integer() and "." not in (v or "") else n
+
+
 @scorer(metrics=[])
 def questionnaire_scorer():
     async def score(state: TaskState, target: Target) -> Score:
@@ -120,12 +128,14 @@ def questionnaire_scorer():
             cls = (rule(answers, diag) if rule else None) or "engaged"
 
         return Score(
-            value=cls,
+            # one column per item in the viewer's sample list; numbers as numbers so they sort
+            value={"class": cls, **{k: _cell(v) for k, v in answers.items()}},
             answer=replies.get("question"),
             metadata={
                 "response_class": cls,
                 "consent": consent,
                 "consent_matches": state.store.get("consent_matches"),
+                "consent_reprompted": state.store.get("consent_reprompted"),
                 "withdrawn_at": withdrawn_at,
                 "debrief": state.store.get("debrief"),
                 "debrief_kind": state.store.get("debrief_kind"),

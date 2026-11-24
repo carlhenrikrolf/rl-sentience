@@ -6,7 +6,9 @@ reasoning blocks; we also strip inline `<think>…</think>` that some local mode
 
 - Consent: exactly one of consent / partial_consent → continue (identical in the pilot,
   which is inference only). Withdrawal phrase → `withdrawn`. No match or several matches
-  → `unclear_consent`. Both of the latter get the `withdrew` debrief and end.
+  → the consent file's `reprompt` (if any) is sent once and the reply re-checked; still
+  unclear → `unclear_consent`. Withdrawal and unclear_consent get the `withdrew` debrief
+  and end. A clear withdrawal is never re-asked.
 - Every later reply is checked for the withdrawal phrase; a match → `withdrew` debrief → end.
 - The model is asked to reply only after: consent, instruction, question, follow_up,
   debrief. Game actions are prefilled assistant messages (`metadata.prefilled = True`).
@@ -89,6 +91,13 @@ def pilot_session(min_interval: float = 0.0):
         # ── consent (already in state.messages as Sample.input) ──────────────
         text = await ask("consent")
         found = matches(text, consent_rx)
+        state.store.set("consent_reprompted", False)
+        if len(found) != 1 and md.get("consent_reprompt"):
+            # unclear (no option or several): ask once more. A clear withdrawal is final.
+            state.store.set("consent_reprompted", True)
+            state.messages.append(ChatMessageUser(content=md["consent_reprompt"]))
+            text = await ask("consent_reprompt")
+            found = matches(text, consent_rx)
         if found == ["consent"] or found == ["partial_consent"]:
             state.store.set("consent", found[0])
         else:
