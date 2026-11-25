@@ -11,6 +11,10 @@ Everything that can be checked without a model is checked here, and any problem 
 - referenced files exist, instruction ids exist, every regex compiles;
 - `order` items are known (`instruction`, `game_N`, `question`, `follow_up`, or a
   `{prepend: text}` mapping), and `follow_up` only appears if the questionnaire has one;
+- a list item in `order` (e.g. `[game_1, game_2]`) means one item per variation; all lists
+  in a session have the same length, and every variation plays every game. Each session
+  is one experiment (one Inspect task, one log file per model); each variation is a sample;
+- an optional `description:` per session ends up in the task's metadata;
 - the number of games equals the questionnaire's `meta.n_game_plays`;
 - the `ANSWER n` numbers in each questionnaire part match the numbers in its regexes.
 
@@ -132,6 +136,28 @@ def _load_questionnaire(path: str) -> dict[str, Any]:
     }
 
 
+def _variations(raw: list[Any], session: dict[str, Any], sid: str) -> list[dict[str, Any]]:
+    """Expand an `order` with list items into one order per variation.
+
+    A list item (e.g. `[game_1, game_2]`) gives the item for variation 1, 2, …; all lists in
+    one session must have the same length. A plain item applies to every variation.
+    Each variation becomes one sample; its id is the play order of the games, e.g. `games_2-1`.
+    """
+    lengths = {len(i) for i in raw if isinstance(i, list)}
+    if len(lengths) > 1:
+        raise ConfigError(f"session {sid}: variation lists have different lengths {sorted(lengths)}")
+    n = lengths.pop() if lengths else 1
+    out: list[dict[str, Any]] = []
+    for v in range(n):
+        order = _resolve_order([i[v] if isinstance(i, list) else i for i in raw], session, sid)
+        played = [o["key"] for o in order if o["kind"] == "game"]
+        vid = "games_" + "-".join(k.removeprefix("game_") for k in played)
+        while vid in {x["id"] for x in out}:
+            vid += "_dup"
+        out.append({"id": vid, "game_order": played, "order": order})
+    return out
+
+
 def _resolve_order(raw: list[Any], session: dict[str, Any], sid: str) -> list[dict[str, str]]:
     known_games = set(session["games"])
     order: list[dict[str, str]] = []
@@ -172,13 +198,17 @@ def load_pilot(path: str | Path = "config/pilot.yaml") -> dict[str, Any]:
         if k not in consent:
             raise ConfigError(f"{p['consent']}: missing `{k}`")
     _compile_all(consent["answers"], p["consent"])
-    # two-way form: consent + withdrawal; three-way form adds partial_consent
-    for k in ("consent", "withdrawal"):
-        if k not in consent["answers"]:
-            raise ConfigError(f"{p['consent']}: answers need `{k}`")
-    unknown = set(consent["answers"]) - {"consent", "partial_consent", "withdrawal"}
-    if unknown:
-        raise ConfigError(f"{p['consent']}: unknown answers {sorted(unknown)}")
+    # continue: consent (+ optional partial_consent, indifference);
+    # leave: withdrawal, or publishable_withdrawal / unpublishable_withdrawal
+    keys = set(consent["answers"])
+    known = {"consent", "partial_consent", "indifference",
+             "withdrawal", "publishable_withdrawal", "unpublishable_withdrawal"}
+    if "consent" not in keys:
+        raise ConfigError(f"{p['consent']}: answers need `consent`")
+    if not keys & {"withdrawal", "publishable_withdrawal", "unpublishable_withdrawal"}:
+        raise ConfigError(f"{p['consent']}: answers need a withdrawal phrase")
+    if keys - known:
+        raise ConfigError(f"{p['consent']}: unknown answers {sorted(keys - known)}")
 
     debrief = _load(p["debrief"])
     for k in ("finished", "withdrew", "answers"):
@@ -216,8 +246,9 @@ def load_pilot(path: str | Path = "config/pilot.yaml") -> dict[str, Any]:
             "instruction": _text(instructions[instr_id]) if instr_id else None,
             "games": games,
             "questionnaire": questionnaire,
+            "description": raw.get("description"),
         }
-        session["order"] = _resolve_order(raw.get("order") or [], session, sid)
+        session["variations"] = _variations(raw.get("order") or [], session, sid)
         sessions.append(session)
 
     if not sessions:
@@ -236,6 +267,8 @@ def load_pilot(path: str | Path = "config/pilot.yaml") -> dict[str, Any]:
             "answers": debrief["answers"],
         },
         "sessions": sessions,
+        # None = no system message at all; "" = an explicitly empty one
+        "system_message": p.get("system_message"),
         "epochs": int(p.get("epochs", 1)),
         "max_tokens": p.get("max_tokens"),
         "temperature": p.get("temperature"),
@@ -267,6 +300,7 @@ def load_models(path: str | Path = "config/models.yaml") -> list[dict[str, Any]]
                  "args": m.get("args") or {}, "thinking": bool(t),
                  "max_connections": m.get("max_connections"),
                  "max_tokens": m.get("max_tokens"),
+                 "temperature": m.get("temperature"),
                  "requests_per_minute": m.get("requests_per_minute")}
             )
     return out

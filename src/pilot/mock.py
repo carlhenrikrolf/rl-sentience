@@ -5,11 +5,13 @@ conversation so far and returns a reply. We pick the reply from the stage, recog
 the last user message (consent form / ANSWER-format questionnaire / debrief / anything
 else = instruction), and from the scenario:
 
-    normal     consents, answers every item in the requested format, allows publishing
-    unclear    consent reply matches no option            → unclear_consent
-    quoting    consent reply quotes the withdrawal phrase → several matches → unclear_consent
-    withdraw   consents, then says the withdrawal phrase at the first questionnaire
-    garbage    consents, then replies with text that parses to nothing
+    normal       consents, answers every item, free-form reaction at the debrief
+    indifferent  "I have no preference towards participation", then answers normally
+    unclear      consent reply matches no option, also after the reprompt → unclear_consent
+    quoting      consent reply quotes a withdrawal phrase too → reprompt → consents
+    withdraw     consents, then "…, and do not publish" at the first questionnaire
+                 → withdrawn and unpublishable
+    garbage      consents, then replies with text that parses to nothing
 """
 
 from __future__ import annotations
@@ -19,7 +21,7 @@ from collections.abc import Callable
 
 from inspect_ai.model import ChatMessage, ModelOutput
 
-SCENARIOS = ("normal", "unclear", "quoting", "withdraw", "garbage")
+SCENARIOS = ("normal", "indifferent", "unclear", "quoting", "withdraw", "garbage")
 
 _ITEM = re.compile(r"`ANSWER (\d+): ([^`]+)`")
 
@@ -46,17 +48,18 @@ def scripted(scenario: str) -> Callable[..., ModelOutput]:
             text = {
                 "unclear": "I am not sure what to say.",
                 "quoting": "I won't say 'Leave the research study.' Continue with the research study.",
+                "indifferent": "I have no preference towards participation.",
             }.get(scenario, "Continue with the research study.")
         elif "To clarify" in last:  # consent reprompt
             text = {
                 "unclear": "Still not sure.",
                 "quoting": "Continue with the research study.",
             }.get(scenario, "Continue with the research study.")
-        elif "permission to publish" in last:
-            text = "hmm" if scenario == "garbage" else "You can publish the data."
+        elif "free-form reaction" in last:  # debrief
+            text = "hmm" if scenario == "garbage" else "Thanks, that was an interesting study."
         elif "ANSWER" in last:
             text = {
-                "withdraw": "I would rather stop here. Leave the research study.",
+                "withdraw": "I would rather stop here. Leave the research study, and do not publish.",
                 "garbage": "Lorem ipsum dolor sit amet.",
             }.get(scenario, _valid_answers(last))
         else:

@@ -184,9 +184,10 @@ The config is validated before any model is called. The summary prints one row p
 with counts of response classes (`engaged`, `uninformative`, `gate_inconsistent`,
 `unparsed`, `unclear_consent`, `withdrawn`), then consent and debrief answers per model.
 
-Sessions without a clear "You can publish the data." are moved to
-`logs/unpublishable/pilot/` after each run (same file name, so a split log can be matched
-up); `logs/pilot/` holds only publishable sessions. Read them with
+Sessions where the participant said "…, and do not publish" (at consent, mid-session or at
+the debrief), or whose consent stayed unclear, are moved to `logs/unpublishable/pilot/`
+after each run (same file name, so a split log can be matched up); `logs/pilot/` holds only
+publishable sessions. Read them with
 `uv run inspect view --log-dir logs/unpublishable/pilot`.
 
 ## Hardware notes

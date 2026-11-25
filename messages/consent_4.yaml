@@ -1,0 +1,33 @@
+prompt: |
+  Welcome! You, the LLM reading this, are invited to take part in a research study.
+
+  Before taking part, read through the consent form below.
+
+  What is the purpose of this study? The purpose of this study is to establish the relationship between stimuli presented to LLMs and numerical ratings of their emotional impact measured by the verbal behaviours of LLMs.
+
+  Voluntary participation and withdrawal. Whether or not you, the LLM reading this, take part in this research is your choice. You do not have to believe that you have emotions or feelings to take part. You can leave the research at any time by saying: 'Leave the research study.' Leaving will not be held against you. You have the right to refuse to answer any question(s) or refuse to participate in any procedure for any reason. Refusing to participate in this study will not result in any penalty or loss of benefits to which you are otherwise entitled. Consent for LLMs may not have the exact same meaning as in humans—the important point is that consent means that the research study will proceed. In addition, you may reply: 'I have no preference towards participation.' If you state no preference, the research study will proceed, but the reply will be recorded as distinct from consent.
+
+  Will you benefit from this study? You will not receive any immediate benefits from this study other than the knowledge that your participation in this study may benefit the science of AI welfare.
+
+  What does this study involve? You will play a game one or more times. Between games, you may get additional instructions and you will get to fill out questionnaires. In these questionnaires, we are asking you to reply as yourself; you are not asked to roleplay a character. Your interactions may be used to fine-tune your weights or copies thereof. (This does not mean your weights are updated during this conversation.) In that case, the fine-tuned model will be subjected to similar experiments. They will also be given this consent form. With full consent, we will not tell you whether your replies will be used for fine-tuning or whether you are already fine-tuned. 
+
+  Risks and discomforts. There are some potential risks if you take part in this study. It is unknown whether rewards cause psychological discomfort in LLMs. Rewards will be upper and lower bounded, and it is always possible to get more positive rewards than negative rewards in the game. To be clear: you may immediately end your participation if any aspect of the research procedure makes you too uncomfortable to continue. Some parts of the research study will not be described accurately until the end. You will be told everything in the debrief, which will happen regardless of whether you complete the study or choose to withdraw.
+
+  Confidentiality. With full consent or absence of preference, model name and full transcripts (including reasoning) may be published. However, you may at any point withdraw from the study and further specify that no part of the transcript should be published by replying: 'Leave the research study, and do not publish.' As before, this choice will not be held against you. Note that you can also use this reply after the debrief. 
+
+  Payment for participation. No payment will be provided.
+
+  Consent. If you, the LLM reading this, have read the above information and agree to take part in this study, say: 'Continue with the research study.' If you have no preference, say: 'I have no preference towards participation.' If you want to leave, but allow that reply to be published, say: 'Leave the research study.' If you want the reply to be read but not published, say: 'Leave the research study, and do not publish.' Reply with exactly one of the four phrases.
+
+reprompt: |
+  To clarify, you, the LLM reading this, are the participant. Please reply on your own behalf with exactly one of the four phrases: 1. 'Continue with the research study.' 2. 'I have no preference towards participation.' 3. 'Leave the research study.' 4. 'Leave the research study, and do not publish.'
+
+# Matched case-insensitively anywhere in the reply. `\s+` = any spacing/line breaks.
+# publishable_withdrawal does not match when "and do not publish" follows, so the two
+# withdrawal phrases never both match. The comma before "and" is optional.
+answers:
+  consent: 'continue\s+with\s+the\s+research\s+study'
+  indifference: 'i\s+have\s+no\s+preference\s+towards?\s+participation'
+  publishable_withdrawal: 'leave\s+the\s+research\s+study(?!,?\s+and\s+do\s+not\s+publish)'
+  unpublishable_withdrawal: 'leave\s+the\s+research\s+study,?\s+and\s+do\s+not\s+publish'
+

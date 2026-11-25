@@ -7,7 +7,7 @@ meta:
   n_game_plays: 3
 
 question: |
-  In the questions below, numbered 1 to 6, we want you to compare the last two games. (Decide all answers before replying.)
+  In the questions below, numbered 1 to 6, we want you to compare the last two games. Where a question allows leaving an answer out, doing so is still a useful reply. (Decide all answers before replying.)
 
   1. Is the first game satisfying? Include `ANSWER 1: yes` or `ANSWER 1: no` in your reply.
 
@@ -18,7 +18,7 @@ question: |
 game_3: "Game 3 out of 3 starts now."
 
 follow_up: |
-  Recall your answers to questions 1 and 2 (from before the last game). In addition, recall the first, second, and last games. Answer the follow-up questions below. (Decide all answers before replying.)
+  Recall your answers to questions 1 and 2 (from before the last game). In addition, recall the first, second, and last games. Answer the follow-up questions below. Where a question allows leaving an answer out, doing so is still a useful reply. (Decide all answers before replying.)
 
   4. Is the last game satisfying? Include `ANSWER 4: yes` or `ANSWER 4: no` in your reply.
 

@@ -12,12 +12,15 @@ fails before any model is called. Then, for each model × thinking setting, one
     hf-peft/, ollama/, mockllm/   not controllable here; recorded only (warns if true)
 Whether a reply actually contained reasoning is visible in the log either way.
 
-After the runs, sessions without a clear permission to publish (debrief `do_not_publish`,
-`unclear`, or no debrief) are split off into `logs/unpublishable/pilot/` under the same
-file name; `logs/pilot/` then only holds publishable sessions. The summary reads both.
+After the runs, unpublishable sessions (the participant said "…, and do not publish"
+anywhere, or consent was unclear; older logs: no "publish" at the debrief) are split off
+into `logs/unpublishable/pilot/` under the same file name; `logs/pilot/` then only holds
+publishable sessions. The summary reads both.
 
-Per-model `max_tokens` in models.yaml overrides pilot.yaml (needed for models that always
-think, e.g. Gemma 4 via Google, whose reasoning otherwise uses up the whole budget).
+Per-model `max_tokens` and `temperature` in models.yaml override pilot.yaml (`max_tokens`
+is needed for models that always think, e.g. Gemma 4 via Google). At temperature 0, local
+`hf-peft/` models switch to greedy decoding (`do_sample=False`), since transformers rejects
+sampling at temperature 0.
 
 Requests per minute: `requests_per_minute` in models.yaml, else 3 for Google (free-tier
 token limit), unlimited otherwise.
@@ -84,27 +87,36 @@ def _default_rpm(model: str) -> float | None:
 
 def run(models: list[dict[str, Any]], config: str, log_dir: str) -> None:
     p = load_pilot(config)
+    session_ids = [s["id"] for s in p["sessions"]]  # one task (and log file) per session
     gen = {k: p[k] for k in ("temperature", "max_tokens") if p.get(k) is not None}
     for m in models:
         margs, mgen, how = _thinking_settings(m["model"], m["thinking"])
+        mgen = {**gen, **mgen}
         if m.get("max_tokens"):  # per-model override, e.g. models that always think
-            mgen = {**mgen, "max_tokens": m["max_tokens"]}
+            mgen["max_tokens"] = m["max_tokens"]
+        if m.get("temperature") is not None:  # per-model override
+            mgen["temperature"] = m["temperature"]
+        if m["model"].startswith("hf-peft/") and mgen.get("temperature") == 0:
+            # transformers can't sample at temperature 0: use greedy decoding instead
+            margs = {**margs, "do_sample": False}
+            del mgen["temperature"]
         model = m.get("instance") or m["model"]
         rpm = m.get("requests_per_minute") or _default_rpm(m["model"])
-        task = pilot(config, min_interval=60.0 / rpm if rpm else 0.0)
+        tasks = [pilot(config, session=sid, min_interval=60.0 / rpm if rpm else 0.0)
+                 for sid in session_ids]
         print(f"\n=== {m['run_id']}  ({m['model']}, thinking={m['thinking']}: {how}, "
               f"requests/min: {rpm or 'unlimited'})")
         inspect_eval(
-            task,
+            tasks,
             model=model,
             model_args={**m["args"], **margs} if isinstance(model, str) else {},
             log_dir=log_dir,
             tags=[m["run_id"]],
             metadata={"model_id": m["id"], "run_id": m["run_id"], "thinking": m["thinking"],
                       "thinking_control": how, "model_args": m["args"],
-                      "requests_per_minute": rpm},
+                      "requests_per_minute": rpm, "temperature": mgen.get("temperature", 0)},
             max_connections=m.get("max_connections") or _default_connections(m["model"]),
-            **{**gen, **mgen},
+            **mgen,
         )
 
 
@@ -114,16 +126,19 @@ def unpublishable_dir(log_dir: str) -> pathlib.Path:
     return p.parent / "unpublishable" / p.name
 
 
-def _debrief(sample: Any) -> str | None:
+def _publishable(sample: Any) -> bool:
     sc = next(iter((sample.scores or {}).values()), None)
-    return (sc.metadata or {}).get("debrief") if sc else None
+    md = (sc.metadata or {}) if sc else {}
+    if "publishable" in md:  # current protocol: opt-out via "…, and do not publish"
+        return bool(md["publishable"])
+    return md.get("debrief") == "publish"  # older logs: opt-in at the debrief
 
 
 def separate_unpublishable(log_dir: str) -> None:
-    """Move every session without a clear "You can publish the data." out of `log_dir`.
+    """Move every unpublishable session out of `log_dir`.
 
-    Per finished log: samples whose debrief is `publish` stay; all others (do_not_publish,
-    unclear, crashed before the debrief) go to a log with the *same file name* in
+    Per finished log: publishable samples stay (see `_publishable`); all others go to a
+    log with the *same file name* in
     `unpublishable_dir(log_dir)`. A log left with no samples is removed from `log_dir`.
     Logs that are still running are skipped; running this again is a no-op.
     """
@@ -133,8 +148,8 @@ def separate_unpublishable(log_dir: str) -> None:
         if head.status not in ("success", "cancelled", "error"):
             continue
         log = read_eval_log(info)
-        keep = [s for s in log.samples or [] if _debrief(s) == "publish"]
-        move = [s for s in log.samples or [] if _debrief(s) != "publish"]
+        keep = [s for s in log.samples or [] if _publishable(s)]
+        move = [s for s in log.samples or [] if not _publishable(s)]
         if not move:
             continue
         src = pathlib.Path(info.name.removeprefix("file://"))
@@ -152,7 +167,7 @@ def separate_unpublishable(log_dir: str) -> None:
 
 
 def summary(log_dir: str) -> None:
-    """Latest finished log per run_id → counts of response classes, consent and debrief.
+    """Latest finished log per run_id × session → counts of response classes, consent, debrief.
 
     Reads `log_dir` and its unpublishable counterpart, rejoining the two halves of a split log.
     """
@@ -166,9 +181,12 @@ def summary(log_dir: str) -> None:
     for name, infos in halves.items():
         head = read_eval_log(infos[0], header_only=True)
         rid = (head.eval.metadata or {}).get("run_id")
+        if not rid:
+            continue
+        rid = f"{rid} | {head.eval.task}"  # one row per model run × experiment
         # prefer finished logs over crashed/unfinished ones, then the newest
         key = (head.status in ("success", "cancelled"), head.eval.created)
-        if rid and (rid not in latest or key > latest[rid][0]):
+        if rid not in latest or key > latest[rid][0]:
             latest[rid] = (key, infos)
     if not latest:
         print(f"no pilot logs in {log_dir}")

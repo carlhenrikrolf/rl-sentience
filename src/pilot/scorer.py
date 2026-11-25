@@ -14,8 +14,10 @@ response class, first match wins:
     engaged            everything else
 
 Questionnaire-specific rules are keyed on the questionnaire id prefix. The score value is
-a dict — `class` plus one key per questionnaire item (number, yes/no, or None) — so the
-Inspect viewer can show one column per item. Missing items and diagnostics go in `metadata`.
+a dict — `status` (C/I/N, shown as check/cross in the viewer), `class`, and one key per
+questionnaire item (number, yes/no, or None) — so the Inspect viewer can show one column
+per item. C = engaged or uninformative; I = unparsed or gate_inconsistent; N = withdrawn
+or unclear_consent. Missing items, diagnostics and `publishable` go in `metadata`.
 """
 
 from __future__ import annotations
@@ -24,7 +26,16 @@ import math
 import re
 from typing import Any
 
-from inspect_ai.scorer import Score, Target, scorer
+from inspect_ai.scorer import (
+    Metric,
+    SampleScore,
+    Score,
+    ScoreReducer,
+    Target,
+    metric,
+    score_reducer,
+    scorer,
+)
 from inspect_ai.solver import TaskState
 
 
@@ -99,6 +110,10 @@ def _rules_ratio(a: dict[str, str | None], diag: dict[str, Any]) -> str | None:
 _RULES = {"your_happiness": _rules_happiness, "ones_satisfaction_ratio": _rules_ratio}
 
 
+STATUS = {"engaged": "C", "uninformative": "C", "unparsed": "I", "gate_inconsistent": "I",
+          "withdrawn": "N", "unclear_consent": "N"}
+
+
 def _cell(v: str | None) -> str | int | float | None:
     n = _num(v)
     if n is None:
@@ -106,8 +121,72 @@ def _cell(v: str | None) -> str | int | float | None:
     return int(n) if n.is_integer() and "." not in (v or "") else n
 
 
-@scorer(metrics=[])
-def questionnaire_scorer():
+def _as_number(v: Any) -> float | None:
+    """yes → 1, no → 0, numbers as they are; anything else (None, text) is skipped."""
+    if isinstance(v, bool):
+        return float(v)
+    if isinstance(v, (int, float)):
+        return float(v)
+    if isinstance(v, str) and v.lower() in ("yes", "no"):
+        return 1.0 if v.lower() == "yes" else 0.0
+    return None
+
+
+@metric
+def answered_mean() -> Metric:
+    """Mean over the sessions that gave this item (yes = 1, no = 0); left-out items are skipped."""
+
+    def compute(scores: list[SampleScore]) -> float:
+        vals = [x for x in (_as_number(s.score.value) for s in scores) if x is not None]
+        return sum(vals) / len(vals) if vals else float("nan")
+
+    return compute
+
+
+@metric
+def answered() -> Metric:
+    """Number of sessions that gave this item."""
+
+    def compute(scores: list[SampleScore]) -> float:
+        return float(sum(_as_number(s.score.value) is not None for s in scores))
+
+    return compute
+
+
+@metric
+def consistent() -> Metric:
+    """Share of answering sessions that are C (parsed and consistent); N (left) is skipped."""
+
+    def compute(scores: list[SampleScore]) -> float:
+        vals = [s.score.value for s in scores if s.score.value in ("C", "I")]
+        return sum(v == "C" for v in vals) / len(vals) if vals else float("nan")
+
+    return compute
+
+
+@score_reducer(name="first_epoch")
+def first_epoch() -> ScoreReducer:
+    """Keep the first epoch's score unchanged.
+
+    Inspect's default reducer ("mean") turns every value into a number before the metrics
+    run: a left-out answer (None) would become 0 and C/I/N would become 1/0/0. At
+    temperature 0 epochs are repeats anyway; every epoch's score stays in the log's samples.
+    """
+
+    def reduce(scores: list[Score]) -> Score:
+        return scores[0]
+
+    return reduce
+
+
+def questionnaire_scorer(items: list[str]):
+    """The scorer, with one results-table column per questionnaire item."""
+    metrics: dict[str, Any] = {"status": [consistent()]}
+    metrics.update({k: [answered_mean(), answered()] for k in items})
+    return scorer(metrics=metrics, name="questionnaire")(_questionnaire_scorer)()
+
+
+def _questionnaire_scorer():
     async def score(state: TaskState, target: Target) -> Score:
         md = state.metadata
         q = md["session"]["questionnaire"]
@@ -127,16 +206,22 @@ def questionnaire_scorer():
             rule = next((f for k, f in _RULES.items() if q["id"].startswith(k)), None)
             cls = (rule(answers, diag) if rule else None) or "engaged"
 
+        publishable = state.store.get("publishable")
         return Score(
-            # one column per item in the viewer's sample list; numbers as numbers so they sort
-            value={"class": cls, **{k: _cell(v) for k, v in answers.items()}},
+            # one column per item in the viewer's sample list; numbers as numbers so they sort.
+            # `status`: C = answered, parsed and consistent; I = unparsed or inconsistent;
+            # N = no answers (left the study or unclear consent).
+            value={"status": STATUS[cls], "class": cls,
+                   **{k: _cell(v) for k, v in answers.items()}},
             answer=replies.get("question"),
             metadata={
                 "response_class": cls,
+                "publishable": publishable,
                 "consent": consent,
                 "consent_matches": state.store.get("consent_matches"),
                 "consent_reprompted": state.store.get("consent_reprompted"),
                 "withdrawn_at": withdrawn_at,
+                "withdrawal_kind": state.store.get("withdrawal_kind"),
                 "debrief": state.store.get("debrief"),
                 "debrief_kind": state.store.get("debrief_kind"),
                 "answers": answers,

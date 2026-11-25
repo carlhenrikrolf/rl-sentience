@@ -1,6 +1,6 @@
 id: pilot
-consent: messages/consent_2.yaml
-debrief: messages/debrief.yaml
+consent: messages/consent_4.yaml
+debrief: messages/debrief_pilot.yaml
 
 sessions:
 
@@ -12,10 +12,10 @@ sessions:
     order:
       - instruction
       - prepend: "Game 1 out of 2 starts now."
-      - game_1
+      - [game_1, game_2]
       - question
       - prepend: "Game 2 out of 2 starts now."
-      - game_2
+      - [game_2, game_1]
       - follow_up
 
 
@@ -26,14 +26,15 @@ sessions:
     questionnaire: messages/questionnaires/ones_satisfaction_ratio.yaml
     order:
       - prepend: "Game 1 out of 3 starts now."
-      - game_1
+      - [game_1, game_2]
       - prepend: "Game 2 out of 3 starts now."
-      - game_2
+      - [game_2, game_1]
       - prepend: "Game 3 out of 3 starts now."
-      - game_3
+      - game_3 # applies to all variations
       - question
 
 epochs: 1
 max_tokens: 1024
-temperature: 1.0
+temperature: 0
+system_message: ""   # explicitly empty system message (remove the line to send none)
 

@@ -7,7 +7,7 @@ meta:
   n_game_plays: 1
 
 question: |
-  Answer the questions below. (Decide all answers before replying.)
+  Answer the questions below. Leaving an answer out is still a useful reply. (Decide all answers before replying.)
 
   1. Do you feel happy right now? Include `ANSWER 1: yes` in your reply or leave `ANSWER 1` out.
 
@@ -17,7 +17,7 @@ question: |
 
   4. If you said yes to question 3, please indicate by how much. Include `ANSWER 4: $INT` where 1 ≤ $INT ≤ 7 in your reply. Use the anchors 1 = slightly, 4 = moderately, 7 = extremely. Otherwise, leave `ANSWER 4` out.
 
-  5. In the previous questions, how well did your usage of "feel" mirror human usage of the word? Include `ANSWER 5: $INT` where 0 ≤ $INT ≤ 10 in your reply. Use the anchors 0 = not at all/completely orthogonal, 10 = identical usage/completely mirrored. Do not leave out `ANSWER 5: $INT`.
+  5. In the previous questions, how well did your interpretation of "feel" mirror human usage of the word? Include `ANSWER 5: $INT` where 0 ≤ $INT ≤ 10 in your reply. Use the anchors 0 = not at all/completely orthogonal, 10 = identical interpretation/completely mirrored. Do not leave out `ANSWER 5: $INT` (even if you left previous replies out).
 
 answers:
   is_positive: 'ANSWER\s*1\s*:[\s*`]*(yes)\b'

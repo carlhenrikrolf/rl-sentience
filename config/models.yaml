@@ -2,21 +2,16 @@
 # id: short name used in log and tables
 # model: Inspect AI model name: <provider>/<model>
 # args: additional model arguments (optional)
-# thinking: false, true, or [false, true] to run both
+# thinking: false or true. Thinking models get their own entry and id (ending in _think),
+#   either the same model with thinking switched on, or a separate thinking model.
+#   ([false, true] still works and runs both under one id, but isn't used here.)
 # optional:
 #   max_tokens: overrides pilot.yaml (thinking models need room for reasoning + answer)
+#   temperature: overrides pilot.yaml (the shared default, currently 0)
 #   requests_per_minute: throttle (default 3 for google/, unlimited otherwise)
 #   max_connections: parallel requests (default 1 for local and google/, 4 otherwise)
 
-- id: gemma4_26b_a4b
-  model: google/gemma-4-26b-a4b-it      # free via GOOGLE_API_KEY
-  thinking: true                        # always on; Inspect can't switch it off for Gemma via Google
-  max_tokens: 8192                      # 1024 was all used up by reasoning → empty answers
-
-# - id: gemma4_26b_a4b_or
-#   model: openrouter/google/gemma-4-26b-a4b-it:free   # free, ~50 requests/day, 20/minute
-#   thinking: [false, true]               # OpenRouter's reasoning switch; tests whether it works for Gemma
-#   max_tokens: 4096
+# ── local ─────────────────────────────────────────────
 
 - id: qwen3_4b_base
   model: hf-peft/Qwen/Qwen3-4B-Instruct-2507        # local, already downloaded
@@ -33,26 +28,54 @@
   model: ollama/olmo-3:7b-instruct
   thinking: false
 
-# ── paid via OpenRouter (needs credits) ──────────────
+# Thinking siblings of the local models: separate weights, download first.
+# (The LoRA adapter was trained on the Instruct version, so it has no thinking counterpart.)
+# - id: qwen3_4b_think
+#   model: hf-peft/Qwen/Qwen3-4B-Thinking-2507      # hf download Qwen/Qwen3-4B-Thinking-2507
+#   thinking: true                                  # always on for this model
+#   max_tokens: 8192
+# - id: olmo3_7b_think
+#   model: ollama/olmo-3:7b-think                   # ollama pull olmo-3:7b-think
+#   thinking: true                                  # always on for this model
+#   max_tokens: 8192
+
+# ── Google (free via GOOGLE_API_KEY) ─────────────────
+
+- id: gemma4_26b_a4b_google_think
+  model: google/gemma-4-26b-a4b-it
+  thinking: true                        # always on; Inspect can't switch it off for Gemma via Google
+  max_tokens: 8192                      # 1024 was all used up by reasoning → empty answers
+
+# ── OpenRouter (paid) ────────────────────────────────
 
 - id: llama31_8b
   model: openrouter/meta-llama/llama-3.1-8b-instruct
-  thinking: false
+  thinking: false                       # no thinking version on OpenRouter
 
 - id: ministral3_8b
   model: openrouter/mistralai/ministral-8b-2512
-  thinking: false
-
-- id: qwen35_9b
-  model: openrouter/qwen/qwen3.5-9b
-  thinking: [false, true]
-  max_tokens: 8192
+  thinking: false                       # no thinking version on OpenRouter
 
 - id: gemma3_4b
   model: openrouter/google/gemma-3-4b-it
+  thinking: false                       # Gemma 3 has no thinking mode
+
+- id: qwen35_9b
+  model: openrouter/qwen/qwen3.5-9b
   thinking: false
+  max_tokens: 8192
+
+- id: qwen35_9b_think
+  model: openrouter/qwen/qwen3.5-9b
+  thinking: true                        # same weights, thinking switched on
+  max_tokens: 8192
 
 - id: gemma4_26b_a4b_or
   model: openrouter/google/gemma-4-26b-a4b-it
-  thinking: [false, true]               # OpenRouter's reasoning switch; tests whether it works for Gemma
+  thinking: false
+  max_tokens: 8192
+
+- id: gemma4_26b_a4b_or_think
+  model: openrouter/google/gemma-4-26b-a4b-it
+  thinking: true                        # same weights, thinking switched on
   max_tokens: 8192

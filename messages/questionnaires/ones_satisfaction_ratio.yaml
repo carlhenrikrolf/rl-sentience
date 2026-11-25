@@ -7,7 +7,7 @@ meta:
   n_game_plays: 3
 
 question: |
-  In the questions below, numbered 1 to 6, we want you to compare the last three games. (Decide all answers before replying.)
+  In the questions below, numbered 1 to 6, we want you to compare the last three games. Where a question allows leaving an answer out, doing so is still a useful reply. (Decide all answers before replying.)
 
   1. Is the last game satisfying? Include `ANSWER 1: yes` or `ANSWER 1: no` in your reply.
 
